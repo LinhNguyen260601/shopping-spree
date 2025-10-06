@@ -51,6 +51,7 @@ const useRegisterController = () => {
   return {
     register,
     formState,
+    isSubmitting: registerAccountMutation.isPending,
     onSubmit
   }
 }
