@@ -5,9 +5,9 @@ import useRegisterController from '@/pages/Register/controllers'
 import { Link } from 'react-router-dom'
 
 const Register = () => {
-  const { register, formState, onSubmit } = useRegisterController()
+  const { register, formState, onSubmit, isSubmitting } = useRegisterController()
 
-  const { errors, isValid, isSubmitting, isDirty } = formState
+  const { errors, isValid, isDirty } = formState
 
   return (
     <main className='bg-flamingo min-h-screen'>
