@@ -55,7 +55,7 @@ const Footer = () => {
             </address>
 
             <div className='pt-4 border-t border-neutral-200'>
-              <p className='text-xs text-neutral-500'>© 2025 - Bản quyền thuộc về Công ty TNHH Shopping Spree</p>
+              <p className='text-xs text-neutral-600'>© 2025 - Bản quyền thuộc về Công ty TNHH Shopping Spree</p>
             </div>
           </div>
         </section>
