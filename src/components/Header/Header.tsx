@@ -48,7 +48,7 @@ const Header = () => {
                 aria-label='User account menu'
               >
                 <Link
-                  to={PATH.HOME}
+                  to={PATH.PROFILE}
                   className='w-full text-left not-first:block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
                   role='menuitem'
                   aria-label='View my account'
@@ -120,7 +120,6 @@ const Header = () => {
           </section>
           <nav className='col-span-1' aria-label='Shopping cart'>
             <Popover
-              initialOpen
               renderPopover={
                 <article
                   className='bg-white relative shadow-md rounded-sm border border-gray-200 w-[400px] text-sm p-4'
