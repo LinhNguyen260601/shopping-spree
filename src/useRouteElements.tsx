@@ -1,4 +1,5 @@
 import { PATH } from '@/constants/path'
+import MainLayout from '@/layouts/MainLayout'
 import RegisterLayout from '@/layouts/RegisterLayout'
 import Login from '@/pages/Login'
 import ProductList from '@/pages/ProductList'
@@ -9,7 +10,11 @@ const useRouteElements = () => {
   const routeElements = useRoutes([
     {
       path: PATH.HOME,
-      element: <ProductList />
+      element: (
+        <MainLayout>
+          <ProductList />
+        </MainLayout>
+      )
     },
     {
       path: PATH.LOGIN,
