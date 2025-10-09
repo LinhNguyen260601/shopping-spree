@@ -1,10 +1,10 @@
 import { PATH } from '@/constants'
 import { Handbag } from 'lucide-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 
 const Navbar = () => {
-  const pathname = useLocation().pathname
-  const isRegister = pathname === PATH.REGISTER
+  const registerMatch = useMatch(PATH.REGISTER)
+  const isRegister = !!registerMatch
 
   return (
     <header className='py-5'>
