@@ -1,17 +1,20 @@
 import { PATH } from '@/constants'
+import { AppContext } from '@/contexts'
 import { REGISTER_DEFAULT_VALUES } from '@/pages/Register/constants'
 import { registerSchema } from '@/pages/Register/schemas'
 import type { RegisterFormData } from '@/pages/Register/types'
 import { registerAccount } from '@/services'
-import type { ApiResponse } from '@/types'
+import type { ErrorResponse } from '@/types'
 import { isAxiosUnprocessableEntityError } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import omit from 'lodash/omit'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 const useRegisterController = () => {
+  const setIsAuthenticated = useContext(AppContext).setIsAuthenticated
   const navigate = useNavigate()
 
   const form = useForm<RegisterFormData>({
@@ -30,10 +33,11 @@ const useRegisterController = () => {
     const body = omit(data, 'passwordConfirm')
     registerAccountMutation.mutate(body, {
       onSuccess: () => {
-        navigate(PATH.LOGIN)
+        setIsAuthenticated(true)
+        navigate(PATH.HOME)
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ApiResponse<Omit<RegisterFormData, 'passwordConfirm'>>>(error)) {
+        if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<RegisterFormData, 'passwordConfirm'>>>(error)) {
           const formError = error.response?.data.data
           if (formError) {
             Object.keys(formError).forEach((key) => {

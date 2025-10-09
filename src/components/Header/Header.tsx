@@ -1,10 +1,27 @@
 import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH } from '@/constants'
+import { AppContext } from '@/contexts'
+import { logout } from '@/services'
+import { useMutation } from '@tanstack/react-query'
 import { ChevronDown, Earth, Handbag, Search, ShoppingCart } from 'lucide-react'
+import { useCallback, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+    }
+  })
+
+  const handleLogout = useCallback(() => {
+    logoutMutation.mutate()
+  }, [logoutMutation.mutate])
+
   return (
     <header className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
       <div className='container'>
@@ -39,51 +56,65 @@ const Header = () => {
             <span className='mx-1'>Tiếng Việt</span>
             <ChevronDown size={16} aria-hidden='true' />
           </Popover>
-          <Popover
-            className='flex items-center py-1 hover:text-gray-300 cursor-pointer'
-            renderPopover={
-              <div
-                className='bg-white relative shadow-md rounded-sm border border-gray-200'
-                role='menu'
-                aria-label='User account menu'
-              >
-                <Link
-                  to={PATH.PROFILE}
-                  className='w-full text-left not-first:block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
-                  role='menuitem'
-                  aria-label='View my account'
+          {isAuthenticated && (
+            <Popover
+              className='flex items-center py-1 hover:text-gray-300 cursor-pointer'
+              renderPopover={
+                <div
+                  className='bg-white relative shadow-md rounded-sm border border-gray-200'
+                  role='menu'
+                  aria-label='User account menu'
                 >
-                  Tài khoản của tôi
-                </Link>
-                <Link
-                  to={PATH.HOME}
-                  className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
-                  role='menuitem'
-                  aria-label='View my orders'
-                >
-                  Đơn mua
-                </Link>
-                <Button
-                  className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
-                  role='menuitem'
-                  aria-label='Sign out'
-                >
-                  Đăng xuất
-                </Button>
-              </div>
-            }
-          >
-            <figure className='size-6 mr-2 flex-shrink-0'>
-              <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlrZqTCInyg6RfYC7Ape20o-EWP1EN_A8fOA&s'
-                alt='User avatar'
-                width={24}
-                height={24}
-                className='size-full object-cover rounded-full'
-              />
-            </figure>
-            <span>Key</span>
-          </Popover>
+                  <Link
+                    to={PATH.PROFILE}
+                    className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
+                    role='menuitem'
+                    aria-label='View my account'
+                  >
+                    Tài khoản của tôi
+                  </Link>
+                  <Link
+                    to={PATH.HOME}
+                    className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
+                    role='menuitem'
+                    aria-label='View my orders'
+                  >
+                    Đơn mua
+                  </Link>
+                  <Button
+                    className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
+                    role='menuitem'
+                    aria-label='Sign out'
+                    onClick={handleLogout}
+                  >
+                    Đăng xuất
+                  </Button>
+                </div>
+              }
+            >
+              <figure className='size-6 mr-2 flex-shrink-0'>
+                <img
+                  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlrZqTCInyg6RfYC7Ape20o-EWP1EN_A8fOA&s'
+                  alt='User avatar'
+                  width={24}
+                  height={24}
+                  className='size-full object-cover rounded-full'
+                />
+              </figure>
+              <span>Key</span>
+            </Popover>
+          )}
+          {!isAuthenticated && (
+            <nav className='flex items-center'>
+              <Link to={PATH.REGISTER} className='mr-3 capitalize hover:text-white/70'>
+                Đăng ký
+              </Link>
+              <span className='border-r-[1px] border-r-white/40 h-4' />
+              <Link to={PATH.LOGIN} className='mx-3 capitalize hover:text-white/70'>
+                Đăng nhập
+              </Link>
+            </nav>
+          )}
         </section>
         <section className='grid grid-cols-12 gap-4 mt-4 items-end' aria-label='Main navigation'>
           <h2 className='sr-only'>Main Navigation</h2>

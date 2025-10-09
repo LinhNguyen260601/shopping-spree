@@ -1,6 +1,7 @@
 import { cn } from '@/utils'
 import { Loader2 } from 'lucide-react'
 import type React from 'react'
+import { memo } from 'react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
@@ -8,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
 }
 
-const Button = ({ loading, loadingText = 'Loading...', children, ...props }: ButtonProps) => {
+const Button = memo(({ loading, loadingText = 'Loading...', children, ...props }: ButtonProps) => {
   return (
     <button
       {...props}
@@ -25,6 +26,6 @@ const Button = ({ loading, loadingText = 'Loading...', children, ...props }: But
       )}
     </button>
   )
-}
+})
 
 export default Button

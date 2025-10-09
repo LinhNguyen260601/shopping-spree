@@ -1,16 +1,19 @@
 import { PATH } from '@/constants'
+import { AppContext } from '@/contexts'
 import { LOGIN_DEFAULT_VALUES } from '@/pages/Login/constants'
 import { loginSchema } from '@/pages/Login/schemas'
 import type { LoginFormData } from '@/pages/Login/types'
 import { login } from '@/services'
-import type { ApiResponse } from '@/types'
+import type { ErrorResponse } from '@/types'
 import { isAxiosUnprocessableEntityError } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 const useLoginController = () => {
+  const setIsAuthenticated = useContext(AppContext).setIsAuthenticated
   const navigate = useNavigate()
   const form = useForm<LoginFormData>({
     defaultValues: LOGIN_DEFAULT_VALUES,
@@ -27,10 +30,11 @@ const useLoginController = () => {
   const onSubmit = handleSubmit((data: LoginFormData) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
+        setIsAuthenticated(true)
         navigate(PATH.HOME)
       },
       onError: (error) => {
-        if (isAxiosUnprocessableEntityError<ApiResponse<LoginFormData>>(error)) {
+        if (isAxiosUnprocessableEntityError<ErrorResponse<LoginFormData>>(error)) {
           const formError = error.response?.data.data
           if (formError) {
             Object.keys(formError).forEach((key) => {
