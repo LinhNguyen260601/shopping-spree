@@ -73,12 +73,12 @@ const Register = () => {
               </div>
 
               {/* Link */}
-              <p className='mt-8 text-center'>
+              <nav className='mt-8 text-center'>
                 <span className='text-gray-600'>Bạn đã có tài khoản? </span>
                 <Link to={PATH.LOGIN} className='text-red-600 font-medium hover:text-red-700'>
                   Đăng nhập
                 </Link>
-              </p>
+              </nav>
             </form>
           </article>
         </section>
