@@ -1,6 +1,11 @@
 import { PATH } from '@/constants'
 import type { AuthResponse } from '@/types'
-import { clearAccessTokenFromLocalStorage, getAccessTokenFromLocalStorage, saveAccessTokenToLocalStorage } from './auth'
+import {
+  clearLocalStorage,
+  getAccessTokenFromLocalStorage,
+  saveAccessTokenToLocalStorage,
+  saveUserToLocalStorage
+} from './auth'
 import type { AxiosError, AxiosInstance } from 'axios'
 import axios, { HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
@@ -39,14 +44,16 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
+        const data = response.data as AuthResponse
         if (url === PATH.LOGIN || url === PATH.REGISTER) {
-          this.accessToken = (response.data as AuthResponse).data.access_token
+          this.accessToken = data.data.access_token
           saveAccessTokenToLocalStorage(this.accessToken)
+          saveUserToLocalStorage(data.data.user)
         }
 
         if (url === PATH.LOG_OUT) {
           this.accessToken = ''
-          clearAccessTokenFromLocalStorage()
+          clearLocalStorage()
         }
 
         return response
