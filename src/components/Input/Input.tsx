@@ -3,15 +3,27 @@ import { EyeClosedIcon, EyeIcon } from 'lucide-react'
 import { useState, forwardRef } from 'react'
 import { cn } from '@/utils'
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: string
   required?: boolean
+  inputClass?: string
+  errorClass?: string
   showPasswordToggle?: boolean
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { label, error, required, showPasswordToggle, type = 'text', className, ...rest } = props
+  const {
+    label,
+    error,
+    required,
+    showPasswordToggle,
+    type = 'text',
+    className,
+    inputClass = '',
+    errorClass = '',
+    ...rest
+  } = props
 
   const [isFocused, setIsFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -23,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     ? cn(baseInputClasses, 'border-red-300 focus:border-red-500 focus:ring-red-500')
     : cn(baseInputClasses, 'border-gray-300 focus:border-gray-500 focus:ring-gray-500')
 
-  const finalInputClasses = cn(inputClasses, className, isFocused ? 'ring-1 ring-gray-500' : '')
+  const finalInputClasses = cn(inputClasses, className, inputClass, isFocused ? 'ring-1 ring-gray-500' : '')
 
   const handleFocus = (focus: boolean) => () => setIsFocused(focus)
 
@@ -65,7 +77,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
       <div className='mt-1 h-5 flex items-start'>
         {error && (
-          <p id={`${rest.id}-error`} className='text-red-600 text-sm leading-tight' role='alert' aria-live='polite'>
+          <p
+            id={`${rest.id}-error`}
+            className={cn('text-red-600 text-sm leading-tight', errorClass)}
+            role='alert'
+            aria-live='polite'
+          >
             {error}
           </p>
         )}

@@ -1,5 +1,6 @@
 import type { FieldValues, Path, UseFormRegister } from 'react-hook-form'
 import Input from '../Input'
+import type { InputProps } from '@/components/Input/Input'
 
 interface FormFieldProps<T extends FieldValues = FieldValues> {
   name: string
@@ -13,6 +14,7 @@ interface FormFieldProps<T extends FieldValues = FieldValues> {
   register?: UseFormRegister<T>
   autoFocus?: boolean
   autoComplete?: string
+  inputProps?: InputProps
 }
 
 const FormField = <T extends FieldValues = FieldValues>({
@@ -25,7 +27,7 @@ const FormField = <T extends FieldValues = FieldValues>({
   className = '',
   required = false,
   showPasswordToggle = false,
-  ...props
+  inputProps
 }: FormFieldProps<T>) => {
   return (
     <Input
@@ -39,7 +41,7 @@ const FormField = <T extends FieldValues = FieldValues>({
       error={error}
       className={className}
       {...register?.(name as Path<T>)}
-      {...props}
+      {...inputProps}
     />
   )
 }

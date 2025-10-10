@@ -60,12 +60,12 @@ const Login = () => {
                 </Button>
               </div>
               {/* Link */}
-              <p className='mt-8 text-center'>
+              <nav className='mt-8 text-center'>
                 <span className='text-gray-600'>Bạn chưa có tài khoản? </span>
                 <Link to={PATH.REGISTER} className='text-red-600 font-medium hover:text-red-700'>
                   Đăng ký
                 </Link>
-              </p>
+              </nav>
             </form>
           </article>
         </section>
