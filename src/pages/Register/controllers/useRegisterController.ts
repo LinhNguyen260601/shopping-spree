@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 const useRegisterController = () => {
-  const setIsAuthenticated = useContext(AppContext).setIsAuthenticated
+  const { setIsAuthenticated, setUser } = useContext(AppContext)
   const navigate = useNavigate()
 
   const form = useForm<RegisterFormData>({
@@ -32,8 +32,9 @@ const useRegisterController = () => {
   const onSubmit = handleSubmit((data: RegisterFormData) => {
     const body = omit(data, 'passwordConfirm')
     registerAccountMutation.mutate(body, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuthenticated(true)
+        setUser(data.data.data.user)
         navigate(PATH.HOME)
       },
       onError: (error) => {

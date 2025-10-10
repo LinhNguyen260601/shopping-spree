@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 const useLoginController = () => {
-  const setIsAuthenticated = useContext(AppContext).setIsAuthenticated
+  const { setIsAuthenticated, setUser } = useContext(AppContext)
   const navigate = useNavigate()
   const form = useForm<LoginFormData>({
     defaultValues: LOGIN_DEFAULT_VALUES,
@@ -29,8 +29,9 @@ const useLoginController = () => {
 
   const onSubmit = handleSubmit((data: LoginFormData) => {
     loginMutation.mutate(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuthenticated(true)
+        setUser(data.data.data.user)
         navigate(PATH.HOME)
       },
       onError: (error) => {

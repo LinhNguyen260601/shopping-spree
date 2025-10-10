@@ -9,12 +9,13 @@ import { useCallback, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setIsAuthenticated(false)
+      setUser(null)
     }
   })
 
@@ -28,7 +29,7 @@ const Header = () => {
         <section className='flex justify-end' aria-label='User actions'>
           <h2 className='sr-only'>User Actions</h2>
           <Popover
-            className='flex items-center py-1 hover:text-gray-300 cursor-pointer mr-6'
+            className='flex items-center py-1 hover:text-white/70 cursor-pointer mr-6'
             renderPopover={
               <div
                 className='bg-white relative shadow-md rounded-sm border border-gray-200'
@@ -58,7 +59,7 @@ const Header = () => {
           </Popover>
           {isAuthenticated && (
             <Popover
-              className='flex items-center py-1 hover:text-gray-300 cursor-pointer'
+              className='flex items-center py-1 hover:text-white/70 cursor-pointer'
               renderPopover={
                 <div
                   className='bg-white relative shadow-md rounded-sm border border-gray-200'
@@ -101,7 +102,7 @@ const Header = () => {
                   className='size-full object-cover rounded-full'
                 />
               </figure>
-              <span>Key</span>
+              <span>{user?.email}</span>
             </Popover>
           )}
           {!isAuthenticated && (
