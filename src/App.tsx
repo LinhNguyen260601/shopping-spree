@@ -1,12 +1,12 @@
-import useRouteElements from '@/useRouteElements'
+import { AppProvider } from '@/contexts'
+import router from '@/router'
+import { RouterProvider } from 'react-router-dom'
 import { Bounce, ToastContainer } from 'react-toastify'
 
 const App = () => {
-  const routeElements = useRouteElements()
-
   return (
-    <>
-      {routeElements}
+    <AppProvider>
+      <RouterProvider router={router} />
       <ToastContainer
         position='top-right'
         autoClose={5000}
@@ -20,7 +20,7 @@ const App = () => {
         theme='light'
         transition={Bounce}
       />
-    </>
+    </AppProvider>
   )
 }
 

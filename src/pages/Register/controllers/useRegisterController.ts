@@ -3,7 +3,6 @@ import { AppContext } from '@/contexts'
 import { REGISTER_DEFAULT_VALUES } from '@/pages/Register/constants'
 import { registerSchema } from '@/pages/Register/schemas'
 import type { RegisterFormData } from '@/pages/Register/types'
-import { registerAccount } from '@/services'
 import type { ErrorResponse } from '@/types'
 import { isAxiosUnprocessableEntityError } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,6 +11,7 @@ import omit from 'lodash/omit'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { authService } from '@/services'
 
 const useRegisterController = () => {
   const { setIsAuthenticated, setUser } = useContext(AppContext)
@@ -26,7 +26,7 @@ const useRegisterController = () => {
   const { handleSubmit, setError, formState, register } = form
 
   const registerAccountMutation = useMutation({
-    mutationFn: (body: Omit<RegisterFormData, 'passwordConfirm'>) => registerAccount(body)
+    mutationFn: (body: Omit<RegisterFormData, 'passwordConfirm'>) => authService.registerAccount(body)
   })
 
   const onSubmit = handleSubmit((data: RegisterFormData) => {

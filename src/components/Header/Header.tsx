@@ -2,7 +2,7 @@ import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH } from '@/constants'
 import { AppContext } from '@/contexts'
-import { logout } from '@/services'
+import { authService } from '@/services'
 import { useMutation } from '@tanstack/react-query'
 import { ChevronDown, Earth, Handbag, Search, ShoppingCart } from 'lucide-react'
 import { useCallback, useContext } from 'react'
@@ -12,7 +12,7 @@ const Header = () => {
   const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
 
   const logoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: authService.logout,
     onSuccess: () => {
       setIsAuthenticated(false)
       setUser(null)

@@ -8,7 +8,7 @@ const AsideFilter = () => {
   return (
     <aside className='py-4' role='complementary' aria-label='Bộ lọc sản phẩm'>
       <header>
-        <Link to={PATH.HOME} className='flex items-center font-bold'>
+        <Link to={PATH.HOME} className='flex items-center font-bold text-gray-900'>
           <Logs size={20} className='mr-3' aria-hidden='true' />
           Tất cả danh mục
         </Link>
@@ -18,7 +18,7 @@ const AsideFilter = () => {
 
       <nav aria-label='Danh mục sản phẩm'>
         <h2 className='sr-only'>Danh mục sản phẩm</h2>
-        <ul role='list'>
+        <ul>
           <li className='py-2 pl-2'>
             <Link to={PATH.HOME} className='relative px-2 text-orange-600 font-semibold' aria-current='page'>
               <StepForward className='text-orange-600 size-3 absolute top-1 left-[-10px]' aria-hidden='true' />
@@ -26,7 +26,7 @@ const AsideFilter = () => {
             </Link>
           </li>
           <li className='py-2 pl-2'>
-            <Link to={PATH.HOME} className='relative px-2'>
+            <Link to={PATH.HOME} className='relative px-2 text-gray-800 hover:text-orange-600'>
               Điện tử
             </Link>
           </li>
@@ -35,7 +35,7 @@ const AsideFilter = () => {
 
       <section className='mt-4'>
         <header>
-          <h3 className='flex items-center font-bold uppercase'>
+          <h3 className='flex items-center font-bold uppercase text-gray-900'>
             <Funnel className='mr-3 size-3' aria-hidden='true' />
             Bộ lọc tìm kiếm
           </h3>
@@ -44,7 +44,7 @@ const AsideFilter = () => {
         <hr className='bg-gray-300 h-[1px] my-4 border-0' />
 
         <fieldset className='my-5'>
-          <legend className='text-sm font-medium mb-2'>Khoảng giá</legend>
+          <legend className='text-sm font-medium mb-2 text-gray-900'>Khoảng giá</legend>
           <form className='mt-2' role='search' aria-label='Lọc theo giá'>
             <div className='flex items-start'>
               <FormField
@@ -71,7 +71,7 @@ const AsideFilter = () => {
             </div>
             <Button
               type='submit'
-              className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-600/80 flex justify-center items-center'
+              className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-700 flex justify-center items-center'
               aria-label='Áp dụng bộ lọc giá'
             >
               Áp dụng
@@ -82,27 +82,35 @@ const AsideFilter = () => {
         <hr className='bg-gray-300 h-[1px] my-4 border-0' />
 
         <fieldset>
-          <legend className='text-sm font-medium mb-2'>Đánh giá</legend>
-          <ul className='my-3' role='list'>
+          <legend className='text-sm font-medium mb-2 text-gray-900'>Đánh giá</legend>
+          <ul className='my-3'>
             <li className='py-1 pl-2'>
-              <Link to={PATH.HOME} className='flex items-center text-sm gap-1' aria-label='Sản phẩm 5 sao trở lên'>
+              <Link
+                to={PATH.HOME}
+                className='flex items-center text-sm gap-1 text-gray-800 hover:text-orange-600'
+                aria-label='Sản phẩm 5 sao trở lên'
+              >
                 <span className='flex' aria-hidden='true'>
                   {Array(5)
                     .fill(0)
                     .map((_, index) => (
-                      <Star className='size-4 mr-1 text-yellow-500' key={index} />
+                      <Star className='size-4 mr-1 text-yellow-600' key={index} />
                     ))}
                 </span>
                 <span>Trở lên</span>
               </Link>
             </li>
             <li className='py-1 pl-2'>
-              <Link to={PATH.HOME} className='flex items-center text-sm gap-1' aria-label='Sản phẩm 4 sao trở lên'>
+              <Link
+                to={PATH.HOME}
+                className='flex items-center text-sm gap-1 text-gray-800 hover:text-orange-600'
+                aria-label='Sản phẩm 4 sao trở lên'
+              >
                 <span className='flex' aria-hidden='true'>
                   {Array(4)
                     .fill(0)
                     .map((_, index) => (
-                      <Star className='size-4 mr-1 text-yellow-500' key={index} />
+                      <Star className='size-4 mr-1 text-yellow-600' key={index} />
                     ))}
                 </span>
                 <span>Trở lên</span>
@@ -115,7 +123,7 @@ const AsideFilter = () => {
 
         <footer>
           <Button
-            className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-600/80 flex justify-center items-center'
+            className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-700 flex justify-center items-center'
             aria-label='Xóa tất cả bộ lọc'
           >
             Xóa tất cả
