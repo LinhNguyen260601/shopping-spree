@@ -3,7 +3,7 @@ import { AppContext } from '@/contexts'
 import { LOGIN_DEFAULT_VALUES } from '@/pages/Login/constants'
 import { loginSchema } from '@/pages/Login/schemas'
 import type { LoginFormData } from '@/pages/Login/types'
-import { login } from '@/services'
+import { authService } from '@/services'
 import type { ErrorResponse } from '@/types'
 import { isAxiosUnprocessableEntityError } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -24,7 +24,7 @@ const useLoginController = () => {
   const { handleSubmit, setError, formState, register } = form
 
   const loginMutation = useMutation({
-    mutationFn: (body: LoginFormData) => login(body)
+    mutationFn: (body: LoginFormData) => authService.login(body)
   })
 
   const onSubmit = handleSubmit((data: LoginFormData) => {
