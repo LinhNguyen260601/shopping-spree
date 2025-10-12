@@ -1,27 +1,12 @@
 import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH } from '@/constants'
-import { AppContext } from '@/contexts'
-import { authService } from '@/services'
-import { useMutation } from '@tanstack/react-query'
+import { useHeaderController } from '@/controllers'
 import { ChevronDown, Earth, Handbag, Search, ShoppingCart } from 'lucide-react'
-import { useCallback, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
-
-  const logoutMutation = useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
-      setIsAuthenticated(false)
-      setUser(null)
-    }
-  })
-
-  const handleLogout = useCallback(() => {
-    logoutMutation.mutate()
-  }, [logoutMutation.mutate])
+  const { isAuthenticated, user, handleLogout } = useHeaderController()
 
   return (
     <header className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>

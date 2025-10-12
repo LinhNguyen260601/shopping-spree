@@ -1,7 +1,8 @@
 import Label from '@/components/Label'
-import { EyeClosedIcon, EyeIcon } from 'lucide-react'
-import { useState, forwardRef } from 'react'
+import { useInputController } from '@/controllers'
 import { cn } from '@/utils'
+import { EyeClosedIcon, EyeIcon } from 'lucide-react'
+import { forwardRef } from 'react'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -25,8 +26,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     ...rest
   } = props
 
-  const [isFocused, setIsFocused] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
+  const { isFocused, showPassword, handleFocus, handleTogglePassword } = useInputController()
 
   const inputType = showPasswordToggle && type === 'password' ? (showPassword ? 'text' : 'password') : type
 
@@ -36,10 +36,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     : cn(baseInputClasses, 'border-gray-300 focus:border-gray-500 focus:ring-gray-500')
 
   const finalInputClasses = cn(inputClasses, className, inputClass, isFocused ? 'ring-1 ring-gray-500' : '')
-
-  const handleFocus = (focus: boolean) => () => setIsFocused(focus)
-
-  const handleTogglePassword = () => setShowPassword(!showPassword)
 
   return (
     <div className='form-group'>

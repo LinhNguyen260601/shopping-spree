@@ -1,18 +1,36 @@
+import Pagination from '@/components/Pagination'
 import { QUERY_KEY } from '@/constants'
 import { useQueryParams } from '@/hooks'
 import { AsideFilter, Product, ProductListSkeleton, SortProductList } from '@/pages/ProductList/components'
+import type { QueryConfig } from '@/pages/ProductList/types'
 import { productService } from '@/services'
+import type { ProductListQueryParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
+import omitBy from 'lodash/omitBy'
+import isUndefined from 'lodash/isUndefined'
 
 const ProductList = () => {
-  const queryParams = useQueryParams()
+  const queryParams: QueryConfig = useQueryParams()
+
+  const queryConfig: QueryConfig = omitBy(
+    {
+      page: queryParams.page || '1',
+      limit: queryParams.limit || 1,
+      sort_by: queryParams.sort_by,
+      exclude: queryParams.exclude,
+      name: queryParams.name,
+      order: queryParams.order,
+      price_max: queryParams.price_max,
+      price_min: queryParams.price_min,
+      rating_filter: queryParams.rating_filter
+    },
+    isUndefined
+  )
 
   const { data, isLoading, error } = useQuery({
-    queryKey: [QUERY_KEY.PRODUCTS, queryParams],
-    queryFn: () => productService.getProducts(queryParams),
-    retry: 3,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000 // 10 minutes
+    queryKey: [QUERY_KEY.PRODUCTS, queryConfig],
+    queryFn: () => productService.getProducts(queryConfig as ProductListQueryParams),
+    placeholderData: (previousData) => previousData
   })
 
   return (
@@ -32,7 +50,7 @@ const ProductList = () => {
             <section className='mt-6' aria-label='Danh sách sản phẩm'>
               <h2 className='sr-only'>{data?.data.data.products?.length || 0} sản phẩm được tìm thấy</h2>
               <div
-                className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'
+                className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3'
                 role='list'
                 aria-label='Danh sách sản phẩm'
               >
@@ -60,6 +78,7 @@ const ProductList = () => {
                 )}
               </div>
             </section>
+            <Pagination queryConfig={queryConfig} pageSize={Number(data?.data.data.pagination.page_size)} />
           </div>
         </div>
       </div>
