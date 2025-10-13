@@ -1,5 +1,6 @@
-import { type Path, PATH } from '@/constants'
+import { PATH } from '@/constants'
 import type { QueryConfig } from '@/pages/ProductList/types'
+import type { Path } from '@/types'
 import type { ProductListQueryParams } from '@/types/product.type'
 import { createSearchParams } from 'react-router-dom'
 

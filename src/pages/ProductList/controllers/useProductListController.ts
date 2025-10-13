@@ -1,7 +1,7 @@
 import { QUERY_KEY } from '@/constants'
 import { useQueryParams } from '@/hooks'
 import type { QueryConfig } from '@/pages/ProductList/types'
-import { productService } from '@/services'
+import { categoryService, productService } from '@/services'
 import type { ProductListQueryParams } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import isUndefined from 'lodash/isUndefined'
@@ -20,22 +20,34 @@ const useProductListController = () => {
       order: queryParams.order,
       price_max: queryParams.price_max,
       price_min: queryParams.price_min,
-      rating_filter: queryParams.rating_filter
+      rating_filter: queryParams.rating_filter,
+      category: queryParams.category
     },
     isUndefined
   )
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: productsData,
+    isLoading,
+    error
+  } = useQuery({
     queryKey: [QUERY_KEY.PRODUCTS, queryConfig],
     queryFn: () => productService.getProducts(queryConfig as ProductListQueryParams),
     placeholderData: (previousData) => previousData
   })
 
+  const { data: categoriesData, isLoading: isLoadingCategories } = useQuery({
+    queryKey: [QUERY_KEY.CATEGORIES],
+    queryFn: () => categoryService.getCategories()
+  })
+
   return {
-    data,
     error,
+    isLoading,
     queryConfig,
-    isLoading
+    productsData,
+    categoriesData,
+    isLoadingCategories
   }
 }
 

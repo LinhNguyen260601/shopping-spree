@@ -1,14 +1,31 @@
 import Button from '@/components/Button'
 import FormField from '@/components/FormField'
 import { PATH } from '@/constants'
+import CategorySkeleton from '@/pages/ProductList/components/CategorySkeleton'
+import type { QueryConfig } from '@/pages/ProductList/types'
+import type { Category } from '@/types'
+import { buildLinkWithUpdatedQuery, cn } from '@/utils'
 import { Funnel, Logs, Star, StepForward } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-const AsideFilter = () => {
+interface AsideFilterProps {
+  categories: Category[]
+  queryConfig: QueryConfig
+  isLoadingCategories?: boolean
+}
+
+const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilterProps) => {
+  const { category } = queryConfig
+
   return (
     <aside className='py-4' role='complementary' aria-label='Bộ lọc sản phẩm'>
       <header>
-        <Link to={PATH.HOME} className='flex items-center font-bold text-gray-900'>
+        <Link
+          to={PATH.HOME}
+          className={cn('flex items-center font-bold', {
+            'text-orange-600': !category
+          })}
+        >
           <Logs size={20} className='mr-3' aria-hidden='true' />
           Tất cả danh mục
         </Link>
@@ -18,19 +35,32 @@ const AsideFilter = () => {
 
       <nav aria-label='Danh mục sản phẩm'>
         <h2 className='sr-only'>Danh mục sản phẩm</h2>
-        <ul>
-          <li className='py-2 pl-2'>
-            <Link to={PATH.HOME} className='relative px-2 text-orange-600 font-semibold' aria-current='page'>
-              <StepForward className='text-orange-600 size-3 absolute top-1 left-[-10px]' aria-hidden='true' />
-              Thời trang nam
-            </Link>
-          </li>
-          <li className='py-2 pl-2'>
-            <Link to={PATH.HOME} className='relative px-2 text-gray-800 hover:text-orange-600'>
-              Điện tử
-            </Link>
-          </li>
-        </ul>
+        {isLoadingCategories ? (
+          <CategorySkeleton />
+        ) : (
+          <ul>
+            {categories.map((categoryItem) => {
+              const isActive = category === categoryItem._id
+
+              return (
+                <li className='py-2 pl-2' key={categoryItem._id}>
+                  <Link
+                    to={buildLinkWithUpdatedQuery(queryConfig, 'category', categoryItem._id)}
+                    className={cn('relative px-2', {
+                      'text-orange-600 hover:text-orange-600 font-semibold': isActive
+                    })}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {isActive && (
+                      <StepForward className='text-orange-600 size-3 absolute top-1 left-[-10px]' aria-hidden='true' />
+                    )}
+                    {categoryItem.name}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </nav>
 
       <section className='mt-4'>
