@@ -1,5 +1,5 @@
-import type { SortBy, SortOrder } from '@/constants'
 import type { Category } from '@/types/category.type'
+import type { SortBy, SortOrder } from '@/types/sort.type'
 
 export interface Product {
   _id: string
@@ -37,4 +37,5 @@ export interface ProductListQueryParams {
   price_max?: number | string
   price_min?: number | string
   name?: string
+  category?: string
 }
