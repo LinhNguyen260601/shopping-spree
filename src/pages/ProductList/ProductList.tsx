@@ -1,37 +1,9 @@
 import Pagination from '@/components/Pagination'
-import { QUERY_KEY } from '@/constants'
-import { useQueryParams } from '@/hooks'
 import { AsideFilter, Product, ProductListSkeleton, SortProductList } from '@/pages/ProductList/components'
-import type { QueryConfig } from '@/pages/ProductList/types'
-import { productService } from '@/services'
-import type { ProductListQueryParams } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import omitBy from 'lodash/omitBy'
-import isUndefined from 'lodash/isUndefined'
+import { useProductListController } from '@/pages/ProductList/controllers'
 
 const ProductList = () => {
-  const queryParams: QueryConfig = useQueryParams()
-
-  const queryConfig: QueryConfig = omitBy(
-    {
-      page: queryParams.page || '1',
-      limit: queryParams.limit || 1,
-      sort_by: queryParams.sort_by,
-      exclude: queryParams.exclude,
-      name: queryParams.name,
-      order: queryParams.order,
-      price_max: queryParams.price_max,
-      price_min: queryParams.price_min,
-      rating_filter: queryParams.rating_filter
-    },
-    isUndefined
-  )
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: [QUERY_KEY.PRODUCTS, queryConfig],
-    queryFn: () => productService.getProducts(queryConfig as ProductListQueryParams),
-    placeholderData: (previousData) => previousData
-  })
+  const { data, isLoading, error, queryConfig } = useProductListController()
 
   return (
     <div className='bg-gray-200 py-6' role='main' aria-label='Danh sách sản phẩm'>
@@ -44,7 +16,7 @@ const ProductList = () => {
           <div className='col-span-9' aria-label='Kết quả tìm kiếm'>
             <header>
               <h1 className='sr-only'>Sản phẩm tìm kiếm</h1>
-              <SortProductList />
+              <SortProductList queryConfig={queryConfig} pageSize={data?.data.data.pagination.page_size || 0} />
             </header>
 
             <section className='mt-6' aria-label='Danh sách sản phẩm'>
@@ -78,7 +50,7 @@ const ProductList = () => {
                 )}
               </div>
             </section>
-            <Pagination queryConfig={queryConfig} pageSize={Number(data?.data.data.pagination.page_size)} />
+            <Pagination queryConfig={queryConfig} pageSize={data?.data.data.pagination.page_size || 0} />
           </div>
         </div>
       </div>
