@@ -1,7 +1,25 @@
 import Label from '@/components/Label'
+import { SORT_BY, type SortBy } from '@/constants'
+import { PRICE_OPTIONS } from '@/pages/ProductList/constants'
+import { useSortProductListController } from '@/pages/ProductList/controllers'
+import type { QueryConfig } from '@/pages/ProductList/types'
+import { buildLinkWithUpdatedQuery, cn } from '@/utils'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-const SortProductList = () => {
+interface SortProductListProps {
+  pageSize: number
+  queryConfig: QueryConfig
+}
+
+const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
+  const { order, page } = queryConfig
+  const pageNumber = Number(page)
+
+  const isActiveSortBy = (sortByValue: SortBy) => queryConfig.sort_by === sortByValue
+
+  const { handleSort, handleChangePriceOrder } = useSortProductListController(queryConfig)
+
   return (
     <section className='bg-gray-300/40 py-4 px-3' aria-label='Bộ công cụ sắp xếp và phân trang'>
       <h2 className='sr-only'>Bộ công cụ sắp xếp và phân trang</h2>
@@ -14,27 +32,45 @@ const SortProductList = () => {
             <ul className='flex items-center gap-2'>
               <li>
                 <button
-                  className='h-8 px-4 capitalize bg-orange-600 text-white text-sm hover:bg-orange-700 text-center cursor-pointer'
+                  className={cn(
+                    'h-8 px-4 capitalize text-sm text-center cursor-pointer',
+                    isActiveSortBy(SORT_BY.VIEW)
+                      ? 'bg-orange-600 text-white hover:bg-orange-700/80'
+                      : 'bg-white text-black hover:bg-slate-100'
+                  )}
                   aria-pressed='true'
                   aria-label='Sắp xếp theo độ phổ biến'
+                  onClick={handleSort(SORT_BY.VIEW)}
                 >
                   Phổ biến
                 </button>
               </li>
               <li>
                 <button
-                  className='h-8 px-4 capitalize bg-white text-gray-900 text-sm hover:bg-gray-100 text-center cursor-pointer border border-gray-300'
+                  className={cn(
+                    'h-8 px-4 capitalize text-sm text-center cursor-pointer',
+                    isActiveSortBy(SORT_BY.CREATED_AT)
+                      ? 'bg-orange-600 text-white hover:bg-orange-700/80'
+                      : 'bg-white text-black hover:bg-slate-100'
+                  )}
                   aria-pressed='false'
                   aria-label='Sắp xếp theo mới nhất'
+                  onClick={handleSort(SORT_BY.CREATED_AT)}
                 >
                   Mới nhất
                 </button>
               </li>
               <li>
                 <button
-                  className='h-8 px-4 capitalize bg-white text-gray-900 text-sm hover:bg-gray-100 text-center cursor-pointer border border-gray-300'
+                  className={cn(
+                    'h-8 px-4 capitalize text-sm text-center cursor-pointer',
+                    isActiveSortBy(SORT_BY.SOLD)
+                      ? 'bg-orange-600 text-white hover:bg-orange-700/80'
+                      : 'bg-white text-black hover:bg-slate-100'
+                  )}
                   aria-pressed='false'
                   aria-label='Sắp xếp theo bán chạy'
+                  onClick={handleSort(SORT_BY.SOLD)}
                 >
                   Bán chạy
                 </button>
@@ -42,15 +78,26 @@ const SortProductList = () => {
               <li>
                 <select
                   id='sort-options'
-                  className='h-8 px-4 capitalize bg-white text-gray-900 text-sm hover:bg-gray-100 text-left outline-none cursor-pointer border border-gray-300'
-                  defaultValue=''
+                  className={cn(
+                    'h-8 px-4 capitalize text-sm text-left outline-none cursor-pointer',
+                    isActiveSortBy(SORT_BY.PRICE)
+                      ? 'bg-orange-600 text-white hover:bg-orange-700/80'
+                      : 'bg-white text-black hover:bg-slate-100'
+                  )}
+                  value={order || ''}
                   aria-label='Sắp xếp theo giá'
+                  onChange={handleChangePriceOrder}
                 >
-                  <option value='' disabled>
-                    Giá
-                  </option>
-                  <option value='price:asc'>Giá: Thấp đến cao</option>
-                  <option value='price:desc'>Giá: Cao đến thấp</option>
+                  {PRICE_OPTIONS.map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      disabled={option.value === ''}
+                      className='bg-white text-black'
+                    >
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </li>
             </ul>
@@ -60,27 +107,40 @@ const SortProductList = () => {
         <nav className='flex items-center' aria-label='Phân trang'>
           <div className='text-sm'>
             <span className='text-orange-800 font-medium' aria-label='Trang hiện tại'>
-              1
+              {page}
             </span>
             <span className='text-gray-800' aria-label='tổng số trang'>
-              /2
+              /{pageSize || '...'}
             </span>
           </div>
           <div className='ml-2 flex' aria-label='Điều hướng trang'>
-            <button
-              className='px-3 h-8 rounded-tl-sm rounded-bl-sm bg-gray-200 text-gray-700 hover:bg-gray-300 cursor-not-allowed shadow border border-gray-300'
-              disabled
-              aria-label='Trang trước'
-              aria-disabled='true'
-            >
-              <ChevronLeft className='size-4' aria-hidden='true' />
-            </button>
-            <button
-              className='shadow px-3 h-8 rounded-tr-sm rounded-br-sm bg-white text-gray-900 hover:bg-gray-100 cursor-pointer border border-gray-300'
-              aria-label='Trang sau'
-            >
-              <ChevronRight className='size-4' aria-hidden='true' />
-            </button>
+            {pageNumber === 1 ? (
+              <span className='px-3 h-8 rounded-tl-sm rounded-bl-sm bg-gray-200 text-gray-700 cursor-not-allowed shadow border border-gray-300 flex items-center'>
+                <ChevronLeft className='size-4' aria-hidden='true' />
+              </span>
+            ) : (
+              <Link
+                to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) - 1)}
+                className='px-3 h-8 rounded-tl-sm rounded-bl-sm bg-white text-gray-700 hover:bg-gray-300 cursor-pointer shadow border border-gray-300 flex items-center'
+                aria-label='Trang trước'
+                aria-disabled='false'
+              >
+                <ChevronLeft className='size-4' aria-hidden='false' />
+              </Link>
+            )}
+            {pageSize === 0 || pageNumber === pageSize ? (
+              <span className='px-3 h-8 rounded-tr-sm rounded-br-sm bg-gray-200 text-gray-700 cursor-not-allowed shadow border border-gray-300 flex items-center'>
+                <ChevronRight className='size-4' aria-hidden='true' />
+              </span>
+            ) : (
+              <Link
+                to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) + 1)}
+                className='shadow px-3 h-8 rounded-tr-sm rounded-br-sm bg-white text-gray-700 hover:bg-gray-300 cursor-pointer border border-gray-300 flex items-center'
+                aria-label='Trang sau'
+              >
+                <ChevronRight className='size-4' aria-hidden='false' />
+              </Link>
+            )}
           </div>
         </nav>
       </div>
