@@ -6,13 +6,21 @@ import { createSearchParams } from 'react-router-dom'
 
 export const buildLinkWithUpdatedQuery = (
   queryConfig: QueryConfig,
-  field: keyof ProductListQueryParams,
-  value: string | number,
+  fieldOrUpdates: keyof ProductListQueryParams | Partial<ProductListQueryParams>,
+  value?: string | number,
   path?: Path
-) => ({
-  pathname: path ?? PATH.HOME,
-  search: createSearchParams({
+) => {
+  const updates = typeof fieldOrUpdates === 'object' ? fieldOrUpdates : { [fieldOrUpdates]: value }
+
+  const updatedQueryConfig = {
     ...queryConfig,
-    [field]: value
-  }).toString()
-})
+    ...Object.fromEntries(Object.entries(updates).map(([key, value]) => [key, String(value)]))
+  }
+
+  return {
+    pathname: path ?? PATH.HOME,
+    search: createSearchParams({
+      ...updatedQueryConfig
+    }).toString()
+  }
+}
