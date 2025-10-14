@@ -3,16 +3,13 @@ import InputNumber from '@/components/InputNumber'
 import StarRating from '@/components/StarRating'
 import { PATH } from '@/constants'
 import CategorySkeleton from '@/pages/ProductList/components/CategorySkeleton'
-import { PRICE_RANGE_DEFAULT_VALUES } from '@/pages/ProductList/constants'
-import { priceRangeSchema } from '@/pages/ProductList/schemas'
-import type { PriceFormData, QueryConfig } from '@/pages/ProductList/types'
+import { useAsideFilterController } from '@/pages/ProductList/controllers'
+import type { QueryConfig } from '@/pages/ProductList/types'
 import type { Category } from '@/types'
 import { buildLinkWithUpdatedQuery, cn } from '@/utils'
-import { yupResolver } from '@hookform/resolvers/yup'
-import omit from 'lodash/omit'
 import { Funnel, Logs, StepForward } from 'lucide-react'
-import { Controller, useForm } from 'react-hook-form'
-import { createSearchParams, Link, useNavigate } from 'react-router-dom'
+import { Controller } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 interface AsideFilterProps {
   categories: Category[]
@@ -21,43 +18,10 @@ interface AsideFilterProps {
 }
 
 const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilterProps) => {
-  const navigate = useNavigate()
   const { category } = queryConfig
 
-  const {
-    control,
-    handleSubmit,
-    trigger,
-    formState: { errors }
-  } = useForm<PriceFormData>({
-    defaultValues: PRICE_RANGE_DEFAULT_VALUES,
-    resolver: yupResolver(priceRangeSchema as any),
-    shouldFocusError: false
-  })
-
-  const handleInputNumberChange =
-    // eslint-disable-next-line no-unused-vars
-    (onChange: (...event: any[]) => void, field: keyof PriceFormData) =>
-      (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event)
-        trigger(field)
-      }
-
-  const handleRemoveLeftAsideFilter = () => {
-    navigate({
-      pathname: PATH.HOME,
-      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category'])).toString()
-    })
-  }
-
-  const onSubmit = handleSubmit((data: PriceFormData) => {
-    navigate(
-      buildLinkWithUpdatedQuery(queryConfig, {
-        price_min: data.price_min,
-        price_max: data.price_max
-      })
-    )
-  })
+  const { control, errors, handleInputNumberChange, handleRemoveLeftAsideFilter, onSubmit } =
+    useAsideFilterController(queryConfig)
 
   return (
     <aside className='py-4' role='complementary' aria-label='Bộ lọc sản phẩm'>
