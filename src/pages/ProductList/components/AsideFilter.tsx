@@ -1,12 +1,16 @@
 import Button from '@/components/Button'
-import FormField from '@/components/FormField'
+import InputNumber from '@/components/InputNumber'
 import { PATH } from '@/constants'
 import CategorySkeleton from '@/pages/ProductList/components/CategorySkeleton'
-import type { QueryConfig } from '@/pages/ProductList/types'
+import { PRICE_RANGE_DEFAULT_VALUES } from '@/pages/ProductList/constants'
+import { priceRangeSchema } from '@/pages/ProductList/schemas'
+import type { PriceFormData, QueryConfig } from '@/pages/ProductList/types'
 import type { Category } from '@/types'
 import { buildLinkWithUpdatedQuery, cn } from '@/utils'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Funnel, Logs, Star, StepForward } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Controller, useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface AsideFilterProps {
   categories: Category[]
@@ -15,7 +19,36 @@ interface AsideFilterProps {
 }
 
 const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilterProps) => {
+  const navigate = useNavigate()
   const { category } = queryConfig
+
+  const {
+    control,
+    handleSubmit,
+    trigger,
+    formState: { errors }
+  } = useForm<PriceFormData>({
+    defaultValues: PRICE_RANGE_DEFAULT_VALUES,
+    resolver: yupResolver(priceRangeSchema as any),
+    shouldFocusError: false
+  })
+
+  const handleInputNumberChange =
+    // eslint-disable-next-line no-unused-vars
+    (onChange: (...event: any[]) => void, field: keyof PriceFormData) =>
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(event)
+        trigger(field)
+      }
+
+  const onSubmit = handleSubmit((data: PriceFormData) => {
+    navigate(
+      buildLinkWithUpdatedQuery(queryConfig, {
+        price_min: data.price_min,
+        price_max: data.price_max
+      })
+    )
+  })
 
   return (
     <aside className='py-4' role='complementary' aria-label='Bộ lọc sản phẩm'>
@@ -75,30 +108,43 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
 
         <fieldset className='my-5'>
           <legend className='text-sm font-medium mb-2 text-gray-900'>Khoảng giá</legend>
-          <form className='mt-2' role='search' aria-label='Lọc theo giá'>
+          <form className='mt-2' role='search' aria-label='Lọc theo giá' onSubmit={onSubmit}>
             <div className='flex items-start'>
-              <FormField
-                className='grow'
-                name='from'
-                placeholder='₫ Từ'
-                inputProps={{
-                  inputClass: 'p-1 bg-white',
-                  'aria-label': 'Giá từ'
-                }}
+              <Controller
+                name='price_min'
+                control={control}
+                render={({ field }) => (
+                  <InputNumber
+                    className='grow'
+                    placeholder='₫ Từ'
+                    classNameInput='p-1 bg-white'
+                    classNameError='hidden'
+                    aria-label='Giá từ'
+                    {...field}
+                    onChange={handleInputNumberChange(field.onChange, 'price_min')}
+                  />
+                )}
               />
               <span className='mx-2 mt-2 shrink-0' aria-hidden='true'>
                 -
               </span>
-              <FormField
-                className='grow'
-                name='to'
-                placeholder='₫ Đến'
-                inputProps={{
-                  inputClass: 'p-1 bg-white',
-                  'aria-label': 'Giá đến'
-                }}
+              <Controller
+                name='price_max'
+                control={control}
+                render={({ field }) => (
+                  <InputNumber
+                    className='grow'
+                    classNameError='hidden'
+                    placeholder='₫ Đến'
+                    classNameInput='p-1 bg-white'
+                    aria-label='Giá đến'
+                    {...field}
+                    onChange={handleInputNumberChange(field.onChange, 'price_max')}
+                  />
+                )}
               />
             </div>
+            <div className='text-center mt-1 text-red-600 text-sm min-h-[1.25rem]'>{errors.price_min?.message}</div>
             <Button
               type='submit'
               className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-700 flex justify-center items-center'
