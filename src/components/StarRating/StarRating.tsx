@@ -27,7 +27,7 @@ const StarRating = ({ rating, size = 'size-4', showNumber = false }: StarRatingP
 
             {/* Foreground star (yellow) with dynamic width */}
             <div className='absolute top-0 left-0 overflow-hidden' style={{ width }}>
-              <Star className={cn('text-yellow-600 fill-current', size)} aria-hidden='true' />
+              <Star className={cn('text-yellow-400 fill-current', size)} aria-hidden='true' />
             </div>
           </div>
         )
