@@ -6,7 +6,7 @@ import { ChevronDown, Earth, Handbag, Search, ShoppingCart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  const { isAuthenticated, user, handleLogout } = useHeaderController()
+  const { user, register, isAuthenticated, handleLogout, handleSearch } = useHeaderController()
 
   return (
     <header className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
@@ -112,18 +112,18 @@ const Header = () => {
           </nav>
           <section className='col-span-8' aria-label='Search functionality'>
             <h3 className='sr-only'>Product Search</h3>
-            <form role='search' aria-label='Search products'>
+            <form role='search' aria-label='Search products' onSubmit={handleSearch}>
               <div className='bg-white rounded-sm p-1 flex'>
                 <label htmlFor='search-input' className='sr-only'>
                   Search products
                 </label>
                 <input
                   id='search-input'
-                  name='search'
                   type='search'
                   className='text-black px-3 py-2 flex-grow border-none outline-none bg-transparent'
                   placeholder='Free Ship đơn từ 0Đ'
                   aria-label='Search for products'
+                  {...register('name')}
                 />
                 <Button
                   type='submit'

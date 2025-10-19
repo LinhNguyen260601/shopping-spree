@@ -1,5 +1,4 @@
-import type { ProductListQueryParams } from '@/types'
-import type { NoUndefinedField } from '@/utils'
+import type { NoUndefinedField, ProductListQueryParams } from '@/types'
 
 export type QueryConfig = {
   // eslint-disable-next-line no-unused-vars

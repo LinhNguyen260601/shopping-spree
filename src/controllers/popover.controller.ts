@@ -10,6 +10,7 @@ const usePopoverController = (initialOpen: boolean, placement: Placement) => {
       offset(6),
       shift({ padding: 8 }),
       flip({ fallbackPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] }),
+      // eslint-disable-next-line react-hooks/refs
       arrow({ element: arrowRef })
     ]
   })
