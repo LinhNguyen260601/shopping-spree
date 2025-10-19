@@ -120,7 +120,10 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
             <div className='text-center mt-1 text-red-600 text-sm min-h-[1.25rem]'>{errors.price_min?.message}</div>
             <Button
               type='submit'
-              className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-700 flex justify-center items-center'
+              variant='primary'
+              size='sm'
+              fullWidth
+              className='uppercase'
               aria-label='Áp dụng bộ lọc giá'
             >
               Áp dụng
@@ -154,7 +157,10 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
 
         <footer>
           <Button
-            className='w-full p-2 uppercase bg-orange-600 text-white text-sm hover:bg-orange-700 flex justify-center items-center'
+            variant='primary'
+            size='sm'
+            fullWidth
+            className='uppercase'
             aria-label='Xóa tất cả bộ lọc'
             onClick={handleRemoveLeftAsideFilter}
           >

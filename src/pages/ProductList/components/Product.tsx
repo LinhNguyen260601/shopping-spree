@@ -11,7 +11,7 @@ interface ProductProps {
 const Product = ({ product }: ProductProps) => {
   return (
     <Link
-      to={PATH.HOME}
+      to={PATH.PRODUCT_DETAILS.replace(':id', product._id)}
       className='group h-full block focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-sm'
       aria-label={`Xem chi tiết sản phẩm ${product.name}`}
     >
@@ -48,7 +48,7 @@ const Product = ({ product }: ProductProps) => {
             </div>
           </div>
           <footer className='mt-auto pt-3 flex items-center justify-between flex-shrink-0'>
-            <StarRating rating={product.rating} size='size-3' />
+            <StarRating rating={product.rating} size='sm' />
             <div className='text-sm text-gray-700'>
               <span>{formatNumberToSocialStyle(product.sold)}</span>
               <span className='ml-1'>Đã bán</span>

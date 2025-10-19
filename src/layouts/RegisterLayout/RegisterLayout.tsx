@@ -7,11 +7,11 @@ interface RegisterLayoutProps {
 
 const RegisterLayout = ({ children }: RegisterLayoutProps) => {
   return (
-    <div>
+    <>
       <Navbar />
       {children}
       <Footer />
-    </div>
+    </>
   )
 }
 

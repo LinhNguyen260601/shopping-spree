@@ -127,7 +127,9 @@ const Header = () => {
                 />
                 <Button
                   type='submit'
-                  className='rounded-sm py-2 px-6 flex-shrink-0 bg-orange-600 hover:opacity-90'
+                  variant='primary'
+                  size='md'
+                  className='flex-shrink-0'
                   aria-label='Search products'
                 >
                   <Search size={16} className='text-white' aria-hidden='true' />
@@ -174,7 +176,7 @@ const Header = () => {
 
                   <footer className='mt-4 pt-3 border-t border-gray-200 flex justify-between items-center'>
                     <p className='text-sm text-gray-600'>1 Thêm Hàng Vào Giỏ</p>
-                    <Button className='bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded text-sm font-medium'>
+                    <Button variant='primary' size='sm'>
                       Xem Giỏ Hàng
                     </Button>
                   </footer>
