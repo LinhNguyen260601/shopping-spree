@@ -5,12 +5,18 @@ import RegisterLayout from '@/layouts/RegisterLayout'
 import RootLayout from '@/layouts/RootLayout'
 import ProductList from '@/pages/ProductList'
 import { productService } from '@/services'
-import { createBrowserRouter } from 'react-router-dom'
+import { getIdFromNameId } from '@/utils'
+import { createBrowserRouter, ScrollRestoration } from 'react-router-dom'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: (
+      <>
+        <RootLayout />
+        <ScrollRestoration />
+      </>
+    ),
     children: [
       {
         path: PATH.HOME,
@@ -48,7 +54,7 @@ const router = createBrowserRouter([
                     <ProductDetails />
                   </MainLayout>
                 ),
-                loader: ({ params }) => productService.getProductDetail(params.id as string)
+                loader: ({ params }) => productService.getProductDetail(getIdFromNameId(params.nameId as string))
               }
             }
           }

@@ -5,5 +5,5 @@ export const PATH = {
   PROFILE: '/profile',
   LOG_OUT: '/logout',
   PRODUCT_LIST: '/products',
-  PRODUCT_DETAILS: '/products/:id'
+  PRODUCT_DETAILS: ':nameId'
 } as const
