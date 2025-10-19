@@ -1,8 +1,7 @@
-import { PATH } from '@/constants'
 import StarRating from '@/components/StarRating'
-import { Link } from 'react-router-dom'
 import { type Product as ProductType } from '@/types'
-import { formatCurrency, formatNumberToSocialStyle } from '@/utils'
+import { formatCurrency, formatNumberToSocialStyle, generateNameId } from '@/utils'
+import { Link } from 'react-router-dom'
 
 interface ProductProps {
   product: ProductType
@@ -11,7 +10,7 @@ interface ProductProps {
 const Product = ({ product }: ProductProps) => {
   return (
     <Link
-      to={PATH.PRODUCT_DETAILS.replace(':id', product._id)}
+      to={generateNameId({ name: product.name, id: product._id })}
       className='group h-full block focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-sm'
       aria-label={`Xem chi tiết sản phẩm ${product.name}`}
     >
