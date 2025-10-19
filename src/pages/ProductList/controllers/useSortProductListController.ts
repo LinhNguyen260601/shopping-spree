@@ -1,8 +1,9 @@
-import { PATH, SORT_BY, type SortBy } from '@/constants'
+import { PATH, SORT_BY } from '@/constants'
 import type { QueryConfig } from '@/pages/ProductList/types'
 import { buildLinkWithUpdatedQuery } from '@/utils'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import omit from 'lodash/omit'
+import type { SortBy } from '@/types'
 
 const useSortProductListController = (queryConfig: QueryConfig) => {
   const navigate = useNavigate()
