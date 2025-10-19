@@ -7,8 +7,17 @@ import DOMPurify from 'dompurify'
 import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingCart } from 'lucide-react'
 
 const ProductDetails = () => {
-  const { product, activeImage, currentImages, handleNextImage, handlePreviousImage, handleSelectActiveImage } =
-    useProductDetaisController()
+  const {
+    product,
+    imageRef,
+    activeImage,
+    currentImages,
+    handleZoom,
+    handleZoomLeave,
+    handleNextImage,
+    handlePreviousImage,
+    handleSelectActiveImage
+  } = useProductDetaisController()
 
   if (!product) return null
 
@@ -19,11 +28,16 @@ const ProductDetails = () => {
           <header className='grid grid-cols-12 gap-9'>
             <section className='col-span-5' aria-label='Product images'>
               <h2 className='sr-only'>Hình ảnh sản phẩm</h2>
-              <figure className='w-full pt-[100%] relative'>
+              <figure
+                className='w-full pt-[100%] relative shadow overflow-hidden cursor-zoom-in'
+                onMouseMove={handleZoom}
+                onMouseLeave={handleZoomLeave}
+              >
                 <img
+                  ref={imageRef}
                   src={activeImage}
                   alt={product.name}
-                  className='absolute top-0 left-0 size-full bg-white object-cover'
+                  className='absolute top-0 left-0 size-full bg-white object-cover pointer-events-none'
                   loading='eager'
                   width='400'
                   height='400'
