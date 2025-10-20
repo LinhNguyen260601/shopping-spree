@@ -1,17 +1,20 @@
+import Badge from '@/components/Badge'
 import Button from '@/components/Button'
 import Popover from '@/components/Popover'
-import { PATH } from '@/constants'
+import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
 import { AppContext } from '@/contexts'
 import { useQueryConfig } from '@/hooks'
-import { authService } from '@/services'
+import { authService, purchaseService } from '@/services'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import omit from 'lodash/omit'
 import { ChevronDown, Earth, Handbag, Search, ShoppingCart } from 'lucide-react'
 import { useCallback, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { createSearchParams, Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { object, string, type InferType } from 'yup'
+import noProductImage from '@/assets/images/no-product.webp'
+import { formatCurrency } from '@/utils'
 
 const searchSchema = object({
   name: string().required('Tên sản phẩm không được để trống').trim()
@@ -19,13 +22,21 @@ const searchSchema = object({
 
 type SearchFormData = InferType<typeof searchSchema>
 
+const MAX_PURCHASES_IN_CART = 5
+
 const Header = () => {
   const navigate = useNavigate()
   const queryConfig = useQueryConfig()
   const [searchParams] = useSearchParams()
+  const searchValue = searchParams.get('name') || ''
   const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
 
-  const searchValue = searchParams.get('name') || ''
+  const { data: purchasesInCartData } = useQuery({
+    queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }],
+    queryFn: () => purchaseService.getPurchases({ status: PURCHASES_STATUS.IN_CART })
+  })
+
+  const purchasesInCart = purchasesInCartData?.data.data || []
 
   const { register, handleSubmit } = useForm<SearchFormData>({
     defaultValues: {
@@ -203,46 +214,74 @@ const Header = () => {
                   role='menu'
                   aria-label='Shopping cart menu'
                 >
-                  <header className='mb-4'>
-                    <h3 className='text-gray-400 capitalize text-sm font-medium'>Sản phẩm mới thêm</h3>
-                  </header>
+                  {purchasesInCart ? (
+                    <>
+                      <header className='mb-4'>
+                        <h3 className='text-gray-400 capitalize text-sm font-medium'>Sản phẩm mới thêm</h3>
+                      </header>
 
-                  <section className='space-y-3' aria-label='Product list'>
-                    <h4 className='sr-only'>Danh sách sản phẩm</h4>
-                    {[1, 2, 3, 4, 5].map((item) => (
-                      <article key={item} className='flex items-center gap-3' role='menuitem'>
-                        <h5 className='sr-only'>Sản phẩm {item}</h5>
-                        <figure className='flex-shrink-0'>
-                          <img
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlrZqTCInyg6RfYC7Ape20o-EWP1EN_A8fOA&s'
-                            alt='Ảnh sản phẩm'
-                            width={44}
-                            height={44}
-                            className='size-11 object-cover rounded'
-                          />
-                        </figure>
-                        <section className='flex-grow min-w-0 flex items-center justify-between'>
-                          <h6 className='sr-only'>Thông tin sản phẩm</h6>
-                          <h4 className='truncate text-gray-800 text-sm flex-1 mr-2 font-normal'>
-                            Điện thoại Samsung Galaxy A23 128GB - Màu xanh lá (8GB RAM)
-                          </h4>
-                          <p className='text-orange-600 font-medium text-sm flex-shrink-0'>₫469.000</p>
-                        </section>
-                      </article>
-                    ))}
-                  </section>
+                      <section className='space-y-3' aria-label='Product list'>
+                        <h4 className='sr-only'>Danh sách sản phẩm</h4>
+                        {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((item) => (
+                          <article
+                            key={item._id}
+                            className='flex items-center gap-3 hover:bg-gray-100 rounded p-2 -m-2'
+                            role='menuitem'
+                          >
+                            <h5 className='sr-only'>Sản phẩm {item.product.name}</h5>
+                            <figure className='flex-shrink-0'>
+                              <img
+                                src={item.product.image}
+                                alt={item.product.name}
+                                width={44}
+                                height={44}
+                                className='size-11 object-cover rounded'
+                              />
+                            </figure>
+                            <section className='flex-grow min-w-0 flex items-center justify-between'>
+                              <h6 className='sr-only'>Thông tin sản phẩm</h6>
+                              <h4 className='truncate text-gray-800 text-sm flex-1 mr-2 font-normal'>
+                                {item.product.name}
+                              </h4>
+                              <p className='text-orange-600 font-medium text-sm flex-shrink-0'>
+                                ₫{formatCurrency(item.product.price)}
+                              </p>
+                            </section>
+                          </article>
+                        ))}
+                      </section>
 
-                  <footer className='mt-4 pt-3 border-t border-gray-200 flex justify-between items-center'>
-                    <p className='text-sm text-gray-600'>1 Thêm Hàng Vào Giỏ</p>
-                    <Button variant='primary' size='sm'>
-                      Xem Giỏ Hàng
-                    </Button>
-                  </footer>
+                      <footer className='mt-4 pt-3 border-t border-gray-200 flex justify-between items-center'>
+                        <p className='text-sm text-gray-600'>
+                          {purchasesInCart.length > MAX_PURCHASES_IN_CART
+                            ? purchasesInCart.length - MAX_PURCHASES_IN_CART
+                            : ''}{' '}
+                          Thêm Hàng Vào Giỏ
+                        </p>
+                        <Button variant='primary' size='sm'>
+                          Xem Giỏ Hàng
+                        </Button>
+                      </footer>
+                    </>
+                  ) : (
+                    <figure className='p-2 flex flex-col items-center justify-center flex-shrink-0'>
+                      <img src={noProductImage} alt='No product' width={100} height={100} className='object-cover' />
+                      <figcaption className='text-gray-400 text-sm font-medium'>Chưa có sản phẩm</figcaption>
+                    </figure>
+                  )}
                 </article>
               }
             >
-              <Link to={PATH.HOME} aria-label='View shopping cart'>
+              <Link to={PATH.HOME} aria-label='View shopping cart' className='relative'>
                 <ShoppingCart size={25} aria-hidden='true' />
+                {purchasesInCart && purchasesInCart.length > 0 && (
+                  <Badge
+                    size='sm'
+                    className='absolute -top-2 -right-3 min-w-[20px] h-5 flex items-center justify-center bg-white text-orange-500'
+                  >
+                    {purchasesInCart.length}
+                  </Badge>
+                )}
               </Link>
             </Popover>
           </nav>

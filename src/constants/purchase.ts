@@ -1,0 +1,9 @@
+export const PURCHASES_STATUS = {
+  IN_CART: -1,
+  ALL: 0,
+  WAITING_FOR_CONFIRMATION: 1,
+  PICKING_UP: 2,
+  IN_TRANSIT: 3,
+  DELIVERED: 4,
+  CANCELLED: 5
+} as const

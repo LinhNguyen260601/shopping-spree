@@ -13,10 +13,12 @@ const ProductDetails = () => {
     imageRef,
     activeImage,
     currentImages,
+    isAddingToCart,
     handleZoom,
     handleBuyCount,
     handleZoomLeave,
     handleNextImage,
+    handleAddToCart,
     handlePreviousImage,
     handleSelectActiveImage
   } = useProductDetaisController()
@@ -126,7 +128,14 @@ const ProductDetails = () => {
               </section>
 
               <footer className='mt-8 flex items-center gap-4' role='group' aria-label='Purchase actions'>
-                <Button variant='secondary' size='lg' className='capitalize'>
+                <Button
+                  variant='secondary'
+                  size='lg'
+                  className='capitalize'
+                  onClick={handleAddToCart}
+                  loading={isAddingToCart}
+                  loadingText='Đang thêm vào giỏ hàng'
+                >
                   <ShoppingCart className='size-4' />
                   Thêm vào giỏ hàng
                 </Button>
