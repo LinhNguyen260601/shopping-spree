@@ -1,6 +1,10 @@
+import { PURCHASES_STATUS, QUERY_KEY } from '@/constants'
+import { purchaseService } from '@/services'
 import type { Product } from '@/types'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useMemo, useRef, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const useProductDetaisController = () => {
   const { data } = useLoaderData()
@@ -13,6 +17,11 @@ const useProductDetaisController = () => {
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
 
   const imageRef = useRef<HTMLImageElement>(null)
+  const queryClient = useQueryClient()
+
+  const addToCartMutation = useMutation({
+    mutationFn: (body: { product_id: string; buy_count: number }) => purchaseService.addToCart(body)
+  })
 
   const product = data?.data as Product
   const currentImages = useMemo(() => product.images.slice(...currentIndexImages), [product.images, currentIndexImages])
@@ -67,16 +76,33 @@ const useProductDetaisController = () => {
 
   const handleBuyCount = (value: number) => setBuyCount(value)
 
+  const handleAddToCart = () => {
+    addToCartMutation.mutate(
+      {
+        product_id: product._id,
+        buy_count: buyCount
+      },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, { autoClose: 3000 })
+          queryClient.invalidateQueries({ queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }] })
+        }
+      }
+    )
+  }
+
   return {
     product,
     buyCount,
     imageRef,
     activeImage,
     currentImages,
+    isAddingToCart: addToCartMutation.isPending,
     handleZoom,
     handleBuyCount,
     handleZoomLeave,
     handleNextImage,
+    handleAddToCart,
     handlePreviousImage,
     handleSelectActiveImage
   }
