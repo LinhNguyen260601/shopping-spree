@@ -1,18 +1,20 @@
 import Button from '@/components/Button'
-import InputNumber from '@/components/InputNumber'
+import QuantityController from '@/components/QuantityController'
 import StarRating from '@/components/StarRating/StarRating'
 import { useProductDetaisController } from '@/pages/ProductDetails/controllers'
 import { calculateDiscountPercentage, formatCurrency, formatNumberToSocialStyle } from '@/utils'
 import DOMPurify from 'dompurify'
-import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingCart } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react'
 
 const ProductDetails = () => {
   const {
     product,
+    buyCount,
     imageRef,
     activeImage,
     currentImages,
     handleZoom,
+    handleBuyCount,
     handleZoomLeave,
     handleNextImage,
     handlePreviousImage,
@@ -113,30 +115,13 @@ const ProductDetails = () => {
               <section className='mt-8 flex items-center' aria-label='Quantity selection'>
                 <h2 className='sr-only'>Chọn số lượng</h2>
                 <div className='capitalize text-gray-500'>Số lượng</div>
-                <div className='ml-10 flex items-center'>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    className='size-8 rounded-l-sm rounded-r-none'
-                    aria-label='Decrease quantity'
-                  >
-                    <Minus className='size-4' />
-                  </Button>
-                  <InputNumber
-                    value={1}
-                    classNameError='hidden'
-                    classNameInput='h-8 w-14 border-t border-b border-gray-300 p-1 text-center outline-none'
-                    aria-label='Quantity'
-                  />
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    className='size-8 rounded-r-sm rounded-l-none'
-                    aria-label='Increase quantity'
-                  >
-                    <Plus className='size-4' />
-                  </Button>
-                </div>
+                <QuantityController
+                  value={buyCount}
+                  max={product.quantity}
+                  onType={handleBuyCount}
+                  onDecrease={handleBuyCount}
+                  onIncrease={handleBuyCount}
+                />
                 <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
               </section>
 
