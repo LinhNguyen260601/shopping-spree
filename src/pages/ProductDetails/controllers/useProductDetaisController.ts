@@ -5,6 +5,7 @@ import { useLoaderData } from 'react-router-dom'
 const useProductDetaisController = () => {
   const { data } = useLoaderData()
 
+  const [buyCount, setBuyCount] = useState<number>(1)
   const [activeImage, setActiveImage] = useState(() => {
     const product = data?.data as Product
     return product?.images?.[0] || ''
@@ -64,12 +65,16 @@ const useProductDetaisController = () => {
     imageRef.current?.removeAttribute('style')
   }
 
+  const handleBuyCount = (value: number) => setBuyCount(value)
+
   return {
     product,
+    buyCount,
     imageRef,
     activeImage,
     currentImages,
     handleZoom,
+    handleBuyCount,
     handleZoomLeave,
     handleNextImage,
     handlePreviousImage,

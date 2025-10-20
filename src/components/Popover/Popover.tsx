@@ -1,8 +1,8 @@
 import { arrowStyle, floatingStyle } from '@/components/Header/style'
-import { usePopoverController } from '@/controllers'
 import { cn } from '@/utils'
-import { FloatingPortal, type Placement } from '@floating-ui/react'
+import { arrow, flip, FloatingPortal, offset, shift, useFloating, type Placement } from '@floating-ui/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useRef, useState } from 'react'
 
 interface PopoverProps {
   className?: string
@@ -21,10 +21,26 @@ const Popover = ({
   as: Element = 'article',
   placement = 'bottom-end'
 }: PopoverProps) => {
-  const { isOpen, refs, middlewareData, strategy, x, y, arrowRef, handleOpen, handleClose } = usePopoverController(
-    initialOpen,
-    placement
-  )
+  const [isOpen, setIsOpen] = useState(initialOpen)
+  const arrowRef = useRef<HTMLElement>(null)
+  const { x, y, refs, middlewareData, strategy } = useFloating({
+    placement,
+    middleware: [
+      offset(6),
+      shift({ padding: 8 }),
+      flip({ fallbackPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] }),
+      // eslint-disable-next-line react-hooks/refs
+      arrow({ element: arrowRef })
+    ]
+  })
+
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
 
   return (
     <Element className='popover-selector'>

@@ -59,6 +59,14 @@ export default [
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react/react-in-jsx-scope': 'off',
       'react/jsx-no-target-blank': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
       'react-hooks/config': 'error',
       'react-hooks/error-boundaries': 'error',
       'react-hooks/component-hook-factories': 'error',
