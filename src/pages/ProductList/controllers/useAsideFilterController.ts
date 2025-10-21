@@ -23,13 +23,9 @@ const useAsideFilterController = (queryConfig: QueryConfig) => {
     shouldFocusError: false
   })
 
-  const handleInputNumberChange =
-    // eslint-disable-next-line no-unused-vars
-    (onChange: (...event: any[]) => void, field: keyof PriceFormData) =>
-      (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event)
-        trigger(field)
-      }
+  const handleInputNumberChange = (field: keyof PriceFormData) => () => {
+    trigger(field)
+  }
 
   const handleRemoveLeftAsideFilter = useCallback(() => {
     navigate({
