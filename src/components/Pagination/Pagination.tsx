@@ -110,13 +110,13 @@ const Pagination = ({ pageSize, queryConfig }: PaginationProps) => {
   return (
     <nav className='flex flex-wrap mt-6 justify-center gap-y-3'>
       {Number(page) === 1 ? (
-        <button className='bg-white rounded px-3 py-2 shadow-sm mx-2 opacity-50 cursor-not-allowed'>Prev</button>
+        <button className='bg-white rounded px-3 py-2 shadow-sm mx-2 opacity-50 cursor-not-allowed'>Trang trước</button>
       ) : (
         <Link
           to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) - 1)}
           className='bg-white rounded px-3 py-2 shadow-sm mx-2 cursor-pointer'
         >
-          Prev
+          Trang trước
         </Link>
       )}
 
@@ -131,7 +131,7 @@ const Pagination = ({ pageSize, queryConfig }: PaginationProps) => {
           to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) + 1)}
           className='bg-white rounded px-3 py-2 shadow-sm mx-2 cursor-pointer'
         >
-          Next
+          Trang tiếp
         </Link>
       )}
     </nav>

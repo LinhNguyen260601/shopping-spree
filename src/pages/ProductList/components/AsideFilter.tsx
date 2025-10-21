@@ -1,5 +1,5 @@
 import Button from '@/components/Button'
-import InputNumber from '@/components/InputNumber'
+import InputController from '@/components/InputController'
 import StarRating from '@/components/StarRating'
 import { PATH } from '@/constants'
 import CategorySkeleton from '@/pages/ProductList/components/CategorySkeleton'
@@ -8,7 +8,6 @@ import type { QueryConfig } from '@/pages/ProductList/types'
 import type { Category } from '@/types'
 import { buildLinkWithUpdatedQuery, cn } from '@/utils'
 import { Funnel, Logs, StepForward } from 'lucide-react'
-import { Controller } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 interface AsideFilterProps {
@@ -83,38 +82,30 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
           <legend className='text-sm font-medium mb-2 text-gray-900'>Khoảng giá</legend>
           <form className='mt-2' role='search' aria-label='Lọc theo giá' onSubmit={onSubmit}>
             <div className='flex items-start'>
-              <Controller
-                name='price_min'
+              <InputController
                 control={control}
-                render={({ field }) => (
-                  <InputNumber
-                    className='grow'
-                    placeholder='₫ Từ'
-                    classNameInput='p-1 bg-white'
-                    classNameError='hidden'
-                    aria-label='Giá từ'
-                    {...field}
-                    onChange={handleInputNumberChange(field.onChange, 'price_min')}
-                  />
-                )}
+                name='price_min'
+                type='number'
+                className='grow'
+                placeholder='₫ Từ'
+                classNameInput='p-1 bg-white'
+                classNameError='hidden'
+                aria-label='Giá từ'
+                onChange={handleInputNumberChange('price_min')}
               />
               <span className='mx-2 mt-2 shrink-0' aria-hidden='true'>
                 -
               </span>
-              <Controller
-                name='price_max'
+              <InputController
                 control={control}
-                render={({ field }) => (
-                  <InputNumber
-                    className='grow'
-                    classNameError='hidden'
-                    placeholder='₫ Đến'
-                    classNameInput='p-1 bg-white'
-                    aria-label='Giá đến'
-                    {...field}
-                    onChange={handleInputNumberChange(field.onChange, 'price_max')}
-                  />
-                )}
+                name='price_max'
+                type='number'
+                className='grow'
+                placeholder='₫ Đến'
+                classNameInput='p-1 bg-white'
+                classNameError='hidden'
+                aria-label='Giá đến'
+                onChange={handleInputNumberChange('price_max')}
               />
             </div>
             <div className='text-center mt-1 text-red-600 text-sm min-h-[1.25rem]'>{errors.price_min?.message}</div>
