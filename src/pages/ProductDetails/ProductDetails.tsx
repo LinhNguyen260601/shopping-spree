@@ -118,11 +118,11 @@ const ProductDetails = () => {
                 <h2 className='sr-only'>Chọn số lượng</h2>
                 <div className='capitalize text-gray-500'>Số lượng</div>
                 <QuantityController
-                  value={buyCount}
-                  max={product.quantity}
-                  onType={handleBuyCount}
-                  onDecrease={handleBuyCount}
-                  onIncrease={handleBuyCount}
+                // value={buyCount}
+                // max={product.quantity}
+                // onType={handleBuyCount}
+                // onDecrease={handleBuyCount}
+                // onIncrease={handleBuyCount}
                 />
                 <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
               </section>
