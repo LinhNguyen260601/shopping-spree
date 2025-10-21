@@ -15,6 +15,7 @@ import { createSearchParams, Link, useNavigate, useSearchParams } from 'react-ro
 import { object, string, type InferType } from 'yup'
 import noProductImage from '@/assets/images/no-product.webp'
 import { formatCurrency } from '@/utils'
+import queryClient from '@/queryClient'
 
 const searchSchema = object({
   name: string().required('Tên sản phẩm không được để trống').trim()
@@ -33,7 +34,8 @@ const Header = () => {
 
   const { data: purchasesInCartData } = useQuery({
     queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }],
-    queryFn: () => purchaseService.getPurchases({ status: PURCHASES_STATUS.IN_CART })
+    queryFn: () => purchaseService.getPurchases({ status: PURCHASES_STATUS.IN_CART }),
+    enabled: isAuthenticated
   })
 
   const purchasesInCart = purchasesInCartData?.data.data || []
@@ -50,6 +52,7 @@ const Header = () => {
     onSuccess: () => {
       setIsAuthenticated(false)
       setUser(null)
+      queryClient.removeQueries({ queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }] })
     }
   })
 
@@ -76,6 +79,8 @@ const Header = () => {
       search: createSearchParams(config).toString()
     })
   })
+
+  const isHavePurchasesInCart = purchasesInCart && purchasesInCart.length > 0
 
   return (
     <header className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
@@ -214,7 +219,7 @@ const Header = () => {
                   role='menu'
                   aria-label='Shopping cart menu'
                 >
-                  {purchasesInCart ? (
+                  {isHavePurchasesInCart ? (
                     <>
                       <header className='mb-4'>
                         <h3 className='text-gray-400 capitalize text-sm font-medium'>Sản phẩm mới thêm</h3>
@@ -258,9 +263,11 @@ const Header = () => {
                             : ''}{' '}
                           Thêm Hàng Vào Giỏ
                         </p>
-                        <Button variant='primary' size='sm'>
-                          Xem Giỏ Hàng
-                        </Button>
+                        <Link to={PATH.CART} className='cursor-pointer'>
+                          <Button variant='primary' size='sm'>
+                            Xem Giỏ Hàng
+                          </Button>
+                        </Link>
                       </footer>
                     </>
                   ) : (
@@ -274,7 +281,7 @@ const Header = () => {
             >
               <Link to={PATH.HOME} aria-label='View shopping cart' className='relative'>
                 <ShoppingCart size={25} aria-hidden='true' />
-                {purchasesInCart && purchasesInCart.length > 0 && (
+                {isHavePurchasesInCart && (
                   <Badge
                     size='sm'
                     className='absolute -top-2 -right-3 min-w-[20px] h-5 flex items-center justify-center bg-white text-orange-500'
