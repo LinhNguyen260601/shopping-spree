@@ -80,7 +80,7 @@ const Header = () => {
     })
   })
 
-  const isHavePurchasesInCart = purchasesInCart && purchasesInCart.length > 0
+  const isPurchasedGoodInCart = purchasesInCart && purchasesInCart.length > 0
 
   return (
     <header className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
@@ -219,7 +219,7 @@ const Header = () => {
                   role='menu'
                   aria-label='Shopping cart menu'
                 >
-                  {isHavePurchasesInCart ? (
+                  {isPurchasedGoodInCart ? (
                     <>
                       <header className='mb-4'>
                         <h3 className='text-gray-400 capitalize text-sm font-medium'>Sản phẩm mới thêm</h3>
@@ -281,7 +281,7 @@ const Header = () => {
             >
               <Link to={PATH.HOME} aria-label='View shopping cart' className='relative'>
                 <ShoppingCart size={25} aria-hidden='true' />
-                {isHavePurchasesInCart && (
+                {isPurchasedGoodInCart && (
                   <Badge
                     size='sm'
                     className='absolute -top-2 -right-3 min-w-[20px] h-5 flex items-center justify-center bg-white text-orange-500'
