@@ -1,29 +1,26 @@
+import Checkbox from '@/components/Checkbox'
 import QuantityController from '@/components/QuantityController'
 import { PATH } from '@/constants'
-import type { Purchase } from '@/types'
+import type { ExtendedPurchases } from '@/pages/Cart/core'
 import { formatCurrency, generateNameId } from '@/utils'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 interface CartItemProps {
-  purchase: Purchase
+  purchase: ExtendedPurchases
+  onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const CartItem: React.FC<CartItemProps> = ({ purchase }) => {
+const CartItem: React.FC<CartItemProps> = ({ purchase, onCheck }) => {
   return (
     <li className='grid grid-cols-12 rounded-sm bg-white py-5 px-4 text-center text-sm text-gray-500'>
       <article className='col-span-6 text-left' aria-label={purchase.product.name}>
         <div className='flex'>
           <div className='flex flex-shrink-0 items-center justify-center pr-3'>
-            <input
-              type='checkbox'
+            <Checkbox
+              checked={purchase.checked}
               aria-label={`Chọn sản phẩm ${purchase.product.name}`}
-              className="
-                      cursor-pointer size-5 appearance-none rounded-sm border border-gray-300
-                      checked:bg-orange-500 checked:border-orange-500
-                      checked:before:content-['✔'] checked:before:text-white
-                      checked:before:flex checked:before:items-center checked:before:justify-center
-                    "
+              onChange={onCheck}
             />
           </div>
 

@@ -1,16 +1,10 @@
 import Button from '@/components/Button'
-import { PURCHASES_STATUS, QUERY_KEY } from '@/constants'
+import Checkbox from '@/components/Checkbox'
 import CartItem from '@/pages/Cart/components'
-import { purchaseService } from '@/services'
-import { useQuery } from '@tanstack/react-query'
+import useCartController from '@/pages/Cart/controllers'
 
 const Cart = () => {
-  const { data: purchasedGoodsInCartData } = useQuery({
-    queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }],
-    queryFn: () => purchaseService.getPurchases({ status: PURCHASES_STATUS.IN_CART })
-  })
-
-  const purchasedGoodsInCart = purchasedGoodsInCartData?.data.data || []
+  const { isAllChecked, extendedPurchases, handleCheck, handleCheckAll } = useCartController()
 
   return (
     <div className='bg-neutral-100 py-16'>
@@ -21,16 +15,7 @@ const Cart = () => {
               <div className='col-span-6'>
                 <div className='flex items-center'>
                   <div className='flex flex-shrink-0 items-center justify-center pr-3'>
-                    <input
-                      type='checkbox'
-                      aria-label='Chọn sản phẩm'
-                      className="
-    cursor-pointer size-5 appearance-none rounded-sm
-    border border-gray-300
-    checked:bg-orange-500 checked:border-orange-500
-    checked:before:content-['✔'] checked:before:text-white checked:before:flex checked:before:items-center checked:before:justify-center
-  "
-                    />
+                    <Checkbox aria-label='Chọn sản phẩm' checked={isAllChecked} onChange={handleCheckAll} />
                   </div>
                   <h2 className='flex-grow text-black'>Sản phẩm</h2>
                 </div>
@@ -51,8 +36,8 @@ const Cart = () => {
               </h2>
 
               <ul className='divide-y divide-gray-200'>
-                {purchasedGoodsInCart?.map((purchase) => (
-                  <CartItem key={purchase._id} purchase={purchase} />
+                {extendedPurchases?.map((purchase, index) => (
+                  <CartItem key={purchase._id} purchase={purchase} onCheck={handleCheck(index)} />
                 ))}
               </ul>
             </section>
@@ -62,14 +47,13 @@ const Cart = () => {
           <div className='px-9 py-4 md:py-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-3'>
             <div className='flex items-center gap-2'>
               <div className='flex flex-shrink-0 items-center justify-center'>
-                <input
-                  type='checkbox'
-                  aria-label='Chọn tất cả sản phẩm'
-                  className="cursor-pointer size-5 appearance-none rounded-sm border border-gray-300 checked:bg-orange-500 checked:border-orange-500 checked:before:content-['✔'] checked:before:text-white checked:before:flex checked:before:items-center checked:before:justify-center"
-                />
+                <Checkbox aria-label='Chọn tất cả sản phẩm' checked={isAllChecked} onChange={handleCheckAll} />
               </div>
-              <button className='cursor-pointer text-sm md:text-base px-2 md:px-3 border-none bg-none hover:text-orange-500 transition whitespace-nowrap'>
-                Chọn tất cả
+              <button
+                className='cursor-pointer text-sm md:text-base px-2 md:px-3 border-none bg-none hover:text-orange-500 transition whitespace-nowrap'
+                onClick={handleCheckAll}
+              >
+                Chọn tất cả ({extendedPurchases.length})
               </button>
               <button className='cursor-pointer text-sm md:text-base px-2 md:px-3 border-none bg-none hover:text-orange-500 transition whitespace-nowrap'>
                 Xóa
