@@ -18,9 +18,10 @@ const purchaseService = {
   ): Promise<AxiosResponse<SuccessResponse<Purchase[]>>> =>
     http.post<SuccessResponse<Purchase[]>>(`${URL}/buy-products`, body),
 
-  updatePurchase: (
-    body: { product_id: string; buy_count: number }[]
-  ): Promise<AxiosResponse<SuccessResponse<Purchase>>> =>
+  updatePurchase: (body: {
+    product_id: string
+    buy_count: number
+  }): Promise<AxiosResponse<SuccessResponse<Purchase>>> =>
     http.put<SuccessResponse<Purchase>>(`${URL}/update-purchase`, body),
 
   deletePurchase: (purchaseIds: string[]): Promise<AxiosResponse<SuccessResponse<{ deleted_count: number }>>> =>

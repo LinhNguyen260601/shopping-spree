@@ -8,10 +8,14 @@ import { Link } from 'react-router-dom'
 
 interface CartItemProps {
   purchase: ExtendedPurchases
+  onType: (value: number) => void
+  onFocusOut: (value: number) => void
+  onIncrease: (value: number) => void
+  onDecrease: (value: number) => void
   onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const CartItem: React.FC<CartItemProps> = ({ purchase, onCheck }) => {
+const CartItem: React.FC<CartItemProps> = ({ purchase, onType, onFocusOut, onIncrease, onDecrease, onCheck }) => {
   return (
     <li className='grid grid-cols-12 rounded-sm bg-white py-5 px-4 text-center text-sm text-gray-500'>
       <article className='col-span-6 text-left' aria-label={purchase.product.name}>
@@ -67,6 +71,11 @@ const CartItem: React.FC<CartItemProps> = ({ purchase, onCheck }) => {
             max={purchase.product.quantity}
             value={purchase.buy_count}
             classNameWrapper='flex items-center'
+            onType={onType}
+            onFocusOut={onFocusOut}
+            onIncrease={onIncrease}
+            onDecrease={onDecrease}
+            disabled={purchase.disabled}
           />
         </div>
 
