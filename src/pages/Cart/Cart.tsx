@@ -4,7 +4,8 @@ import CartItem from '@/pages/Cart/components'
 import useCartController from '@/pages/Cart/controllers'
 
 const Cart = () => {
-  const { isAllChecked, extendedPurchases, handleCheck, handleCheckAll } = useCartController()
+  const { isAllChecked, extendedPurchases, handleCheck, handleCheckAll, handleQuantity, handleTypeQuantity } =
+    useCartController()
 
   return (
     <div className='bg-neutral-100 py-16'>
@@ -37,7 +38,15 @@ const Cart = () => {
 
               <ul className='divide-y divide-gray-200'>
                 {extendedPurchases?.map((purchase, index) => (
-                  <CartItem key={purchase._id} purchase={purchase} onCheck={handleCheck(index)} />
+                  <CartItem
+                    key={purchase._id}
+                    purchase={purchase}
+                    onType={handleTypeQuantity(index)}
+                    onCheck={handleCheck(index)}
+                    onFocusOut={handleQuantity(index, purchase.product.quantity)}
+                    onIncrease={handleQuantity(index, purchase.product.quantity)}
+                    onDecrease={handleQuantity(index, purchase.product.quantity)}
+                  />
                 ))}
               </ul>
             </section>
