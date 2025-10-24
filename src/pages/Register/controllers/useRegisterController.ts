@@ -53,11 +53,17 @@ const useRegisterController = () => {
     })
   })
 
+  const handlePreloadRegisterLayout = () => {
+    import('@/layouts/RegisterLayout')
+    import('@/pages/Login')
+  }
+
   return {
     register,
     formState,
     isSubmitting: registerAccountMutation.isPending,
-    onSubmit
+    onSubmit,
+    handlePreloadRegisterLayout
   }
 }
 

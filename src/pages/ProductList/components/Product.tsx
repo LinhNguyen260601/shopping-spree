@@ -4,10 +4,11 @@ import { formatCurrency, formatNumberToSocialStyle, generateNameId } from '@/uti
 import { Link } from 'react-router-dom'
 
 interface ProductProps {
+  index: number
   product: ProductType
 }
 
-const Product = ({ product }: ProductProps) => {
+const Product = ({ index, product }: ProductProps) => {
   return (
     <Link
       to={generateNameId({ name: product.name, id: product._id })}
@@ -20,10 +21,9 @@ const Product = ({ product }: ProductProps) => {
             src={product.image}
             alt={product.name}
             className='absolute top-0 left-0 size-full bg-white object-cover group-hover:scale-105 transition-transform duration-200'
-            loading='lazy'
-            width='200'
-            height='200'
-            decoding='async'
+            width={200}
+            height={200}
+            {...(index <= 6 ? { fetchPriority: 'high', decoding: 'async' } : { loading: 'lazy', decoding: 'async' })}
           />
         </figure>
         <section className='p-2 overflow-hidden flex-1 flex flex-col'>

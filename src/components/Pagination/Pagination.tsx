@@ -125,7 +125,7 @@ const Pagination = ({ pageSize, queryConfig }: PaginationProps) => {
       ))}
 
       {pageSize === 0 || Number(page) === pageSize ? (
-        <button className='bg-white rounded px-3 py-2 shadow-sm mx-2 opacity-50 cursor-not-allowed'>Next</button>
+        <button className='bg-white rounded px-3 py-2 shadow-sm mx-2 opacity-50 cursor-not-allowed'>Trang tiếp</button>
       ) : (
         <Link
           to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) + 1)}

@@ -1,7 +1,7 @@
 import { arrowStyle, floatingStyle } from '@/components/Header/style'
 import { cn } from '@/utils'
 import { arrow, flip, FloatingPortal, offset, shift, useFloating, type Placement } from '@floating-ui/react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion'
 import { useRef, useState } from 'react'
 
 interface PopoverProps {
@@ -29,18 +29,12 @@ const Popover = ({
       offset(6),
       shift({ padding: 8 }),
       flip({ fallbackPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'] }),
-      // eslint-disable-next-line react-hooks/refs
       arrow({ element: arrowRef })
     ]
   })
 
-  const handleOpen = () => {
-    setIsOpen(true)
-  }
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
+  const handleOpen = () => setIsOpen(true)
+  const handleClose = () => setIsOpen(false)
 
   return (
     <Element className='popover-selector'>
@@ -59,26 +53,28 @@ const Popover = ({
       <FloatingPortal>
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              ref={refs.setFloating}
-              style={floatingStyle(middlewareData?.arrow?.x ?? 0, strategy, x ?? 0, y ?? 0)}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              transition={{ duration: 0.2 }}
-              role='menu'
-              aria-label='Language options'
-              onMouseEnter={handleOpen}
-              onMouseLeave={handleClose}
-            >
-              <span
-                ref={arrowRef}
-                className='border-x-transparent border-t-transparent border-b-white border-[11px] absolute translate-y-[-95%] z-10'
-                style={arrowStyle(middlewareData?.arrow?.x ?? 0, middlewareData?.arrow?.y ?? 0)}
-                aria-hidden='true'
-              />
-              {renderPopover}
-            </motion.div>
+            <LazyMotion features={domAnimation}>
+              <m.div
+                ref={refs.setFloating}
+                style={floatingStyle(middlewareData?.arrow?.x ?? 0, strategy, x ?? 0, y ?? 0)}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.2 }}
+                role='menu'
+                aria-label='Language options'
+                onMouseEnter={handleOpen}
+                onMouseLeave={handleClose}
+              >
+                <span
+                  ref={arrowRef}
+                  className='border-x-transparent border-t-transparent border-b-white border-[11px] absolute translate-y-[-95%] z-10'
+                  style={arrowStyle(middlewareData?.arrow?.x ?? 0, middlewareData?.arrow?.y ?? 0)}
+                  aria-hidden='true'
+                />
+                {renderPopover}
+              </m.div>
+            </LazyMotion>
           )}
         </AnimatePresence>
       </FloatingPortal>

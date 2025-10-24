@@ -42,14 +42,14 @@ const ProductList = () => {
                     <p className='text-gray-600'>Không tìm thấy sản phẩm nào.</p>
                   </div>
                 ) : (
-                  products.map((product) => (
+                  products.map((product, index) => (
                     <div
                       className='col-span-1'
                       key={product._id}
                       role='listitem'
                       aria-label={`Sản phẩm ${product.name}`}
                     >
-                      <Product product={product} />
+                      <Product index={index} product={product} />
                     </div>
                   ))
                 )}

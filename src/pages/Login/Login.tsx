@@ -5,7 +5,7 @@ import useLoginController from '@/pages/Login/controllers'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
-  const { register, formState, onSubmit, isSubmitting } = useLoginController()
+  const { register, formState, onSubmit, isSubmitting, handlePreloadRegisterLayout } = useLoginController()
 
   const { errors, isValid, isDirty } = formState
 
@@ -65,7 +65,11 @@ const Login = () => {
               {/* Link */}
               <nav className='mt-8 text-center'>
                 <span className='text-gray-600'>Bạn chưa có tài khoản? </span>
-                <Link to={PATH.REGISTER} className='text-red-600 font-medium hover:text-red-700'>
+                <Link
+                  to={PATH.REGISTER}
+                  className='text-red-600 font-medium hover:text-red-700'
+                  onMouseEnter={handlePreloadRegisterLayout}
+                >
                   Đăng ký
                 </Link>
               </nav>

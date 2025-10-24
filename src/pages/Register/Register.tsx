@@ -5,7 +5,7 @@ import useRegisterController from '@/pages/Register/controllers'
 import { Link } from 'react-router-dom'
 
 const Register = () => {
-  const { register, formState, onSubmit, isSubmitting } = useRegisterController()
+  const { register, formState, onSubmit, isSubmitting, handlePreloadRegisterLayout } = useRegisterController()
 
   const { errors, isValid, isDirty } = formState
 
@@ -78,7 +78,11 @@ const Register = () => {
               {/* Link */}
               <nav className='mt-8 text-center'>
                 <span className='text-gray-600'>Bạn đã có tài khoản? </span>
-                <Link to={PATH.LOGIN} className='text-red-600 font-medium hover:text-red-700'>
+                <Link
+                  to={PATH.LOGIN}
+                  className='text-red-600 font-medium hover:text-red-700'
+                  onMouseEnter={handlePreloadRegisterLayout}
+                >
                   Đăng nhập
                 </Link>
               </nav>

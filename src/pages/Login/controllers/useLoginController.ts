@@ -50,11 +50,17 @@ const useLoginController = () => {
     })
   })
 
+  const handlePreloadRegisterLayout = () => {
+    import('@/layouts/RegisterLayout')
+    import('@/pages/Login')
+  }
+
   return {
     register,
     formState,
     isSubmitting: loginMutation.isPending,
-    onSubmit
+    onSubmit,
+    handlePreloadRegisterLayout
   }
 }
 
