@@ -14,7 +14,7 @@ const Navbar = () => {
             <Handbag size={30} className='text-red-700 mb-1' />
             <span className='text-base text-red-700 font-semibold'>Shopping Spree</span>
           </Link>
-          <span className='text-xl lg:text-2xl'>{isRegister ? 'Đăng ký' : 'Đăng nhập'}</span>
+          <span className='text-xl lg:text-2xl'>{isRegister ? 'Đăng ký' : 'Đăng nhậpp'}</span>
         </nav>
       </div>
     </header>

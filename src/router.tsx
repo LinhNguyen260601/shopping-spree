@@ -1,12 +1,15 @@
 import { PATH } from '@/constants/path'
 import { ProtectedRoute, RejectedRoute } from '@/guards'
 import MainLayout from '@/layouts/MainLayout'
-import RegisterLayout from '@/layouts/RegisterLayout'
 import RootLayout from '@/layouts/RootLayout'
 import ProductList from '@/pages/ProductList'
 import { productService } from '@/services'
 import { getIdFromNameId } from '@/utils'
+import { lazy } from 'react'
 import { createBrowserRouter, ScrollRestoration } from 'react-router-dom'
+
+const CartLayout = lazy(() => import('@/layouts/CartLayout'))
+const RegisterLayout = lazy(() => import('@/layouts/RegisterLayout'))
 
 const router = createBrowserRouter([
   {
@@ -50,9 +53,9 @@ const router = createBrowserRouter([
               const { default: Cart } = await import('@/pages/Cart')
               return {
                 element: (
-                  <MainLayout>
+                  <CartLayout>
                     <Cart />
-                  </MainLayout>
+                  </CartLayout>
                 )
               }
             }
