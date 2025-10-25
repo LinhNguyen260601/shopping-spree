@@ -2,15 +2,15 @@ import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
 import { AppContext } from '@/contexts'
-import queryClient from '@/queryClient'
 import { authService } from '@/services'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChevronDown, Earth } from 'lucide-react'
 import { useCallback, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const NavHeader = () => {
   const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
+  const queryClient = useQueryClient()
 
   const logoutMutation = useMutation({
     mutationFn: authService.logout,
@@ -31,7 +31,7 @@ const NavHeader = () => {
   }
 
   return (
-    <section className='flex justify-end' aria-label='User actions'>
+    <section className='flex justify-end items-center' aria-label='User actions'>
       <h2 className='sr-only'>User Actions</h2>
       <Popover
         className='flex items-center py-1 hover:text-white/70 cursor-pointer mr-6'
@@ -111,7 +111,7 @@ const NavHeader = () => {
         </Popover>
       )}
       {!isAuthenticated && (
-        <nav className='flex items-center'>
+        <nav className='flex items-center min-h-8'>
           <Link
             to={PATH.REGISTER}
             className='mr-3 capitalize hover:text-white/70'

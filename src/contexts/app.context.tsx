@@ -10,6 +10,7 @@ interface AppContextInterface {
   setUser: React.Dispatch<React.SetStateAction<User | null>>
   extendedPurchases: ExtendedPurchases[]
   setExtendedPurchases: React.Dispatch<React.SetStateAction<ExtendedPurchases[]>>
+  reset: () => void
 }
 
 export const initialAppContext: AppContextInterface = {
@@ -18,7 +19,8 @@ export const initialAppContext: AppContextInterface = {
   user: getUserFromLocalStorage(),
   setUser: () => {},
   extendedPurchases: [],
-  setExtendedPurchases: () => {}
+  setExtendedPurchases: () => {},
+  reset: () => {}
 }
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
