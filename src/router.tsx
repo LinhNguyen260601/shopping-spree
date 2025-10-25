@@ -10,6 +10,7 @@ import { createBrowserRouter, ScrollRestoration } from 'react-router-dom'
 
 const CartLayout = lazy(() => import('@/layouts/CartLayout'))
 const RegisterLayout = lazy(() => import('@/layouts/RegisterLayout'))
+const UserLayout = lazy(() => import('@/pages/User/layouts/UserLayout'))
 
 const router = createBrowserRouter([
   {
@@ -35,17 +36,41 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />,
         children: [
           {
-            path: PATH.PROFILE,
-            lazy: async () => {
-              const { default: Profile } = await import('@/pages/Profile')
-              return {
-                element: (
-                  <MainLayout>
-                    <Profile />
-                  </MainLayout>
-                )
+            path: PATH.USER,
+            element: (
+              <MainLayout>
+                <UserLayout />
+              </MainLayout>
+            ),
+            children: [
+              {
+                path: PATH.PROFILE,
+                lazy: async () => {
+                  const { default: Profile } = await import('@/pages/User/pages/Profile')
+                  return {
+                    element: <Profile />
+                  }
+                }
+              },
+              {
+                path: PATH.CHANGE_PASSWORD,
+                lazy: async () => {
+                  const { default: ChangePassword } = await import('@/pages/User/pages/ChangePassword')
+                  return {
+                    element: <ChangePassword />
+                  }
+                }
+              },
+              {
+                path: PATH.HISTORY_PURCHASE,
+                lazy: async () => {
+                  const { default: HistoryPurchase } = await import('@/pages/User/pages/HistoryPurchase')
+                  return {
+                    element: <HistoryPurchase />
+                  }
+                }
               }
-            }
+            ]
           },
           {
             path: PATH.CART,

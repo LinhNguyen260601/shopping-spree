@@ -30,6 +30,11 @@ const NavHeader = () => {
     !isRegister ? import('@/pages/Login') : import('@/pages/Register')
   }
 
+  const handlePreloadUserLayout = () => {
+    import('@/pages/User/layouts/UserLayout')
+    import('@/pages/User/pages/Profile')
+  }
+
   return (
     <section className='flex justify-end items-center' aria-label='User actions'>
       <h2 className='sr-only'>User Actions</h2>
@@ -76,6 +81,7 @@ const NavHeader = () => {
                 className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
                 role='menuitem'
                 aria-label='View my account'
+                onMouseEnter={handlePreloadUserLayout}
               >
                 Tài khoản của tôi
               </Link>
