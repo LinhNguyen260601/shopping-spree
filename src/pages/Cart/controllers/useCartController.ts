@@ -4,7 +4,7 @@ import { purchaseService } from '@/services'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { produce } from 'immer'
 import keyBy from 'lodash/keyBy'
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -45,17 +45,30 @@ const useCartController = () => {
   })
 
   const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
+
   const purchasedGoodsInCart = purchasedGoodsInCartData?.data.data || []
-  const isAllChecked = extendedPurchases.length > 0 && extendedPurchases.every((purchase) => purchase.checked)
-  const checkedPurchases = extendedPurchases.filter((purchase) => purchase.checked)
-  const checkedPurchasesCount = checkedPurchases.length
-  const totalCheckedPurchasePrice = checkedPurchases.reduce(
-    (result, current) => result + current.product.price * current.buy_count,
-    0
+
+  const isAllChecked = useMemo(
+    () => extendedPurchases.length > 0 && extendedPurchases.every((purchase) => purchase.checked),
+    [extendedPurchases]
   )
-  const totalCheckedPurchaseSavingPrice = checkedPurchases.reduce(
-    (result, current) => result + (current.product.price_before_discount - current.product.price) * current.buy_count,
-    0
+  const checkedPurchases = useMemo(() => extendedPurchases.filter((purchase) => purchase.checked), [extendedPurchases])
+
+  const checkedPurchasesCount = checkedPurchases.length
+
+  const totalCheckedPurchasePrice = useMemo(
+    () => checkedPurchases.reduce((result, current) => result + current.product.price * current.buy_count, 0),
+    [checkedPurchases]
+  )
+
+  const totalCheckedPurchaseSavingPrice = useMemo(
+    () =>
+      checkedPurchases.reduce(
+        (result, current) =>
+          result + (current.product.price_before_discount - current.product.price) * current.buy_count,
+        0
+      ),
+    [checkedPurchases]
   )
 
   useEffect(() => {
