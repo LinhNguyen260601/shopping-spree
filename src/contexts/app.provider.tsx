@@ -8,7 +8,21 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(initialAppContext.user)
   const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchases[]>(initialAppContext.extendedPurchases)
 
-  const providerValue = { isAuthenticated, setIsAuthenticated, user, setUser, extendedPurchases, setExtendedPurchases }
+  const reset = () => {
+    setIsAuthenticated(false)
+    setExtendedPurchases([])
+    setUser(null)
+  }
+
+  const providerValue = {
+    isAuthenticated,
+    setIsAuthenticated,
+    user,
+    setUser,
+    extendedPurchases,
+    setExtendedPurchases,
+    reset
+  }
 
   return <AppContext.Provider value={providerValue}>{children}</AppContext.Provider>
 }
