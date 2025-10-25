@@ -1,9 +1,9 @@
-import { PURCHASES_STATUS, QUERY_KEY } from '@/constants'
+import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
 import { purchaseService } from '@/services'
 import type { Product } from '@/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useMemo, useRef, useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const useProductDetaisController = () => {
@@ -18,6 +18,7 @@ const useProductDetaisController = () => {
 
   const imageRef = useRef<HTMLImageElement>(null)
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const addToCartMutation = useMutation({
     mutationFn: (body: { product_id: string; buy_count: number }) => purchaseService.addToCart(body)
@@ -76,7 +77,7 @@ const useProductDetaisController = () => {
 
   const handleBuyCount = (value: number) => setBuyCount(value)
 
-  const handleAddToCart = () => {
+  const handleAddToCart = useCallback(() => {
     addToCartMutation.mutate(
       {
         product_id: product._id,
@@ -89,7 +90,26 @@ const useProductDetaisController = () => {
         }
       }
     )
-  }
+  }, [addToCartMutation, product._id, buyCount])
+
+  const handleBuyNow = useCallback(() => {
+    addToCartMutation.mutate(
+      {
+        product_id: product._id,
+        buy_count: buyCount
+      },
+      {
+        onSuccess: (res) => {
+          const purchase = res.data.data
+          navigate(PATH.CART, {
+            state: {
+              purchaseId: purchase._id
+            }
+          })
+        }
+      }
+    )
+  }, [addToCartMutation, product._id, buyCount])
 
   return {
     product,
@@ -99,6 +119,7 @@ const useProductDetaisController = () => {
     currentImages,
     isAddingToCart: addToCartMutation.isPending,
     handleZoom,
+    handleBuyNow,
     handleBuyCount,
     handleZoomLeave,
     handleNextImage,

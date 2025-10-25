@@ -15,6 +15,7 @@ const ProductDetails = () => {
     currentImages,
     isAddingToCart,
     handleZoom,
+    handleBuyNow,
     handleBuyCount,
     handleZoomLeave,
     handleNextImage,
@@ -139,7 +140,7 @@ const ProductDetails = () => {
                   <ShoppingCart className='size-4' />
                   Thêm vào giỏ hàng
                 </Button>
-                <Button variant='primary' size='lg' className='min-w-[5rem] capitalize'>
+                <Button variant='primary' size='lg' className='min-w-[5rem] capitalize' onClick={handleBuyNow}>
                   Mua ngay
                 </Button>
               </footer>
