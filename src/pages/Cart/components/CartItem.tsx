@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 
 interface CartItemProps {
   purchase: ExtendedPurchases
+  onDelete: () => void
   onType: (value: number) => void
   onFocusOut: (value: number) => void
   onIncrease: (value: number) => void
@@ -15,7 +16,15 @@ interface CartItemProps {
   onCheck: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const CartItem: React.FC<CartItemProps> = ({ purchase, onType, onFocusOut, onIncrease, onDecrease, onCheck }) => {
+const CartItem: React.FC<CartItemProps> = ({
+  purchase,
+  onDelete,
+  onType,
+  onFocusOut,
+  onIncrease,
+  onDecrease,
+  onCheck
+}) => {
   return (
     <li className='grid grid-cols-12 rounded-sm bg-white py-5 px-4 text-center text-sm text-gray-500'>
       <article className='col-span-6 text-left' aria-label={purchase.product.name}>
@@ -84,6 +93,7 @@ const CartItem: React.FC<CartItemProps> = ({ purchase, onType, onFocusOut, onInc
         <div className='col-span-1'>
           <button
             type='button'
+            onClick={onDelete}
             aria-label={`Xóa ${purchase.product.name}`}
             className='bg-none cursor-pointer text-black transition-colors hover:text-orange-500'
           >
