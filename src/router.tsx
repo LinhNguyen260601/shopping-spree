@@ -3,7 +3,7 @@ import { ProtectedRoute, RejectedRoute } from '@/guards'
 import MainLayout from '@/layouts/MainLayout'
 import RootLayout from '@/layouts/RootLayout'
 import ProductList from '@/pages/ProductList'
-import { productService } from '@/services'
+import { productService, userService } from '@/services'
 import { getIdFromNameId } from '@/utils'
 import { lazy } from 'react'
 import { createBrowserRouter, ScrollRestoration } from 'react-router-dom'
@@ -50,7 +50,8 @@ const router = createBrowserRouter([
                   return {
                     element: <Profile />
                   }
-                }
+                },
+                loader: userService.getProfile
               },
               {
                 path: PATH.CHANGE_PASSWORD,
