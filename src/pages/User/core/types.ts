@@ -4,10 +4,12 @@ import type { InferType } from 'yup'
 import type { profileSchema } from '@/pages/User/core/schemas'
 
 export interface BodyUpdateProfile extends Omit<User, '_id' | 'roles' | 'createdAt' | 'updatedAt' | 'email'> {
-  password: string
-  new_password: string
+  password?: string
+  new_password?: string
 }
 
 export type UserFormData = InferType<typeof userSchema>
 
 export type ProfileFormData = InferType<typeof profileSchema>
+
+export type DateSelectNameType = 'date' | 'month' | 'year'

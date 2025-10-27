@@ -1,3 +1,4 @@
+import Avatar from '@/components/Avatar'
 import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
@@ -63,13 +64,13 @@ const NavHeader = () => {
           </div>
         }
       >
-        <Earth size={16} aria-hidden='true' />
+        <Earth size={20} aria-hidden='true' />
         <span className='mx-1'>Tiếng Việt</span>
-        <ChevronDown size={16} aria-hidden='true' />
+        <ChevronDown size={20} aria-hidden='true' />
       </Popover>
       {isAuthenticated && (
         <Popover
-          className='flex items-center py-1 hover:text-white/70 cursor-pointer'
+          className='flex py-1 hover:text-white/70 cursor-pointer'
           renderPopover={
             <div
               className='bg-white relative shadow-md rounded-sm border border-gray-200'
@@ -105,13 +106,7 @@ const NavHeader = () => {
           }
         >
           <figure className='size-6 mr-2 flex-shrink-0'>
-            <img
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlrZqTCInyg6RfYC7Ape20o-EWP1EN_A8fOA&s'
-              alt='User avatar'
-              width={24}
-              height={24}
-              className='size-full object-cover rounded-full'
-            />
+            <Avatar width={24} height={24} src={user?.avatar} />
           </figure>
           <span>{user?.email}</span>
         </Popover>

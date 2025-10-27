@@ -6,7 +6,7 @@ export const userSchema = object({
   phone: string().max(20, 'Độ dài tối đa là 20 ký tự'),
   address: string().max(160, 'Độ dài tối đa là 160 ký tự'),
   avatar: string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
-  date_of_birth: date().max(new Date(), 'Hãy chọn một trong quá khứ'),
+  date_of_birth: date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
   password: passwordField(),
   new_password: passwordField(),
   confirm_password: passwordConfirmField()
