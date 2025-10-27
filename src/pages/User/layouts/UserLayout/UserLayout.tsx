@@ -1,4 +1,4 @@
-import UserAsideNav from '@/pages/User/components'
+import { UserAsideNav } from '@/pages/User/components'
 import { Outlet } from 'react-router-dom'
 
 const UserLayout = () => {

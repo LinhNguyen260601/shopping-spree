@@ -25,7 +25,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
     <div className={className}>
       <input
         className={cn(
-          'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm transition-colors',
+          'p-3 w-full outline-none border border-orange-300 focus:border-orange-500 focus:ring-orange-500 focus-visible:border-orange-500 rounded-sm focus:shadow-sm transition-colors',
           classNameInput
         )}
         onChange={handleChange}

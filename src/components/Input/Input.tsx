@@ -37,9 +37,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const baseInputClasses = 'p-3 w-full outline-none border rounded-sm focus:shadow-sm transition-colors'
   const inputClasses = error
     ? cn(baseInputClasses, 'border-red-300 focus:border-red-500 focus:ring-red-500')
-    : cn(baseInputClasses, 'border-gray-300 focus:border-gray-500 focus:ring-gray-500')
+    : cn(baseInputClasses, 'border-orange-300 focus:border-orange-500 focus:ring-orange-500')
 
-  const finalInputClasses = cn(inputClasses, className, inputClass, isFocused ? 'ring-1 ring-gray-500' : '')
+  const finalInputClasses = cn(inputClasses, className, inputClass, isFocused ? 'focus-visible:border-orange-500' : '')
 
   return (
     <div className='form-group'>
