@@ -1,3 +1,4 @@
+import Avatar from '@/components/Avatar'
 import Button from '@/components/Button'
 import FormField from '@/components/FormField'
 import InputController from '@/components/InputController'
@@ -6,7 +7,22 @@ import { useProfileController } from '@/pages/User/controllers'
 import { Controller } from 'react-hook-form'
 
 const Profile = () => {
-  const { errors, isValid, control, isDirty, profile, register, isSubmiting, onSubmit } = useProfileController()
+  const {
+    avatar,
+    errors,
+    isValid,
+    control,
+    isDirty,
+    profile,
+    register,
+    previewImage,
+    fileInputRef,
+    isSubmiting,
+    onSubmit,
+    handleUpload,
+    handleFileChange,
+    setEventValueToEmpty
+  } = useProfileController()
 
   return (
     <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
@@ -89,19 +105,22 @@ const Profile = () => {
         <section className='flex justify-center md:w-72 md:border-l md:border-l-gray-200'>
           <h2 className='sr-only'>Ảnh đại diện</h2>
           <figure className='flex flex-col items-center'>
-            <div className='my-5 size-24 cursor-pointer'>
-              <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlrZqTCInyg6RfYC7Ape20o-EWP1EN_A8fOA&s'
-                alt='User avatar'
-                width={96}
-                height={96}
-                className='size-full object-cover rounded-full'
-              />
+            <div className='my-5 size-24 cursor-pointer' onClick={handleUpload}>
+              <Avatar size='xl' src={previewImage || avatar} width={96} height={96} />
             </div>
-            <input className='hidden' type='file' accept='.jpg,.jpeg,.png' aria-label='Tải ảnh đại diện lên' />
+            <input
+              className='hidden'
+              type='file'
+              accept='.jpg,.jpeg,.png'
+              aria-label='Tải ảnh đại diện lên'
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              onClick={setEventValueToEmpty}
+            />
             <Button
               type='button'
               className='flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm cursor-pointer hover:bg-white'
+              onClick={handleUpload}
             >
               Chọn ảnh
             </Button>

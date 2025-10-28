@@ -1,9 +1,9 @@
+import React, { forwardRef, memo } from 'react'
 import { cn } from '@/utils'
 import { CircleUserRound } from 'lucide-react'
-import React, { forwardRef, memo } from 'react'
 
 type AvatarVariant = 'rounded' | 'square'
-type AvatarSize = 'sm' | 'md' | 'lg'
+type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
 
 interface AvatarProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src?: string
@@ -15,12 +15,19 @@ interface AvatarProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
   ({ src, alt = 'User avatar', size = 'md', variant = 'rounded', fallback, className, ...rest }, ref) => {
+    const sizeClasses: Record<AvatarSize, string> = {
+      sm: 'size-8',
+      md: 'size-10',
+      lg: 'size-16',
+      xl: 'size-24'
+    }
+
     const variantClasses: Record<AvatarVariant, string> = {
       rounded: 'rounded-full',
       square: 'rounded-md'
     }
 
-    const baseImg = cn('object-cover size-full', variantClasses[variant])
+    const baseImg = cn(variantClasses[variant], sizeClasses[size], 'object-cover size-full')
 
     return (
       <>
