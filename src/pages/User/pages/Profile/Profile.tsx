@@ -2,6 +2,7 @@ import Avatar from '@/components/Avatar'
 import Button from '@/components/Button'
 import FormField from '@/components/FormField'
 import InputController from '@/components/InputController'
+import InputFile from '@/components/InputFile'
 import { DateSelect } from '@/pages/User/components'
 import { useProfileController } from '@/pages/User/controllers'
 import { Controller } from 'react-hook-form'
@@ -16,12 +17,9 @@ const Profile = () => {
     profile,
     register,
     previewImage,
-    fileInputRef,
     isSubmiting,
     onSubmit,
-    handleUpload,
-    handleFileChange,
-    setEventValueToEmpty
+    handleFileChange
   } = useProfileController()
 
   return (
@@ -105,25 +103,10 @@ const Profile = () => {
         <section className='flex justify-center md:w-72 md:border-l md:border-l-gray-200'>
           <h2 className='sr-only'>Ảnh đại diện</h2>
           <figure className='flex flex-col items-center'>
-            <div className='my-5 size-24 cursor-pointer' onClick={handleUpload}>
+            <div className='my-5 size-24 cursor-pointer'>
               <Avatar size='xl' src={previewImage || avatar} width={96} height={96} />
             </div>
-            <input
-              className='hidden'
-              type='file'
-              accept='.jpg,.jpeg,.png'
-              aria-label='Tải ảnh đại diện lên'
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              onClick={setEventValueToEmpty}
-            />
-            <Button
-              type='button'
-              className='flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm cursor-pointer hover:bg-white'
-              onClick={handleUpload}
-            >
-              Chọn ảnh
-            </Button>
+            <InputFile onChange={handleFileChange} />
             <figcaption className='mt-3 text-gray-400'>
               <div>Dung lượng file tối đa 1 MB</div>
               <div>Định dạng:.JPEG, .PNG</div>

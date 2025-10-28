@@ -1,11 +1,5 @@
 import { AppContext } from '@/contexts'
-import {
-  MAX_SIZE_UPLOAD_AVATAR,
-  PROFILE_DEFAULT_VALUES,
-  profileSchema,
-  type FormDataError,
-  type ProfileFormData
-} from '@/pages/User/core'
+import { PROFILE_DEFAULT_VALUES, profileSchema, type FormDataError, type ProfileFormData } from '@/pages/User/core'
 import { userService } from '@/services'
 import type { ErrorResponse, User } from '@/types'
 import { isAxiosUnprocessableEntityError, saveUserToLocalStorage } from '@/utils'
@@ -104,30 +98,8 @@ const useProfileController = () => {
     }
   })
 
-  const validateFileBeforeUploading = (file?: File): boolean => {
-    if (!file) return false
-
-    if (file && (file.size >= MAX_SIZE_UPLOAD_AVATAR || !file.type.includes('image'))) {
-      toast.warn('Dung lượng file tối đa 1 MB và định dạng:.JPEG, .PNG')
-      return false
-    }
-
-    return true
-  }
-
-  const setEventValueToEmpty = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    event.currentTarget.value = ''
-  }
-
-  const handleUpload = () => {
-    fileInputRef.current?.click()
-  }
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0]
-    const isFileValid = validateFileBeforeUploading(selectedFile)
-    if (!isFileValid) return
-    setFile(selectedFile)
+  const handleFileChange = (file?: File) => {
+    setFile(file)
   }
 
   return {
@@ -142,9 +114,7 @@ const useProfileController = () => {
     fileInputRef,
     isSubmiting: updateProfileMutation.isPending,
     onSubmit,
-    handleUpload,
-    handleFileChange,
-    setEventValueToEmpty
+    handleFileChange
   }
 }
 

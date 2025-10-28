@@ -1,13 +1,15 @@
 import Avatar from '@/components/Avatar'
 import { PATH } from '@/constants'
 import { AppContext } from '@/contexts'
+import { ASIDE_NAV_ITEMS } from '@/pages/User/core'
 import type { User as UserType } from '@/types'
-import { LockKeyhole, Pencil, ReceiptText, User } from 'lucide-react'
+import { cn } from '@/utils'
+import { Pencil } from 'lucide-react'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const UserAsideNav = () => {
-  const { avatar, email } = useContext(AppContext).user as UserType
+  const { avatar = '', email = '' } = useContext(AppContext).user as UserType
 
   return (
     <>
@@ -28,30 +30,22 @@ const UserAsideNav = () => {
       <section className='mt-7'>
         <h2 className='sr-only'>User Navigation</h2>
         <ul>
-          <li>
-            <Link to={PATH.PROFILE} className='flex items-center capitalize text-orange-500 transition-colors gap-3'>
-              <User size={20} className='text-blue-500 ' />
-              Tài khoản của tôi
-            </Link>
-          </li>
-          <li className='mt-4'>
-            <Link
-              to={PATH.CHANGE_PASSWORD}
-              className='flex items-center capitalize text-gray-600 transition-colors gap-3'
-            >
-              <LockKeyhole size={20} className='text-blue-500 ' />
-              Đổi mật khẩu
-            </Link>
-          </li>
-          <li className='mt-4'>
-            <Link
-              to={PATH.HISTORY_PURCHASE}
-              className='flex items-center capitalize text-gray-600 transition-colors gap-3'
-            >
-              <ReceiptText size={20} className='text-blue-500 ' />
-              Đơn mua
-            </Link>
-          </li>
+          {ASIDE_NAV_ITEMS.map((item) => (
+            <li className='not-first:mt-4' key={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center capitalize gap-3 transition-colors hover:text-orange-500',
+                    isActive ? 'text-orange-500' : 'text-gray-600 hover:text-orange-500'
+                  )
+                }
+              >
+                <item.icon size={20} />
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </section>
     </>

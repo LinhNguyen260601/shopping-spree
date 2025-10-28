@@ -1,5 +1,8 @@
+import { PATH } from '@/constants'
 import type { DateSelectNameType, ProfileFormData } from '@/pages/User/core/types'
+import type { Path } from '@/types'
 import range from 'lodash/range'
+import { LockKeyhole, ReceiptText, User, type LucideProps } from 'lucide-react'
 
 export const PROFILE_DEFAULT_VALUES: ProfileFormData = {
   name: '',
@@ -32,3 +35,21 @@ export const DATE_SELECTS: {
 ]
 
 export const MAX_SIZE_UPLOAD_AVATAR = 1048576
+
+export const ASIDE_NAV_ITEMS: { path: Path; icon: React.ComponentType<LucideProps>; label: string }[] = [
+  {
+    path: PATH.PROFILE,
+    icon: User,
+    label: 'Tài khoản của tôi'
+  },
+  {
+    path: PATH.CHANGE_PASSWORD,
+    icon: LockKeyhole,
+    label: 'Đổi mật khẩu'
+  },
+  {
+    path: PATH.HISTORY_PURCHASE,
+    icon: ReceiptText,
+    label: 'Đơn mua'
+  }
+]
