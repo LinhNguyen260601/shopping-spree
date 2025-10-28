@@ -30,3 +30,5 @@ export const DATE_SELECTS: {
     options: range(1990, new Date().getFullYear() + 1).reverse()
   }
 ]
+
+export const MAX_SIZE_UPLOAD_AVATAR = 1048576

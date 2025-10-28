@@ -13,3 +13,7 @@ export type UserFormData = InferType<typeof userSchema>
 export type ProfileFormData = InferType<typeof profileSchema>
 
 export type DateSelectNameType = 'date' | 'month' | 'year'
+
+export type FormDataError = Omit<ProfileFormData, 'date_of_birth'> & {
+  date_of_birth?: string
+}

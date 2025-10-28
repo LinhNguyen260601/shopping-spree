@@ -7,14 +7,14 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const UserAsideNav = () => {
-  const { avatar = '', email = '' } = useContext(AppContext).user as UserType
+  const { avatar, email } = useContext(AppContext).user as UserType
 
   return (
     <>
       <nav className='flex flex-col border-b border-b-gray-200 py-4'>
         <figure className='flex items-center'>
           <Link to={PATH.PROFILE} className='size-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10'>
-            <Avatar width={48} height={48} src={avatar} />
+            <Avatar src={avatar} width={48} height={48} />
           </Link>
           <figcaption className='flex-grow pl-4'>
             <div className='mb-1 truncate font-semibold text-gray-600'>{email}</div>

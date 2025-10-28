@@ -1,19 +1,32 @@
 import { AppContext } from '@/contexts'
-import { PROFILE_DEFAULT_VALUES, profileSchema, type ProfileFormData } from '@/pages/User/core'
+import {
+  MAX_SIZE_UPLOAD_AVATAR,
+  PROFILE_DEFAULT_VALUES,
+  profileSchema,
+  type FormDataError,
+  type ProfileFormData
+} from '@/pages/User/core'
 import { userService } from '@/services'
-import type { User } from '@/types'
-import { saveUserToLocalStorage } from '@/utils'
+import type { ErrorResponse, User } from '@/types'
+import { isAxiosUnprocessableEntityError, saveUserToLocalStorage } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useForm, type Resolver } from 'react-hook-form'
 import { useLoaderData, useRevalidator } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const useProfileController = () => {
+  const [file, setFile] = useState<File>()
+
   const { data } = useLoaderData()
   const revalidator = useRevalidator()
+
   const setUser = useContext(AppContext).setUser
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const previewImage = useMemo(() => (file ? URL.createObjectURL(file) : ''), [file])
 
   const profile = data?.data as User
 
@@ -28,9 +41,16 @@ const useProfileController = () => {
     }
   })
 
+  const uploadAvatarMutation = useMutation({
+    mutationFn: userService.uploadAvatar
+  })
+
   const {
+    watch,
     control,
     register,
+    setValue,
+    setError,
     reset,
     handleSubmit,
     formState: { errors, isValid, isDirty }
@@ -39,6 +59,8 @@ const useProfileController = () => {
     resolver: yupResolver(profileSchema) as Resolver<ProfileFormData>,
     mode: 'onChange'
   })
+
+  const avatar = watch('avatar')
 
   useEffect(() => {
     if (profile) {
@@ -52,22 +74,77 @@ const useProfileController = () => {
     }
   }, [profile, reset])
 
-  const onSubmit = handleSubmit((data: ProfileFormData) => {
-    updateProfileMutation.mutate({
-      ...data,
-      date_of_birth: data.date_of_birth?.toISOString()
-    })
+  const onSubmit = handleSubmit(async (data: ProfileFormData) => {
+    try {
+      let src = avatar
+
+      if (file) {
+        const uploadRes = await uploadAvatarMutation.mutateAsync(file)
+        src = uploadRes.data.data
+        setValue('avatar', src)
+      }
+
+      updateProfileMutation.mutate({
+        ...data,
+        date_of_birth: data.date_of_birth?.toISOString(),
+        avatar: src
+      })
+    } catch (error) {
+      if (isAxiosUnprocessableEntityError<ErrorResponse<FormDataError>>(error)) {
+        const formError = error.response?.data.data
+        if (formError) {
+          Object.keys(formError).forEach((key) => {
+            setError(key as keyof FormDataError, {
+              message: formError[key as keyof FormDataError],
+              type: 'Server'
+            })
+          })
+        }
+      }
+    }
   })
 
+  const validateFileBeforeUploading = (file?: File): boolean => {
+    if (!file) return false
+
+    if (file && (file.size >= MAX_SIZE_UPLOAD_AVATAR || !file.type.includes('image'))) {
+      toast.warn('Dung lượng file tối đa 1 MB và định dạng:.JPEG, .PNG')
+      return false
+    }
+
+    return true
+  }
+
+  const setEventValueToEmpty = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    event.currentTarget.value = ''
+  }
+
+  const handleUpload = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0]
+    const isFileValid = validateFileBeforeUploading(selectedFile)
+    if (!isFileValid) return
+    setFile(selectedFile)
+  }
+
   return {
+    avatar,
     errors,
     isValid,
     control,
     isDirty,
     profile,
     register,
+    previewImage,
+    fileInputRef,
     isSubmiting: updateProfileMutation.isPending,
-    onSubmit
+    onSubmit,
+    handleUpload,
+    handleFileChange,
+    setEventValueToEmpty
   }
 }
 
