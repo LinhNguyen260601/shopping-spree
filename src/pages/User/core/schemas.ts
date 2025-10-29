@@ -9,7 +9,7 @@ export const userSchema = object({
   date_of_birth: date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
   password: passwordField(),
   new_password: passwordField(),
-  confirm_password: passwordConfirmField()
+  confirm_password: passwordConfirmField('new_password')
 })
 
 export const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birth', 'avatar'])

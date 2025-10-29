@@ -23,6 +23,8 @@ const NavHeader = () => {
   })
 
   const handleLogout = useCallback(() => {
+    import('@/layouts/RegisterLayout')
+    import('@/pages/Login')
     logoutMutation.mutate()
   }, [logoutMutation])
 
