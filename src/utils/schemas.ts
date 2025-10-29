@@ -25,9 +25,9 @@ export const passwordField = () =>
  * Password confirm field schema
  * @returns Password confirm field schema
  */
-export const passwordConfirmField = () =>
+export const passwordConfirmField = (field: 'password' | 'new_password' = 'password') =>
   string()
     .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
     .max(160, 'Mật khẩu không được vượt quá 160 ký tự')
     .required('Mật khẩu không được để trống')
-    .oneOf([ref('password')], 'Mật khẩu không khớp')
+    .oneOf([ref(field)], 'Mật khẩu không khớp')
