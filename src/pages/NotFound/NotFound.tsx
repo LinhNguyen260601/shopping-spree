@@ -8,15 +8,15 @@ const NotFound = () => {
       <header className='text-center'>
         <p className='text-9xl font-semibold text-orange-500'>404</p>
         <h1 className='mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-800 sm:text-7xl'>
-          Page not found
+          Không tìm thấy trang
         </h1>
         <p className='mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8'>
-          Sorry, we couldn’t find the page you’re looking for.
+          Rất tiếc, chúng tôi không tìm thấy trang bạn đang tìm kiếm.
         </p>
         <nav className='mt-10 flex items-center justify-center gap-x-6'>
           <Link to={PATH.HOME}>
             <Button size='lg' variant='primary'>
-              Go back home
+              Quay lại trang chủ
             </Button>
           </Link>
         </nav>
