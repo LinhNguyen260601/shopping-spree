@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/ErrorBoundary'
 import { PATH } from '@/constants/path'
 import { ProtectedRoute, RejectedRoute } from '@/guards'
 import MainLayout from '@/layouts/MainLayout'
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
         <CustomScrollRestoration />
       </>
     ),
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: PATH.HOME,
