@@ -3,6 +3,7 @@ import Button from '@/components/Button'
 import Popover from '@/components/Popover'
 import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
 import { AppContext } from '@/contexts'
+import { useStatusLink } from '@/hooks'
 import { authService } from '@/services'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChevronDown, Earth } from 'lucide-react'
@@ -10,8 +11,11 @@ import { useCallback, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 const NavHeader = () => {
+  const getStatusLink = useStatusLink().getStatusLink
   const { isAuthenticated, setIsAuthenticated, setUser, user } = useContext(AppContext)
   const queryClient = useQueryClient()
+
+  const historyPurchaseLinkTo = getStatusLink(PATH.HISTORY_PURCHASE)
 
   const logoutMutation = useMutation({
     mutationFn: authService.logout,
@@ -33,9 +37,9 @@ const NavHeader = () => {
     !isRegister ? import('@/pages/Login') : import('@/pages/Register')
   }
 
-  const handlePreloadUserLayout = () => {
+  const handlePreloadUserLayout = (type: 'profile' | 'history-purchase') => () => {
     import('@/pages/User/layouts/UserLayout')
-    import('@/pages/User/pages/Profile')
+    type === 'profile' ? import('@/pages/User/pages/Profile') : import('@/pages/User/pages/HistoryPurchase')
   }
 
   return (
@@ -84,15 +88,16 @@ const NavHeader = () => {
                 className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
                 role='menuitem'
                 aria-label='View my account'
-                onMouseEnter={handlePreloadUserLayout}
+                onMouseEnter={handlePreloadUserLayout('profile')}
               >
                 Tài khoản của tôi
               </Link>
               <Link
-                to={PATH.HOME}
+                to={historyPurchaseLinkTo}
                 className='w-full text-left block py-3 px-4 hover:bg-slate-100 bg-white hover:text-cyan-500 text-gray-800'
                 role='menuitem'
                 aria-label='View my orders'
+                onMouseEnter={handlePreloadUserLayout('history-purchase')}
               >
                 Đơn mua
               </Link>
