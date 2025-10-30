@@ -1,6 +1,7 @@
 import Avatar from '@/components/Avatar'
 import { PATH } from '@/constants'
 import { AppContext } from '@/contexts'
+import { useStatusLink } from '@/hooks'
 import { ASIDE_NAV_ITEMS } from '@/pages/User/core'
 import type { User as UserType } from '@/types'
 import { cn } from '@/utils'
@@ -9,7 +10,11 @@ import { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 const UserAsideNav = () => {
+  const getStatusLink = useStatusLink().getStatusLink
+
   const { avatar = '', email = '' } = useContext(AppContext).user as UserType
+
+  const historyPurchaseLinkTo = getStatusLink(PATH.HISTORY_PURCHASE)
 
   return (
     <>
@@ -33,7 +38,7 @@ const UserAsideNav = () => {
           {ASIDE_NAV_ITEMS.map((item) => (
             <li className='not-first:mt-4' key={item.path}>
               <NavLink
-                to={item.path}
+                to={item.path === PATH.HISTORY_PURCHASE ? historyPurchaseLinkTo : item.path}
                 className={({ isActive }) =>
                   cn(
                     'flex items-center capitalize gap-3 transition-colors hover:text-orange-500',

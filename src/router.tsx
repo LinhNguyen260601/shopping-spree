@@ -3,14 +3,22 @@ import { ProtectedRoute, RejectedRoute } from '@/guards'
 import MainLayout from '@/layouts/MainLayout'
 import RootLayout from '@/layouts/RootLayout'
 import ProductList from '@/pages/ProductList'
-import { productService, userService } from '@/services'
+import { productService, purchaseService, userService } from '@/services'
+import type { PurchaseListStatus } from '@/types'
 import { getIdFromNameId } from '@/utils'
 import { lazy } from 'react'
-import { createBrowserRouter, ScrollRestoration } from 'react-router-dom'
+import { createBrowserRouter, ScrollRestoration, useLocation } from 'react-router-dom'
 
 const CartLayout = lazy(() => import('@/layouts/CartLayout'))
 const RegisterLayout = lazy(() => import('@/layouts/RegisterLayout'))
 const UserLayout = lazy(() => import('@/pages/User/layouts/UserLayout'))
+
+const CustomScrollRestoration = () => {
+  const pathname = useLocation().pathname
+
+  if (pathname.startsWith('/user/purchase')) return null
+  return <ScrollRestoration />
+}
 
 const router = createBrowserRouter([
   {
@@ -18,7 +26,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <RootLayout />
-        <ScrollRestoration />
+        <CustomScrollRestoration />
       </>
     ),
     children: [
@@ -69,6 +77,11 @@ const router = createBrowserRouter([
                   return {
                     element: <HistoryPurchase />
                   }
+                },
+                loader: ({ request }) => {
+                  const searchParams = new URL(request.url).searchParams
+                  const status = searchParams.get('status')
+                  return purchaseService.getPurchases({ status: Number(status) as PurchaseListStatus })
                 }
               }
             ]
