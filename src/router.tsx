@@ -2,6 +2,7 @@ import { PATH } from '@/constants/path'
 import { ProtectedRoute, RejectedRoute } from '@/guards'
 import MainLayout from '@/layouts/MainLayout'
 import RootLayout from '@/layouts/RootLayout'
+import { NotFound } from '@/pages/NotFound'
 import ProductList from '@/pages/ProductList'
 import { productService, purchaseService, userService } from '@/services'
 import type { PurchaseListStatus } from '@/types'
@@ -146,6 +147,14 @@ const router = createBrowserRouter([
             }
           }
         ]
+      },
+      {
+        path: '*',
+        element: (
+          <MainLayout>
+            <NotFound />
+          </MainLayout>
+        )
       }
     ]
   }
