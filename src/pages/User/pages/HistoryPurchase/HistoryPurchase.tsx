@@ -45,7 +45,7 @@ const HistoryPurchase = () => {
       </nav>
 
       {/* Purchases List */}
-      <section aria-label='Purchase Orders' className='mt-4'>
+      <section aria-label='Purchase Orders' className='mt-4 min-w-[700px]'>
         {purchaseOrderData.map((purchase) => (
           <article
             key={purchase._id}
