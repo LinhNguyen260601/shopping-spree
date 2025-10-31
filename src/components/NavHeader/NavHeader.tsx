@@ -5,6 +5,7 @@ import { PATH, PURCHASES_STATUS, QUERY_KEY } from '@/constants'
 import { AppContext } from '@/contexts'
 import { useStatusLink } from '@/hooks'
 import { authService } from '@/services'
+import { clearLocalStorage } from '@/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChevronDown, Earth } from 'lucide-react'
 import { useCallback, useContext } from 'react'
@@ -23,6 +24,7 @@ const NavHeader = () => {
       setIsAuthenticated(false)
       setUser(null)
       queryClient.removeQueries({ queryKey: [QUERY_KEY.PURCHASES, { status: PURCHASES_STATUS.IN_CART }] })
+      clearLocalStorage()
     }
   })
 

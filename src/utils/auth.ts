@@ -11,10 +11,19 @@ export const saveAccessTokenToLocalStorage = (accessToken: string) => {
 }
 
 /**
+ * Save refresh token to local storage
+ * @param refreshToken - Refresh token
+ */
+export const saveRefreshTokenToLocalStorage = (refresh_token: string) => {
+  localStorage.setItem('refresh_token', refresh_token)
+}
+
+/**
  * Clear access token and user from local storage
  */
 export const clearLocalStorage = () => {
   localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
   localStorage.removeItem('user')
   const clearLocalStorageEvent = new Event('clearLocalStorage')
   localStorageEventTarget.dispatchEvent(clearLocalStorageEvent)
@@ -25,6 +34,12 @@ export const clearLocalStorage = () => {
  * @returns Access token
  */
 export const getAccessTokenFromLocalStorage = () => localStorage.getItem('access_token') ?? ''
+
+/**
+ * Get refresh token from local storage
+ * @returns Refresh token
+ */
+export const getRefreshTokenFromLocalStorage = () => localStorage.getItem('refresh_token') ?? ''
 
 /**
  * Get user from local storage
