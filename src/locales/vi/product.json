@@ -1,0 +1,12 @@
+{
+  "available": "Sản phẩm có sẵn",
+  "quantity": "Số lượng",
+  "sold": "Đã bán",
+  "productImages": "Hình ảnh sản phẩm",
+  "productDescription": "Mô tả sản phẩm",
+  "selectQuantity": "Chọn số lượng",
+  "pricingInfo": "Thông tin giá",
+  "purchaseActions": "Hành động mua hàng",
+  "rating": "Đánh giá",
+  "discount": "giảm"
+}

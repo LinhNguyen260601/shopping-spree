@@ -1,6 +1,7 @@
 import StarRating from '@/components/StarRating'
 import { type Product as ProductType } from '@/types'
 import { formatCurrency, formatNumberToSocialStyle, generateNameId } from '@/utils'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 interface ProductProps {
@@ -9,6 +10,7 @@ interface ProductProps {
 }
 
 const Product = ({ index, product }: ProductProps) => {
+  const { t } = useTranslation('product')
   return (
     <Link
       to={generateNameId({ name: product.name, id: product._id })}
@@ -50,7 +52,7 @@ const Product = ({ index, product }: ProductProps) => {
             <StarRating rating={product.rating} size='sm' />
             <div className='text-sm text-gray-700'>
               <span>{formatNumberToSocialStyle(product.sold)}</span>
-              <span className='ml-1'>Đã bán</span>
+              <span className='ml-1'>{t('product:sold')}</span>
             </div>
           </footer>
         </section>

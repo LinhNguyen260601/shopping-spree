@@ -11,11 +11,13 @@ import { formatCurrency } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 import { Handbag, Search, ShoppingCart } from 'lucide-react'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const MAX_PURCHASES_IN_CART = 5
 
 const Header = () => {
+  const { t } = useTranslation('header')
   const isAuthenticated = useContext(AppContext).isAuthenticated
   const { register, handleSearch } = useSearchProducts()
 
@@ -57,7 +59,7 @@ const Header = () => {
                   id='search-input'
                   type='search'
                   className='text-black px-3 py-2 flex-grow border-none outline-none bg-transparent'
-                  placeholder='Free Ship đơn từ 0Đ'
+                  placeholder={t('searchPlaceholder')}
                   aria-label='Search for products'
                   {...register('name')}
                 />
@@ -84,11 +86,11 @@ const Header = () => {
                   {isPurchasedGoodInCart ? (
                     <>
                       <header className='mb-4'>
-                        <h3 className='text-gray-400 capitalize text-sm font-medium'>Sản phẩm mới thêm</h3>
+                        <h3 className='text-gray-400 capitalize text-sm font-medium'>{t('cart.newProducts')}</h3>
                       </header>
 
                       <section className='space-y-3' aria-label='Product list'>
-                        <h4 className='sr-only'>Danh sách sản phẩm</h4>
+                        <h4 className='sr-only'>{t('cart.newProducts')}</h4>
                         {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((item) => (
                           <article
                             key={item._id}
@@ -123,11 +125,11 @@ const Header = () => {
                           {purchasesInCart.length > MAX_PURCHASES_IN_CART
                             ? purchasesInCart.length - MAX_PURCHASES_IN_CART
                             : ''}{' '}
-                          Thêm Hàng Vào Giỏ
+                          {t('cart.moreItems')}
                         </p>
                         <Link to={PATH.CART} className='cursor-pointer' onMouseEnter={handlePreloadCart}>
                           <Button variant='primary' size='sm'>
-                            Xem Giỏ Hàng
+                            {t('cart.viewCart')}
                           </Button>
                         </Link>
                       </footer>
@@ -135,7 +137,7 @@ const Header = () => {
                   ) : (
                     <figure className='p-2 flex flex-col items-center justify-center flex-shrink-0'>
                       <img src={noProductImage} alt='No product' width={100} height={100} className='object-cover' />
-                      <figcaption className='text-gray-400 text-sm font-medium'>Chưa có sản phẩm</figcaption>
+                      <figcaption className='text-gray-400 text-sm font-medium'>{t('cart.noProducts')}</figcaption>
                     </figure>
                   )}
                 </article>

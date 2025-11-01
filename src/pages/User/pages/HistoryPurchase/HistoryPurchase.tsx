@@ -1,12 +1,14 @@
 import Avatar from '@/components/Avatar'
 import { PATH, PURCHASES_STATUS } from '@/constants'
 import { useQueryParams } from '@/hooks'
-import { PURCHASE_TABS } from '@/pages/User/pages/HistoryPurchase/core'
+import { GET_TAB_LABEL, PURCHASE_TABS } from '@/pages/User/pages/HistoryPurchase/core'
 import type { Purchase } from '@/types'
 import { cn, formatCurrency, generateNameId } from '@/utils'
+import { useTranslation } from 'react-i18next'
 import { createSearchParams, Link, useLoaderData } from 'react-router-dom'
 
 const HistoryPurchase = () => {
+  const { t } = useTranslation('user')
   const data = useLoaderData()
   const queryParams: { status?: string } = useQueryParams()
   const status: number = Number(queryParams.status) ?? PURCHASES_STATUS.ALL
@@ -37,7 +39,7 @@ const HistoryPurchase = () => {
                 )}
                 aria-current={status === tab.status ? 'page' : undefined}
               >
-                {tab.label}
+                {GET_TAB_LABEL(t, tab.status)}
               </Link>
             </li>
           ))}
@@ -77,7 +79,7 @@ const HistoryPurchase = () => {
             </Link>
 
             <footer className='mt-4 flex justify-end border-t border-gray-100 pt-4 text-sm'>
-              <span className='text-gray-600'>Tổng giá tiền:</span>
+              <span className='text-gray-600'>{t('purchaseHistory.totalPrice')}</span>
               <strong className='ml-4 text-xl text-orange-500'>
                 ₫{formatCurrency(purchase.product.price * purchase.buy_count)}
               </strong>

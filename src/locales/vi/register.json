@@ -1,0 +1,14 @@
+{
+  "title": "Đăng ký",
+  "subtitle": "Vui lòng nhập thông tin đăng ký của bạn",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "confirmPassword": "Xác nhận mật khẩu",
+  "emailPlaceholder": "Nhập email của bạn",
+  "passwordPlaceholder": "Nhập mật khẩu của bạn",
+  "confirmPasswordPlaceholder": "Nhập lại mật khẩu của bạn",
+  "submit": "Đăng ký",
+  "hasAccount": "Bạn đã có tài khoản?",
+  "loginLink": "Đăng nhập"
+}
+

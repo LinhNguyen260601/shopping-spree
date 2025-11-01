@@ -1,8 +1,10 @@
 import Pagination from '@/components/Pagination'
 import { AsideFilter, Product, ProductListSkeleton, SortProductList } from '@/pages/ProductList/components'
 import { useProductListController } from '@/pages/ProductList/controllers'
+import { useTranslation } from 'react-i18next'
 
 const ProductList = () => {
+  const { t } = useTranslation('productList')
   const { error, isLoading, queryConfig, productsData, categoriesData, isLoadingCategories } =
     useProductListController()
 
@@ -35,11 +37,11 @@ const ProductList = () => {
                   <ProductListSkeleton />
                 ) : error ? (
                   <div className='col-span-full text-center py-8' role='alert' aria-live='polite'>
-                    <p className='text-red-600'>Có lỗi xảy ra khi tải sản phẩm. Vui lòng thử lại.</p>
+                    <p className='text-red-600'>{t('errorLoading')}</p>
                   </div>
                 ) : products.length === 0 ? (
                   <div className='col-span-full text-center py-8'>
-                    <p className='text-gray-600'>Không tìm thấy sản phẩm nào.</p>
+                    <p className='text-gray-600'>{t('noProducts')}</p>
                   </div>
                 ) : (
                   products.map((product, index) => (

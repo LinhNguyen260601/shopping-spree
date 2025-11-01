@@ -1,0 +1,18 @@
+{
+  "title": "Giỏ hàng",
+  "emptyCart": "Giỏ hàng của bạn còn trống",
+  "product": "Sản phẩm",
+  "selectProduct": "Chọn sản phẩm",
+  "selectAll": "Chọn tất cả",
+  "unitPrice": "Đơn giá",
+  "quantity": "Số lượng",
+  "totalPrice": "Số tiền",
+  "actions": "Thao tác",
+  "cartItems": "Các sản phẩm trong giỏ hàng",
+  "totalPayment": "Tổng thanh toán",
+  "products": "sản phẩm",
+  "saving": "Tiết kiệm:",
+  "buyNow": "Mua ngay",
+  "moreItemsInCart": "Thêm Hàng Vào Giỏ"
+}
+

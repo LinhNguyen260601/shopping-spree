@@ -8,6 +8,7 @@ import type { QueryConfig } from '@/pages/ProductList/types'
 import type { Category } from '@/types'
 import { buildLinkWithUpdatedQuery, cn } from '@/utils'
 import { Funnel, Logs, StepForward } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 interface AsideFilterProps {
@@ -17,13 +18,14 @@ interface AsideFilterProps {
 }
 
 const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilterProps) => {
+  const { t } = useTranslation(['home', 'productList', 'common'])
   const { category } = queryConfig
 
   const { control, errors, handleInputNumberChange, handleRemoveLeftAsideFilter, onSubmit } =
     useAsideFilterController(queryConfig)
 
   return (
-    <aside className='py-4' role='complementary' aria-label='Bộ lọc sản phẩm'>
+    <aside className='py-4' role='complementary' aria-label={t('productList:productCategories')}>
       <header>
         <Link
           to={PATH.HOME}
@@ -32,14 +34,14 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
           })}
         >
           <Logs size={20} className='mr-3' aria-hidden='true' />
-          Tất cả danh mục
+          {t('home:asideFilter.allCategories')}
         </Link>
       </header>
 
       <hr className='bg-gray-300 h-[1px] my-4 border-0' />
 
-      <nav aria-label='Danh mục sản phẩm'>
-        <h2 className='sr-only'>Danh mục sản phẩm</h2>
+      <nav aria-label={t('productList:productCategories')}>
+        <h2 className='sr-only'>{t('productList:productCategories')}</h2>
         {isLoadingCategories ? (
           <CategorySkeleton />
         ) : (
@@ -72,25 +74,25 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
         <header>
           <h3 className='flex items-center font-bold uppercase text-gray-900'>
             <Funnel className='mr-3 size-3' aria-hidden='true' />
-            Bộ lọc tìm kiếm
+            {t('home:asideFilter.searchFilters')}
           </h3>
         </header>
 
         <hr className='bg-gray-300 h-[1px] my-4 border-0' />
 
         <fieldset className='my-5'>
-          <legend className='text-sm font-medium mb-2 text-gray-900'>Khoảng giá</legend>
-          <form className='mt-2' role='search' aria-label='Lọc theo giá' onSubmit={onSubmit}>
+          <legend className='text-sm font-medium mb-2 text-gray-900'>{t('productList:priceRange')}</legend>
+          <form className='mt-2' role='search' aria-label={t('productList:applyPriceFilter')} onSubmit={onSubmit}>
             <div className='flex items-start'>
               <InputController
                 control={control}
                 name='price_min'
                 type='number'
                 className='grow'
-                placeholder='₫ Từ'
+                placeholder={`₫ ${t('productList:priceFrom')}`}
                 classNameInput='p-1 bg-white'
                 classNameError='hidden'
-                aria-label='Giá từ'
+                aria-label={t('productList:priceFrom')}
                 onChange={handleInputNumberChange('price_min')}
               />
               <span className='mx-2 mt-2 shrink-0' aria-hidden='true'>
@@ -101,10 +103,10 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
                 name='price_max'
                 type='number'
                 className='grow'
-                placeholder='₫ Đến'
+                placeholder={`₫ ${t('productList:priceTo')}`}
                 classNameInput='p-1 bg-white'
                 classNameError='hidden'
-                aria-label='Giá đến'
+                aria-label={t('productList:priceTo')}
                 onChange={handleInputNumberChange('price_max')}
               />
             </div>
@@ -115,9 +117,9 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
               size='sm'
               fullWidth
               className='uppercase'
-              aria-label='Áp dụng bộ lọc giá'
+              aria-label={t('productList:applyPriceFilter')}
             >
-              Áp dụng
+              {t('common:actions.apply')}
             </Button>
           </form>
         </fieldset>
@@ -125,7 +127,7 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
         <hr className='bg-gray-300 h-[1px] my-4 border-0' />
 
         <fieldset>
-          <legend className='text-sm font-medium mb-2 text-gray-900'>Đánh giá</legend>
+          <legend className='text-sm font-medium mb-2 text-gray-900'>{t('productList:rating')}</legend>
           <ul className='my-3'>
             {Array.from({ length: 5 })
               .map((_, index) => (
@@ -133,10 +135,10 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
                   <Link
                     to={buildLinkWithUpdatedQuery(queryConfig, 'rating_filter', index + 1)}
                     className='flex items-center text-sm gap-1 text-gray-800 hover:text-orange-600'
-                    aria-label={`Sản phẩm ${index + 1} sao trở lên`}
+                    aria-label={`${t('productList:viewProduct')} ${index + 1} ${t('productList:rating')} ${t('productList:andAbove')}`}
                   >
                     <StarRating rating={index + 1} />
-                    {index + 1 < 5 && <span>Trở lên</span>}
+                    {index + 1 < 5 && <span>{t('productList:andAbove')}</span>}
                   </Link>
                 </li>
               ))
@@ -152,10 +154,10 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
             size='sm'
             fullWidth
             className='uppercase'
-            aria-label='Xóa tất cả bộ lọc'
+            aria-label={t('productList:removeAllFilters')}
             onClick={handleRemoveLeftAsideFilter}
           >
-            Xóa tất cả
+            {t('common:actions.deleteAll')}
           </Button>
         </footer>
       </section>

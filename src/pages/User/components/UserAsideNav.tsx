@@ -7,9 +7,11 @@ import type { User as UserType } from '@/types'
 import { cn } from '@/utils'
 import { Pencil } from 'lucide-react'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
 
 const UserAsideNav = () => {
+  const { t } = useTranslation(['user', 'common'])
   const getStatusLink = useStatusLink().getStatusLink
 
   const { avatar = '', email = '' } = useContext(AppContext).user as UserType
@@ -27,7 +29,7 @@ const UserAsideNav = () => {
             <div className='mb-1 truncate font-semibold text-gray-600'>{email}</div>
             <Link to={PATH.PROFILE} className='flex items-center capitalize text-gray-500 gap-1'>
               <Pencil size={12} className='text-[#9b9b9b] fill-[#9b9b9b]' />
-              Sửa hồ sơ
+              {t('common:actions.editProfile')}
             </Link>
           </figcaption>
         </figure>
@@ -47,7 +49,7 @@ const UserAsideNav = () => {
                 }
               >
                 <item.icon size={20} />
-                {item.label}
+                {t(`asideNav.${item.path === PATH.PROFILE ? 'myAccount' : item.path === PATH.CHANGE_PASSWORD ? 'changePassword' : 'purchaseHistory'}`)}
               </NavLink>
             </li>
           ))}

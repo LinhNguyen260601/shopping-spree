@@ -1,0 +1,12 @@
+{
+  "title": "Login",
+  "subtitle": "Please enter your login information",
+  "email": "Email",
+  "password": "Password",
+  "emailPlaceholder": "Enter your email",
+  "passwordPlaceholder": "Enter your password",
+  "submit": "Login",
+  "noAccount": "Don't have an account?",
+  "registerLink": "Register"
+}
+

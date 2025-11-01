@@ -57,3 +57,26 @@ export const getUserFromLocalStorage = () => {
 export const saveUserToLocalStorage = (user: User) => {
   localStorage.setItem('user', JSON.stringify(user))
 }
+
+/**
+ * Save language preference to local storage
+ * @param language - Language code (e.g., 'en', 'vi')
+ */
+export const saveLanguageToLocalStorage = (language: string) => {
+  localStorage.setItem('language', language)
+}
+
+/**
+ * Get language preference from local storage
+ * @returns Language code or null if not found
+ */
+export const getLanguageFromLocalStorage = () => {
+  return localStorage.getItem('language')
+}
+
+/**
+ * Remove language preference from local storage
+ */
+export const removeLanguageFromLocalStorage = () => {
+  localStorage.removeItem('language')
+}

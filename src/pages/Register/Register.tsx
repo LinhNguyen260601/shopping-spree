@@ -2,9 +2,11 @@ import Button from '@/components/Button'
 import FormField from '@/components/FormField'
 import { PATH } from '@/constants'
 import useRegisterController from '@/pages/Register/controllers'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const Register = () => {
+  const { t } = useTranslation(['register', 'common'])
   const { register, formState, onSubmit, isSubmitting, handlePreloadRegisterLayout } = useRegisterController()
 
   const { errors, isValid, isDirty } = formState
@@ -18,17 +20,17 @@ const Register = () => {
             <form className='p-10 rounded bg-white shadow-sm' role='form' aria-label='Đăng nhập' onSubmit={onSubmit}>
               {/* Header */}
               <header className='mb-8'>
-                <h1 className='text-2xl font-semibold text-gray-800'>Đăng ký</h1>
-                <p className='mt-2 text-sm text-gray-600'>Vui lòng nhập thông tin đăng ký của bạn</p>
+                <h1 className='text-2xl font-semibold text-gray-800'>{t('register:title')}</h1>
+                <p className='mt-2 text-sm text-gray-600'>{t('register:subtitle')}</p>
               </header>
 
               {/* Form */}
               <fieldset className='space-y-1'>
                 <FormField
                   name='email'
-                  label='Email'
+                  label={t('register:email')}
                   type='email'
-                  placeholder='Nhập email của bạn'
+                  placeholder={t('register:emailPlaceholder')}
                   required
                   error={errors.email?.message}
                   register={register}
@@ -36,9 +38,9 @@ const Register = () => {
                 />
                 <FormField
                   name='password'
-                  label='Mật khẩu'
+                  label={t('register:password')}
                   type='password'
-                  placeholder='Nhập mật khẩu của bạn'
+                  placeholder={t('register:passwordPlaceholder')}
                   required
                   showPasswordToggle
                   error={errors.password?.message}
@@ -47,9 +49,9 @@ const Register = () => {
                 />
                 <FormField
                   name='passwordConfirm'
-                  label='Xác nhận mật khẩu'
+                  label={t('register:confirmPassword')}
                   type='password'
-                  placeholder='Nhập lại mật khẩu của bạn'
+                  placeholder={t('register:confirmPasswordPlaceholder')}
                   required
                   showPasswordToggle
                   error={errors.passwordConfirm?.message}
@@ -63,7 +65,7 @@ const Register = () => {
                 <Button
                   type='submit'
                   loading={isSubmitting}
-                  loadingText='Đang đăng ký...'
+                  loadingText={t('common:loading.registering')}
                   variant='danger'
                   size='lg'
                   fullWidth
@@ -71,19 +73,19 @@ const Register = () => {
                   disabled={!isValid || !isDirty}
                   aria-describedby='submit-help'
                 >
-                  Đăng ký
+                  {t('register:submit')}
                 </Button>
               </div>
 
               {/* Link */}
               <nav className='mt-8 text-center'>
-                <span className='text-gray-600'>Bạn đã có tài khoản? </span>
+                <span className='text-gray-600'>{t('register:hasAccount')} </span>
                 <Link
                   to={PATH.LOGIN}
                   className='text-red-600 font-medium hover:text-red-700'
                   onMouseEnter={handlePreloadRegisterLayout}
                 >
-                  Đăng nhập
+                  {t('register:loginLink')}
                 </Link>
               </nav>
             </form>

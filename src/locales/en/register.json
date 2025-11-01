@@ -1,0 +1,14 @@
+{
+  "title": "Register",
+  "subtitle": "Please enter your registration information",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "emailPlaceholder": "Enter your email",
+  "passwordPlaceholder": "Enter your password",
+  "confirmPasswordPlaceholder": "Re-enter your password",
+  "submit": "Register",
+  "hasAccount": "Already have an account?",
+  "loginLink": "Login"
+}
+
