@@ -1,0 +1,12 @@
+{
+  "title": "Đăng nhập",
+  "subtitle": "Vui lòng nhập thông tin đăng nhập của bạn",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "emailPlaceholder": "Nhập email của bạn",
+  "passwordPlaceholder": "Nhập mật khẩu của bạn",
+  "submit": "Đăng nhập",
+  "noAccount": "Bạn chưa có tài khoản?",
+  "registerLink": "Đăng ký"
+}
+

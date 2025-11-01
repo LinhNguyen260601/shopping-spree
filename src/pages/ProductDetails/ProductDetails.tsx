@@ -5,8 +5,11 @@ import { useProductDetaisController } from '@/pages/ProductDetails/controllers'
 import { calculateDiscountPercentage, formatCurrency, formatNumberToSocialStyle } from '@/utils'
 import DOMPurify from 'dompurify'
 import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const ProductDetails = () => {
+  const { t } = useTranslation(['product', 'common'])
+
   const {
     product,
     buyCount,
@@ -32,7 +35,7 @@ const ProductDetails = () => {
         <article className='bg-white p-4 shadow'>
           <header className='grid grid-cols-12 gap-9'>
             <section className='col-span-5' aria-label='Product images'>
-              <h2 className='sr-only'>Hình ảnh sản phẩm</h2>
+              <h2 className='sr-only'>{t('product:productImages')}</h2>
               <figure
                 className='w-full pt-[100%] relative shadow overflow-hidden cursor-zoom-in'
                 onMouseMove={handleZoom}
@@ -101,23 +104,23 @@ const ProductDetails = () => {
                   <div className='mx-4 h-4 w-[1px] bg-gray-300'></div>
                   <div>
                     <span>{formatNumberToSocialStyle(product.sold)}</span>
-                    <span className='ml-1 text-gray-500'>Đã bán</span>
+                    <span className='ml-1 text-gray-500'>{t('product:sold')}</span>
                   </div>
                 </div>
               </header>
 
               <section className='mt-8 flex items-center bg-gray-50 px-5 py-4' aria-label='Pricing information'>
-                <h2 className='sr-only'>Thông tin giá</h2>
+                <h2 className='sr-only'>{t('product:pricingInfo')}</h2>
                 <div className='text-gray-500 line-through'>₫{formatCurrency(product.price_before_discount)}</div>
                 <div className='ml-3 text-3xl font-medium text-orange-500'>₫{formatCurrency(product.price)}</div>
                 <div className='ml-4 rounded-sm bg-orange-600 px-1 py-[2px] text-xs font-semibold uppercase text-white'>
-                  {calculateDiscountPercentage(product.price_before_discount, product.price)} giảm
+                  {calculateDiscountPercentage(product.price_before_discount, product.price)} {t('product:discount')}
                 </div>
               </section>
 
               <section className='mt-8 flex items-center' aria-label='Quantity selection'>
-                <h2 className='sr-only'>Chọn số lượng</h2>
-                <div className='capitalize text-gray-500'>Số lượng</div>
+                <h2 className='sr-only'>{t('product:selectQuantity')}</h2>
+                <div className='capitalize text-gray-500'>{t('product:quantity')}</div>
                 <QuantityController
                   value={buyCount}
                   max={product.quantity}
@@ -125,7 +128,9 @@ const ProductDetails = () => {
                   onDecrease={handleBuyCount}
                   onIncrease={handleBuyCount}
                 />
-                <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
+                <div className='ml-6 text-sm text-gray-500'>
+                  {product.quantity} {t('product:available')}
+                </div>
               </section>
 
               <footer className='mt-8 flex items-center gap-4' role='group' aria-label='Purchase actions'>
@@ -135,13 +140,13 @@ const ProductDetails = () => {
                   className='capitalize'
                   onClick={handleAddToCart}
                   loading={isAddingToCart}
-                  loadingText='Đang thêm vào giỏ hàng'
+                  loadingText={t('common:loading.addingToCart')}
                 >
                   <ShoppingCart className='size-4' />
-                  Thêm vào giỏ hàng
+                  {t('common:actions.addToCart')}
                 </Button>
                 <Button variant='primary' size='lg' className='min-w-[5rem] capitalize' onClick={handleBuyNow}>
-                  Mua ngay
+                  {t('common:actions.buyNow')}
                 </Button>
               </footer>
             </section>
@@ -152,7 +157,9 @@ const ProductDetails = () => {
       <div className='container'>
         <article className='mt-8 bg-white p-4 shadow'>
           <header>
-            <h2 className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>Mô tả sản phẩm</h2>
+            <h2 className='rounded bg-gray-50 p-4 text-lg capitalize text-slate-700'>
+              {t('product:productDescription')}
+            </h2>
           </header>
           <section className='mx-4 mt-12 mb-4 text-sm leading-loose' aria-label='Product description'>
             <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product.description) }} />

@@ -1,0 +1,28 @@
+{
+  "title": "Danh sách sản phẩm",
+  "searchResults": "Kết quả tìm kiếm",
+  "productsFound": "sản phẩm được tìm thấy",
+  "noProducts": "Không tìm thấy sản phẩm nào.",
+  "errorLoading": "Có lỗi xảy ra khi tải sản phẩm. Vui lòng thử lại.",
+  "sortBy": "Sắp xếp theo",
+  "popular": "Phổ biến",
+  "newest": "Mới nhất",
+  "bestselling": "Bán chạy",
+  "price": "Giá",
+  "priceLowToHigh": "Giá: Thấp đến cao",
+  "priceHighToLow": "Giá: Cao đến thấp",
+  "currentPage": "Trang hiện tại",
+  "totalPages": "tổng số trang",
+  "previousPage": "Trang trước",
+  "nextPage": "Trang sau",
+  "priceRange": "Khoảng giá",
+  "priceFrom": "Từ",
+  "priceTo": "Đến",
+  "applyPriceFilter": "Áp dụng bộ lọc giá",
+  "rating": "Đánh giá",
+  "andAbove": "Trở lên",
+  "removeAllFilters": "Xóa tất cả bộ lọc",
+  "productCategories": "Danh mục sản phẩm",
+  "viewProduct": "Xem chi tiết sản phẩm"
+}
+

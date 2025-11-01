@@ -1,0 +1,51 @@
+{
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your profile information to secure your account",
+    "personalInfo": "Personal Information",
+    "avatar": "Avatar",
+    "email": "Email",
+    "name": "Name",
+    "namePlaceholder": "Name",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Phone Number",
+    "address": "Address",
+    "addressPlaceholder": "Address",
+    "fileSize": "Maximum file size 1 MB",
+    "fileFormat": "Format: .JPEG, .PNG",
+    "saveButton": "Save"
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "subtitle": "Manage your profile information to secure your account",
+    "oldPassword": "Old Password",
+    "oldPasswordPlaceholder": "Old Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Confirm New Password",
+    "saveButton": "Save"
+  },
+  "asideNav": {
+    "myAccount": "My Account",
+    "changePassword": "Change Password",
+    "purchaseHistory": "Purchase Orders"
+  },
+  "purchaseHistory": {
+    "title": "Purchase History",
+    "all": "All",
+    "waitingForConfirmation": "Waiting for Confirmation",
+    "pickingUp": "Waiting for Pickup",
+    "inTransit": "In Transit",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "totalPrice": "Total price:"
+  },
+  "dateSelect": {
+    "dateOfBirth": "Date of Birth",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
+  }
+}
+

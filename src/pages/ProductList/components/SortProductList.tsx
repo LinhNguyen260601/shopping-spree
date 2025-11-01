@@ -1,11 +1,12 @@
 import Label from '@/components/Label'
-import { SORT_BY } from '@/constants'
-import { PRICE_OPTIONS } from '@/pages/ProductList/constants'
+import { SORT_BY, SORT_ORDER } from '@/constants'
 import { useSortProductListController } from '@/pages/ProductList/controllers'
 import type { QueryConfig } from '@/pages/ProductList/types'
 import type { SortBy } from '@/types'
 import { buildLinkWithUpdatedQuery, cn } from '@/utils'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 interface SortProductListProps {
@@ -14,6 +15,7 @@ interface SortProductListProps {
 }
 
 const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
+  const { t } = useTranslation('productList')
   const { order, page } = queryConfig
   const pageNumber = Number(page)
 
@@ -21,15 +23,33 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
 
   const { handleSort, handleChangePriceOrder } = useSortProductListController(queryConfig)
 
+  const priceOptions = useMemo(
+    () => [
+      {
+        value: '',
+        label: t('price')
+      },
+      {
+        value: SORT_ORDER.ASC,
+        label: t('priceLowToHigh')
+      },
+      {
+        value: SORT_ORDER.DESC,
+        label: t('priceHighToLow')
+      }
+    ],
+    [t]
+  )
+
   return (
     <section className='bg-gray-300/40 py-4 px-3' aria-label='Bộ công cụ sắp xếp và phân trang'>
       <h2 className='sr-only'>Bộ công cụ sắp xếp và phân trang</h2>
       <div className='flex flex-wrap items-center justify-between gap-2'>
         <div className='flex items-center flex-wrap gap-2'>
           <Label className='text-sm font-medium text-gray-900' htmlFor='sort-options'>
-            Sắp xếp theo
+            {t('sortBy')}
           </Label>
-          <nav aria-label='Tùy chọn sắp xếp'>
+          <nav aria-label={t('sortBy')}>
             <ul className='flex items-center gap-2'>
               <li>
                 <button
@@ -40,10 +60,10 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
                       : 'bg-white text-black hover:bg-slate-100'
                   )}
                   aria-pressed='true'
-                  aria-label='Sắp xếp theo độ phổ biến'
+                  aria-label={t('popular')}
                   onClick={handleSort(SORT_BY.VIEW)}
                 >
-                  Phổ biến
+                  {t('popular')}
                 </button>
               </li>
               <li>
@@ -55,10 +75,10 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
                       : 'bg-white text-black hover:bg-slate-100'
                   )}
                   aria-pressed='false'
-                  aria-label='Sắp xếp theo mới nhất'
+                  aria-label={t('newest')}
                   onClick={handleSort(SORT_BY.CREATED_AT)}
                 >
-                  Mới nhất
+                  {t('newest')}
                 </button>
               </li>
               <li>
@@ -70,10 +90,10 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
                       : 'bg-white text-black hover:bg-slate-100'
                   )}
                   aria-pressed='false'
-                  aria-label='Sắp xếp theo bán chạy'
+                  aria-label={t('bestselling')}
                   onClick={handleSort(SORT_BY.SOLD)}
                 >
-                  Bán chạy
+                  {t('bestselling')}
                 </button>
               </li>
               <li>
@@ -86,10 +106,10 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
                       : 'bg-white text-black hover:bg-slate-100'
                   )}
                   value={order || ''}
-                  aria-label='Sắp xếp theo giá'
+                  aria-label={t('price')}
                   onChange={handleChangePriceOrder}
                 >
-                  {PRICE_OPTIONS.map((option) => (
+                  {priceOptions.map((option) => (
                     <option
                       key={option.value}
                       value={option.value}
@@ -105,16 +125,16 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
           </nav>
         </div>
 
-        <nav className='flex items-center' aria-label='Phân trang'>
+        <nav className='flex items-center' aria-label={t('nextPage')}>
           <div className='text-sm'>
-            <span className='text-orange-800 font-medium' aria-label='Trang hiện tại'>
+            <span className='text-orange-800 font-medium' aria-label={t('currentPage')}>
               {page}
             </span>
-            <span className='text-gray-800' aria-label='tổng số trang'>
+            <span className='text-gray-800' aria-label={t('totalPages')}>
               /{pageSize || '...'}
             </span>
           </div>
-          <div className='ml-2 flex' aria-label='Điều hướng trang'>
+          <div className='ml-2 flex' aria-label={t('nextPage')}>
             {pageNumber === 1 ? (
               <span className='px-3 h-8 rounded-tl-sm rounded-bl-sm bg-gray-200 text-gray-700 cursor-not-allowed shadow border border-gray-300 flex items-center'>
                 <ChevronLeft className='size-4' aria-hidden='true' />
@@ -123,7 +143,7 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
               <Link
                 to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) - 1)}
                 className='px-3 h-8 rounded-tl-sm rounded-bl-sm bg-white text-gray-700 hover:bg-gray-300 cursor-pointer shadow border border-gray-300 flex items-center'
-                aria-label='Trang trước'
+                aria-label={t('previousPage')}
                 aria-disabled='false'
               >
                 <ChevronLeft className='size-4' aria-hidden='false' />
@@ -137,7 +157,7 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
               <Link
                 to={buildLinkWithUpdatedQuery(queryConfig, 'page', Number(page) + 1)}
                 className='shadow px-3 h-8 rounded-tr-sm rounded-br-sm bg-white text-gray-700 hover:bg-gray-300 cursor-pointer border border-gray-300 flex items-center'
-                aria-label='Trang sau'
+                aria-label={t('nextPage')}
               >
                 <ChevronRight className='size-4' aria-hidden='false' />
               </Link>

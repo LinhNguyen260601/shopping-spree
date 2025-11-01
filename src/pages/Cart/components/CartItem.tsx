@@ -3,6 +3,7 @@ import QuantityController from '@/components/QuantityController'
 import { PATH } from '@/constants'
 import type { ExtendedPurchases } from '@/pages/Cart/core'
 import { formatCurrency, generateNameId } from '@/utils'
+import { useTranslation } from 'react-i18next'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -25,6 +26,8 @@ const CartItem: React.FC<CartItemProps> = ({
   onDecrease,
   onCheck
 }) => {
+  const { t } = useTranslation(['cart', 'common'])
+
   return (
     <li className='grid grid-cols-12 rounded-sm bg-white py-5 px-4 text-center text-sm text-gray-500'>
       <article className='col-span-6 text-left' aria-label={purchase.product.name}>
@@ -32,7 +35,7 @@ const CartItem: React.FC<CartItemProps> = ({
           <div className='flex flex-shrink-0 items-center justify-center pr-3'>
             <Checkbox
               checked={purchase.checked}
-              aria-label={`Chọn sản phẩm ${purchase.product.name}`}
+              aria-label={`${t('cart:selectProduct')} ${purchase.product.name}`}
               onChange={onCheck}
             />
           </div>
@@ -94,10 +97,10 @@ const CartItem: React.FC<CartItemProps> = ({
           <button
             type='button'
             onClick={onDelete}
-            aria-label={`Xóa ${purchase.product.name}`}
+            aria-label={`${t('common:actions.delete')} ${purchase.product.name}`}
             className='bg-none cursor-pointer text-black transition-colors hover:text-orange-500'
           >
-            Xóa
+            {t('common:actions.delete')}
           </button>
         </div>
       </div>

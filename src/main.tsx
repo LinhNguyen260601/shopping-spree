@@ -5,6 +5,7 @@ import '@/styles/index.css'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { lazy, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@/i18n/i18n'
 
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>

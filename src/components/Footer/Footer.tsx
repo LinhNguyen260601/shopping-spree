@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 const COUNTRIES = [
   'Singapore',
   'Indonesia',
@@ -14,24 +16,24 @@ const COUNTRIES = [
 ]
 
 const Footer = () => {
+  const { t } = useTranslation('footer')
+
   return (
     <footer className='bg-neutral-100 py-12'>
       <div className='container max-w-6xl mx-auto px-4'>
         {/* Main Footer Content */}
         <section className='grid grid-cols-1 gap-8 lg:grid-cols-2 mb-8'>
-          <h2 className='sr-only'>Thông tin công ty</h2>
+          <h2 className='sr-only'>{t('companyInfo')}</h2>
 
           {/* Copyright Section */}
           <article className='space-y-3'>
-            <h3 className='text-base font-semibold text-neutral-800'>Bản quyền</h3>
-            <p className='text-sm text-neutral-600 leading-relaxed'>
-              © 2025 Shopping Spree. Tất cả các quyền được bảo lưu.
-            </p>
+            <h3 className='text-base font-semibold text-neutral-800'>{t('copyright')}</h3>
+            <p className='text-sm text-neutral-600 leading-relaxed'>{t('copyrightText')}</p>
           </article>
 
           {/* Countries Section */}
           <article className='space-y-3'>
-            <h3 className='text-base font-semibold text-neutral-800'>Quốc gia & Khu vực</h3>
+            <h3 className='text-base font-semibold text-neutral-800'>{t('countries')}</h3>
             <div className='flex flex-wrap gap-2'>
               {COUNTRIES.map((country, index) => (
                 <span
@@ -47,15 +49,15 @@ const Footer = () => {
 
         {/* Company Info Section */}
         <section className='border-t border-neutral-200 pt-8'>
-          <h2 className='sr-only'>Thông tin liên hệ</h2>
+          <h2 className='sr-only'>{t('companyInfo')}</h2>
           <div className='text-center space-y-4'>
             <address className='not-italic'>
-              <h3 className='text-lg font-semibold text-neutral-800 mb-2'>Công ty TNHH Shopping Spree</h3>
-              <p className='text-sm text-neutral-600'>Địa chỉ: 6 Nại Nam, Hoà Cường Bắc, Hải Châu, Đà Nẵng</p>
+              <h3 className='text-lg font-semibold text-neutral-800 mb-2'>{t('companyName')}</h3>
+              <p className='text-sm text-neutral-600'>{t('address')}</p>
             </address>
 
             <div className='pt-4 border-t border-neutral-200'>
-              <p className='text-xs text-neutral-600'>© 2025 - Bản quyền thuộc về Công ty TNHH Shopping Spree</p>
+              <p className='text-xs text-neutral-600'>{t('copyrightFooter')}</p>
             </div>
           </div>
         </section>

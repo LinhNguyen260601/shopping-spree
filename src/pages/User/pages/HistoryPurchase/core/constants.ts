@@ -1,4 +1,5 @@
 import { PURCHASES_STATUS } from '@/constants'
+import type { TFunction } from 'i18next'
 
 export const PURCHASE_TABS = [
   {
@@ -26,3 +27,15 @@ export const PURCHASE_TABS = [
     label: 'Đã hủy'
   }
 ]
+
+export const GET_TAB_LABEL = (t: TFunction<'user'>, tabStatus: number) => {
+  const labels: Record<number, string> = {
+    [PURCHASES_STATUS.ALL]: t('purchaseHistory.all'),
+    [PURCHASES_STATUS.WAITING_FOR_CONFIRMATION]: t('purchaseHistory.waitingForConfirmation'),
+    [PURCHASES_STATUS.PICKING_UP]: t('purchaseHistory.pickingUp'),
+    [PURCHASES_STATUS.IN_TRANSIT]: t('purchaseHistory.inTransit'),
+    [PURCHASES_STATUS.DELIVERED]: t('purchaseHistory.delivered'),
+    [PURCHASES_STATUS.CANCELLED]: t('purchaseHistory.cancelled')
+  }
+  return labels[tabStatus] || tabStatus.toString()
+}
