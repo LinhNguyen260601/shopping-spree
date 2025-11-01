@@ -6,6 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { lazy, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@/i18n/i18n'
+import { HelmetProvider } from '@dr.pogodin/react-helmet'
 
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -17,11 +18,13 @@ const ReactQueryDevtools = import.meta.env.DEV
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AppProvider>
-        <App />
-      </AppProvider>
-      <ReactQueryDevtools initialIsOpen={false} position='right' />
-    </QueryClientProvider>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+        <ReactQueryDevtools initialIsOpen={false} position='right' />
+      </QueryClientProvider>
+    </HelmetProvider>
   </StrictMode>
 )
