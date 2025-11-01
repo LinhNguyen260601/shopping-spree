@@ -1,3 +1,4 @@
+import { Helmet } from '@dr.pogodin/react-helmet'
 import Avatar from '@/components/Avatar'
 import Button from '@/components/Button'
 import FormField from '@/components/FormField'
@@ -25,7 +26,27 @@ const Profile = () => {
   } = useProfileController()
 
   return (
-    <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
+    <>
+      <Helmet>
+        <title>Thông Tin Cá Nhân - Shopping Spree | Quản Lý Tài Khoản</title>
+        <meta
+          name='description'
+          content='Quản lý thông tin cá nhân của bạn tại Shopping Spree. Cập nhật hồ sơ, địa chỉ giao hàng, số điện thoại và các thông tin khác để trải nghiệm mua sắm tốt nhất.'
+        />
+        <meta name='keywords' content='thông tin cá nhân, profile, tài khoản, quản lý hồ sơ, shopping spree' />
+        <meta property='og:title' content='Thông Tin Cá Nhân - Shopping Spree' />
+        <meta
+          property='og:description'
+          content='Quản lý thông tin cá nhân của bạn tại Shopping Spree. Cập nhật hồ sơ và địa chỉ giao hàng.'
+        />
+        <meta property='og:type' content='website' />
+        <meta property='og:url' content={window.location.href} />
+        <meta name='twitter:card' content='summary' />
+        <meta name='twitter:title' content='Thông Tin Cá Nhân - Shopping Spree' />
+        <meta name='twitter:description' content='Quản lý thông tin cá nhân của bạn tại Shopping Spree.' />
+        <meta name='robots' content='noindex, nofollow' />
+      </Helmet>
+      <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
       <hgroup className='border-b border-b-gray-200 py-6'>
         <h1 className='text-lg font-medium capitalize text-gray-900'>{t('user:profile.title')}</h1>
         <p className='mt-1 text-sm text-gray-700'>{t('user:profile.subtitle')}</p>
@@ -117,6 +138,7 @@ const Profile = () => {
         </section>
       </form>
     </div>
+    </>
   )
 }
 

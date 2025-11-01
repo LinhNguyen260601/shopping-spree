@@ -13,6 +13,7 @@
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\""
   },
   "dependencies": {
+    "@dr.pogodin/react-helmet": "^3.0.4",
     "@floating-ui/react": "^0.27.16",
     "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.1.14",
