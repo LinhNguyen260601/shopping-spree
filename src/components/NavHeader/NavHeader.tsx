@@ -126,7 +126,7 @@ const NavHeader = () => {
           }
         >
           <figure className='size-6 mr-2 flex-shrink-0'>
-            <Avatar width={24} height={24} src={user?.avatar} />
+            <Avatar width={24} height={24} src={user?.avatar} className='size-full' />
           </figure>
           <span>{user?.email}</span>
         </Popover>

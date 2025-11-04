@@ -1,13 +1,14 @@
 import Button from '@/components/Button'
 import { MAX_SIZE_UPLOAD_AVATAR } from '@/pages/User/core'
-import { useRef } from 'react'
+import { useRef, type InputHTMLAttributes } from 'react'
 import { toast } from 'react-toastify'
 
-interface InputFileProps {
-  onChange?: (file?: File) => void
+interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
+  accept?: string
+  inputChange?: (file?: File) => void
 }
 
-const InputFile = ({ onChange }: InputFileProps) => {
+const InputFile = ({ accept = '.jpg,.jpeg,.png', inputChange, ...rest }: InputFileProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const setEventValueToEmpty = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
@@ -29,7 +30,7 @@ const InputFile = ({ onChange }: InputFileProps) => {
     const selectedFile = event.target.files?.[0]
     const isFileValid = validateFileBeforeUploading(selectedFile)
     if (!isFileValid) return
-    onChange && onChange(selectedFile)
+    inputChange && inputChange(selectedFile)
   }
 
   const handleUpload = () => {
@@ -41,11 +42,12 @@ const InputFile = ({ onChange }: InputFileProps) => {
       <input
         className='hidden'
         type='file'
-        accept='.jpg,.jpeg,.png'
+        accept={accept}
         aria-label='Tải ảnh đại diện lên'
         ref={fileInputRef}
         onChange={handleFileChange}
         onClick={setEventValueToEmpty}
+        {...rest}
       />
       <Button
         type='button'
