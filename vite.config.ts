@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -11,6 +12,14 @@ const __dirname = path.dirname(__filename)
 export default defineConfig({
   plugins: [react(), tailwindcss(), visualizer()],
   resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    setupFiles: ['./src/test/setup.ts'],
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
