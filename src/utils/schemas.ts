@@ -1,4 +1,4 @@
-import { ref, string } from 'yup'
+import { string } from 'yup'
 
 /**
  * Email field schema
@@ -30,4 +30,7 @@ export const passwordConfirmField = (field: 'password' | 'new_password' = 'passw
     .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
     .max(160, 'Mật khẩu không được vượt quá 160 ký tự')
     .required('Mật khẩu không được để trống')
-    .oneOf([ref(field)], 'Mật khẩu không khớp')
+    .test('passwords-match', 'Mật khẩu không khớp', function (value) {
+      const { [field]: password } = this.parent
+      return !value || value === password
+    })
