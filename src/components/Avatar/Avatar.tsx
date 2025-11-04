@@ -27,7 +27,7 @@ const Avatar = forwardRef<HTMLImageElement, AvatarProps>(
       square: 'rounded-md'
     }
 
-    const baseImg = cn(variantClasses[variant], sizeClasses[size], 'object-cover size-full')
+    const baseImg = cn(variantClasses[variant], size ? sizeClasses[size] : 'size-full', 'object-cover')
 
     return (
       <>
