@@ -43,7 +43,7 @@
   },
   "dateSelect": {
     "dateOfBirth": "Date of Birth",
-    "day": "Day",
+    "date": "Day",
     "month": "Month",
     "year": "Year"
   }

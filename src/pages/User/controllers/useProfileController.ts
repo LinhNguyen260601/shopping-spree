@@ -99,7 +99,10 @@ const useProfileController = () => {
   })
 
   const handleFileChange = (file?: File) => {
+    if (!file) return
     setFile(file)
+    const preview = URL.createObjectURL(file)
+    setValue('avatar', preview, { shouldDirty: true, shouldValidate: true })
   }
 
   return {

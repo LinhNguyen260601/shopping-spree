@@ -1,7 +1,6 @@
 import App from '@/App'
 import { AppProvider } from '@/contexts'
 import queryClient from '@/queryClient'
-import '@/styles/index.css'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { lazy, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'

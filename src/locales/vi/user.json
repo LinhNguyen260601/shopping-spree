@@ -43,7 +43,7 @@
   },
   "dateSelect": {
     "dateOfBirth": "Ngày sinh",
-    "day": "Ngày",
+    "date": "Ngày",
     "month": "Tháng",
     "year": "Năm"
   }

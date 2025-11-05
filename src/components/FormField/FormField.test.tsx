@@ -64,7 +64,7 @@ describe('FormField', () => {
       <FormField
         name='test'
         inputProps={{
-          'data-testid': 'custom-input',
+          id: 'custom-input',
           autoComplete: 'off'
         }}
         register={undefined}

@@ -63,8 +63,8 @@ const ProductDetails = () => {
       <div className='bg-gray-200 py-6' role='main'>
         <div className='container'>
           <article className='bg-white p-4 shadow'>
-            <header className='grid grid-cols-12 gap-9'>
-              <section className='col-span-5' aria-label='Product images'>
+            <header className='flex flex-col lg:flex-row gap-6 lg:gap-9'>
+              <section className='lg:w-[460px] lg:shrink-0' aria-label='Product images'>
                 <h2 className='sr-only'>{t('product:productImages')}</h2>
                 <figure
                   className='w-full pt-[100%] relative shadow overflow-hidden cursor-zoom-in'
@@ -77,8 +77,8 @@ const ProductDetails = () => {
                     alt={product.name}
                     className='absolute top-0 left-0 size-full bg-white object-cover pointer-events-none'
                     loading='eager'
-                    width='400'
-                    height='400'
+                    width={400}
+                    height={400}
                   />
                 </figure>
                 <nav className='relative mt-4 grid grid-cols-5 gap-1' aria-label='Product image gallery'>
@@ -124,7 +124,7 @@ const ProductDetails = () => {
                 </nav>
               </section>
 
-              <section className='col-span-7' aria-labelledby='product-title'>
+              <section className='lg:flex-1' aria-labelledby='product-title'>
                 <header>
                   <h1 id='product-title' className='text-xl font-medium uppercase'>
                     {product.name}
@@ -143,7 +143,10 @@ const ProductDetails = () => {
                   </div>
                 </header>
 
-                <section className='mt-8 flex items-center bg-gray-50 px-5 py-4' aria-label='Pricing information'>
+                <section
+                  className='mt-8 flex items-center flex-wrap gap-y-2 bg-gray-50 px-5 py-4'
+                  aria-label='Pricing information'
+                >
                   <h2 className='sr-only'>{t('product:pricingInfo')}</h2>
                   <div className='text-gray-500 line-through'>₫{formatCurrency(product.price_before_discount)}</div>
                   <div className='ml-3 text-3xl font-medium text-orange-500'>₫{formatCurrency(product.price)}</div>
@@ -152,7 +155,7 @@ const ProductDetails = () => {
                   </div>
                 </section>
 
-                <section className='mt-8 flex items-center' aria-label='Quantity selection'>
+                <section className='mt-8 flex items-center flex-wrap gap-3' aria-label='Quantity selection'>
                   <h2 className='sr-only'>{t('product:selectQuantity')}</h2>
                   <div className='capitalize text-gray-500'>{t('product:quantity')}</div>
                   <QuantityController
@@ -162,12 +165,12 @@ const ProductDetails = () => {
                     onDecrease={handleBuyCount}
                     onIncrease={handleBuyCount}
                   />
-                  <div className='ml-6 text-sm text-gray-500'>
+                  <div className='ml-0 lg:ml-6 text-sm text-gray-500'>
                     {product.quantity} {t('product:available')}
                   </div>
                 </section>
 
-                <footer className='mt-8 flex items-center gap-4' role='group' aria-label='Purchase actions'>
+                <footer className='mt-8 flex items-center flex-wrap gap-4' role='group' aria-label='Purchase actions'>
                   <Button
                     variant='secondary'
                     size='lg'

@@ -25,7 +25,7 @@ const AsideFilter = ({ categories, queryConfig, isLoadingCategories }: AsideFilt
     useAsideFilterController(queryConfig)
 
   return (
-    <aside className='py-4' role='complementary' aria-label={t('productList:productCategories')}>
+    <aside className='py-4 lg:sticky lg:top-4' role='complementary' aria-label={t('productList:productCategories')}>
       <header>
         <Link
           to={PATH.HOME}

@@ -25,12 +25,7 @@ const CustomScrollRestoration = () => {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <RootLayout />
-        <CustomScrollRestoration />
-      </>
-    ),
+    element: <RootLayout />,
     errorElement: <ErrorBoundary />,
     children: [
       {
@@ -44,7 +39,12 @@ const router = createBrowserRouter([
       },
       {
         path: '',
-        element: <ProtectedRoute />,
+        element: (
+          <>
+            <ProtectedRoute />
+            <CustomScrollRestoration />
+          </>
+        ),
         children: [
           {
             path: PATH.USER,
