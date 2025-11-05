@@ -91,6 +91,7 @@ const HistoryPurchase = () => {
                     height={80}
                     src={purchase.product.image}
                     alt={purchase.product.name}
+                    className='size-full'
                   />
                 </figure>
                 <div className='ml-3 flex-grow overflow-hidden'>

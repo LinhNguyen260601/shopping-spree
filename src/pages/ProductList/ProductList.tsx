@@ -13,6 +13,34 @@ const ProductList = () => {
 
   const { data: categories = [] } = categoriesData?.data || {}
 
+  const renderProduct = () => {
+    if (isLoading) {
+      return <ProductListSkeleton />
+    }
+
+    if (error) {
+      return (
+        <div className='col-span-full text-center py-8' role='alert' aria-live='polite'>
+          <p className='text-red-600'>{t('errorLoading')}</p>
+        </div>
+      )
+    }
+
+    if (products.length === 0) {
+      return (
+        <div className='col-span-full text-center py-8'>
+          <p className='text-gray-600'>{t('noProducts')}</p>
+        </div>
+      )
+    }
+
+    return products.map((product, index) => (
+      <div className='col-span-1' key={product._id} role='listitem' aria-label={`Sản phẩm ${product.name}`}>
+        <Product index={index} product={product} />
+      </div>
+    ))
+  }
+
   return (
     <>
       <Helmet>
@@ -41,8 +69,8 @@ const ProductList = () => {
       </Helmet>
       <div className='bg-gray-200 py-6' role='main' aria-label='Danh sách sản phẩm'>
         <div className='container'>
-          <div className='grid grid-cols-12 gap-6'>
-            <div className='col-span-3'>
+          <div className='flex flex-col lg:flex-row gap-4 lg:gap-6'>
+            <div className='lg:w-64 lg:shrink-0'>
               <AsideFilter
                 categories={categories}
                 queryConfig={queryConfig}
@@ -50,7 +78,7 @@ const ProductList = () => {
               />
             </div>
 
-            <div className='col-span-9' aria-label='Kết quả tìm kiếm'>
+            <div className='lg:flex-1' aria-label='Kết quả tìm kiếm'>
               <header>
                 <h1 className='sr-only'>Sản phẩm tìm kiếm</h1>
                 <SortProductList queryConfig={queryConfig} pageSize={pagination.page_size || 0} />
@@ -63,28 +91,7 @@ const ProductList = () => {
                   role='list'
                   aria-label='Danh sách sản phẩm'
                 >
-                  {isLoading ? (
-                    <ProductListSkeleton />
-                  ) : error ? (
-                    <div className='col-span-full text-center py-8' role='alert' aria-live='polite'>
-                      <p className='text-red-600'>{t('errorLoading')}</p>
-                    </div>
-                  ) : products.length === 0 ? (
-                    <div className='col-span-full text-center py-8'>
-                      <p className='text-gray-600'>{t('noProducts')}</p>
-                    </div>
-                  ) : (
-                    products.map((product, index) => (
-                      <div
-                        className='col-span-1'
-                        key={product._id}
-                        role='listitem'
-                        aria-label={`Sản phẩm ${product.name}`}
-                      >
-                        <Product index={index} product={product} />
-                      </div>
-                    ))
-                  )}
+                  {renderProduct()}
                 </div>
               </section>
               <Pagination queryConfig={queryConfig} pageSize={pagination.page_size || 0} />

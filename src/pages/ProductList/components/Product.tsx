@@ -21,11 +21,17 @@ const Product = ({ index, product }: ProductProps) => {
         <figure className='w-full pt-[100%] relative overflow-hidden flex-shrink-0'>
           <img
             src={product.image}
+            srcSet={`
+              ${product.image}?w=200 200w,
+              ${product.image}?w=400 400w,
+              ${product.image}?w=720 720w
+            `}
+            sizes='(max-width: 768px) 200px, 200px'
             alt={product.name}
             className='absolute top-0 left-0 size-full bg-white object-cover group-hover:scale-105 transition-transform duration-200'
             width={200}
             height={200}
-            {...(index <= 6 ? { fetchPriority: 'high', decoding: 'async' } : { loading: 'lazy', decoding: 'async' })}
+            {...(index <= 3 ? { fetchPriority: 'high', decoding: 'async' } : { loading: 'lazy', decoding: 'async' })}
           />
         </figure>
         <section className='p-2 overflow-hidden flex-1 flex flex-col'>
@@ -52,7 +58,7 @@ const Product = ({ index, product }: ProductProps) => {
             <StarRating rating={product.rating} size='sm' />
             <div className='text-sm text-gray-700'>
               <span>{formatNumberToSocialStyle(product.sold)}</span>
-              <span className='ml-1'>{t('product:sold')}</span>
+              <span className='ml-1'>{t('sold')}</span>
             </div>
           </footer>
         </section>

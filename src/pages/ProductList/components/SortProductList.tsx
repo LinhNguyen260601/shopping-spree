@@ -42,7 +42,7 @@ const SortProductList = ({ pageSize, queryConfig }: SortProductListProps) => {
   )
 
   return (
-    <section className='bg-gray-300/40 py-4 px-3' aria-label='Bộ công cụ sắp xếp và phân trang'>
+    <section className='bg-gray-300/40 py-3 px-2 sm:py-4 sm:px-3' aria-label='Bộ công cụ sắp xếp và phân trang'>
       <h2 className='sr-only'>Bộ công cụ sắp xếp và phân trang</h2>
       <div className='flex flex-wrap items-center justify-between gap-2'>
         <div className='flex items-center flex-wrap gap-2'>

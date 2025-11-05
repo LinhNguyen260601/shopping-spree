@@ -67,7 +67,6 @@ describe('Pagination', () => {
     const router = createRouter({ page: '10', limit: '20' })
     render(<RouterProvider router={router} />)
     // Check if dots are rendered (may appear as spans with ...)
-    const dots = screen.queryByText('...')
     // Dots may or may not be present depending on pagination logic
     expect(screen.getByRole('navigation')).toBeInTheDocument()
   })

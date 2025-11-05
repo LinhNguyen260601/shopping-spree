@@ -40,7 +40,7 @@ const Profile = () => {
           content='Quản lý thông tin cá nhân của bạn tại Shopping Spree. Cập nhật hồ sơ và địa chỉ giao hàng.'
         />
         <meta property='og:type' content='website' />
-        <meta property='og:url' content={window.location.href} />
+        <meta property='og:url' content={location.href} />
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:title' content='Thông Tin Cá Nhân - Shopping Spree' />
         <meta name='twitter:description' content='Quản lý thông tin cá nhân của bạn tại Shopping Spree.' />
@@ -127,7 +127,7 @@ const Profile = () => {
             <h2 className='sr-only'>{t('user:profile.avatar')}</h2>
             <figure className='flex flex-col items-center'>
               <div className='my-5 size-24 cursor-pointer'>
-                <Avatar size='xl' src={previewImage || avatar} width={96} height={96} />
+                <Avatar size='xl' src={previewImage || avatar} width={96} height={96} className='size-full' />
               </div>
               <InputFile inputChange={handleFileChange} />
               <figcaption className='mt-3 text-gray-400'>
