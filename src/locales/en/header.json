@@ -1,0 +1,22 @@
+{
+  "searchPlaceholder": "Free shipping for orders from ₫0",
+  "cart": {
+    "title": "Shopping Cart",
+    "newProducts": "Newly Added Products",
+    "noProducts": "No products yet",
+    "viewCart": "View Cart",
+    "moreItems": "More items in cart"
+  },
+  "nav": {
+    "register": "Register",
+    "login": "Login",
+    "myAccount": "My Account",
+    "purchaseOrders": "Purchase Orders",
+    "logout": "Logout"
+  },
+  "language": {
+    "vietnamese": "Vietnamese",
+    "english": "English"
+  }
+}
+

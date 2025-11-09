@@ -1,0 +1,51 @@
+{
+  "profile": {
+    "title": "Hồ Sơ Của Tôi",
+    "subtitle": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+    "personalInfo": "Thông tin cá nhân",
+    "avatar": "Ảnh đại diện",
+    "email": "Email",
+    "name": "Tên",
+    "namePlaceholder": "Tên",
+    "phone": "Số điện thoại",
+    "phonePlaceholder": "Số điện thoại",
+    "address": "Địa chỉ",
+    "addressPlaceholder": "Địa chỉ",
+    "fileSize": "Dung lượng file tối đa 1 MB",
+    "fileFormat": "Định dạng:.JPEG, .PNG",
+    "saveButton": "Lưu"
+  },
+  "changePassword": {
+    "title": "Đổi mật khẩu",
+    "subtitle": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+    "oldPassword": "Mật khẩu cũ",
+    "oldPasswordPlaceholder": "Mật khẩu cũ",
+    "newPassword": "Mật khẩu mới",
+    "newPasswordPlaceholder": "Mật khẩu mới",
+    "confirmPassword": "Nhập mật khẩu mới",
+    "confirmPasswordPlaceholder": "Nhập mật khẩu mới",
+    "saveButton": "Lưu"
+  },
+  "asideNav": {
+    "myAccount": "Tài khoản của tôi",
+    "changePassword": "Đổi mật khẩu",
+    "purchaseHistory": "Đơn mua"
+  },
+  "purchaseHistory": {
+    "title": "Purchase History",
+    "all": "Tất cả",
+    "waitingForConfirmation": "Chờ xác nhận",
+    "pickingUp": "Chờ lấy hàng",
+    "inTransit": "Đang giao",
+    "delivered": "Đã giao",
+    "cancelled": "Đã hủy",
+    "totalPrice": "Tổng giá tiền:"
+  },
+  "dateSelect": {
+    "dateOfBirth": "Ngày sinh",
+    "date": "Ngày",
+    "month": "Tháng",
+    "year": "Năm"
+  }
+}
+

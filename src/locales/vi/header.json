@@ -1,0 +1,22 @@
+{
+  "searchPlaceholder": "Free Ship đơn từ 0Đ",
+  "cart": {
+    "title": "Giỏ hàng",
+    "newProducts": "Sản phẩm mới thêm",
+    "noProducts": "Chưa có sản phẩm",
+    "viewCart": "Xem Giỏ Hàng",
+    "moreItems": "Thêm Hàng Vào Giỏ"
+  },
+  "nav": {
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "myAccount": "Tài khoản của tôi",
+    "purchaseOrders": "Đơn mua",
+    "logout": "Đăng xuất"
+  },
+  "language": {
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh"
+  }
+}
+

@@ -1,0 +1,37 @@
+{
+  "validation": {
+    "emailInvalid": "Email không hợp lệ",
+    "emailRequired": "Email không được để trống",
+    "emailMin": "Email phải có ít nhất 5 ký tự",
+    "emailMax": "Email không được vượt quá 160 ký tự",
+    "passwordRequired": "Mật khẩu không được để trống",
+    "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự",
+    "passwordMax": "Mật khẩu không được vượt quá 160 ký tự",
+    "passwordMismatch": "Mật khẩu không khớp",
+    "priceInvalid": "Giá không phù hợp"
+  },
+  "actions": {
+    "save": "Lưu",
+    "delete": "Xóa",
+    "deleteAll": "Xóa tất cả",
+    "apply": "Áp dụng",
+    "addToCart": "Thêm vào giỏ hàng",
+    "buyNow": "Mua ngay",
+    "buyProducts": "Mua hàng",
+    "viewCart": "Xem Giỏ Hàng",
+    "goToHome": "Quay lại trang chủ",
+    "editProfile": "Sửa hồ sơ"
+  },
+  "loading": {
+    "addingToCart": "Đang thêm vào giỏ hàng",
+    "buyingProducts": "Đang mua sản phẩm",
+    "loggingIn": "Đang đăng nhập...",
+    "registering": "Đang đăng ký...",
+    "updating": "Đang cập nhật..."
+  },
+  "language": {
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh"
+  }
+}
+

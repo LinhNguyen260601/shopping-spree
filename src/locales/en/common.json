@@ -1,0 +1,37 @@
+{
+  "validation": {
+    "emailInvalid": "Invalid email",
+    "emailRequired": "Email is required",
+    "emailMin": "Email must be at least 5 characters",
+    "emailMax": "Email must not exceed 160 characters",
+    "passwordRequired": "Password is required",
+    "passwordMin": "Password must be at least 6 characters",
+    "passwordMax": "Password must not exceed 160 characters",
+    "passwordMismatch": "Passwords do not match",
+    "priceInvalid": "Invalid price range"
+  },
+  "actions": {
+    "save": "Save",
+    "delete": "Delete",
+    "deleteAll": "Delete all",
+    "apply": "Apply",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "buyProducts": "Buy products",
+    "viewCart": "View Cart",
+    "goToHome": "Return to home",
+    "editProfile": "Edit profile"
+  },
+  "loading": {
+    "addingToCart": "Adding to cart...",
+    "buyingProducts": "Buying products...",
+    "loggingIn": "Logging in...",
+    "registering": "Registering...",
+    "updating": "Updating..."
+  },
+  "language": {
+    "vietnamese": "Vietnamese",
+    "english": "English"
+  }
+}
+
