@@ -94,17 +94,13 @@ export const WithContent: Story = {
 
 export const DifferentPlacements: Story = {
   render: () => {
-    const placements = ['top', 'bottom', 'left', 'right', 'top-start', 'bottom-end'] as const
-
     return (
       <div className='flex flex-col gap-8 items-center p-20'>
         <div className='flex gap-4'>
           <Popover
             placement='top'
             renderPopover={
-              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>
-                Top
-              </div>
+              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>Top</div>
             }
           >
             <Button variant='outline'>Top</Button>
@@ -113,9 +109,7 @@ export const DifferentPlacements: Story = {
           <Popover
             placement='bottom'
             renderPopover={
-              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>
-                Bottom
-              </div>
+              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>Bottom</div>
             }
           >
             <Button variant='outline'>Bottom</Button>
@@ -124,9 +118,7 @@ export const DifferentPlacements: Story = {
           <Popover
             placement='left'
             renderPopover={
-              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>
-                Left
-              </div>
+              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>Left</div>
             }
           >
             <Button variant='outline'>Left</Button>
@@ -135,9 +127,7 @@ export const DifferentPlacements: Story = {
           <Popover
             placement='right'
             renderPopover={
-              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>
-                Right
-              </div>
+              <div className='p-3 bg-white shadow-lg rounded-sm border border-gray-200 whitespace-nowrap'>Right</div>
             }
           >
             <Button variant='outline'>Right</Button>
@@ -155,19 +145,11 @@ export const WithList: Story = {
         <div className='bg-white shadow-lg rounded-sm border border-gray-200 min-w-[200px]'>
           <div className='p-2'>
             <div className='px-3 py-2 text-xs font-semibold text-gray-500 uppercase'>Navigation</div>
-            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>
-              Home
-            </button>
-            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>
-              Products
-            </button>
-            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>
-              About
-            </button>
+            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>Home</button>
+            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>Products</button>
+            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>About</button>
             <div className='border-t border-gray-200 my-1' />
-            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>
-              Settings
-            </button>
+            <button className='w-full text-left px-3 py-2 hover:bg-gray-100 text-sm text-gray-700'>Settings</button>
           </div>
         </div>
       }
@@ -176,4 +158,3 @@ export const WithList: Story = {
     </Popover>
   )
 }
-

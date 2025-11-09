@@ -16,7 +16,7 @@ const meta: Meta<typeof Pagination> = {
   },
   tags: ['autodocs'],
   decorators: [
-    (Story, context) => {
+    (_, context) => {
       const args = context.args as { queryConfig?: QueryConfig; pageSize?: number }
       const queryConfig: QueryConfig = args?.queryConfig || { page: '1', limit: '20' }
       const pageSize: number = args?.pageSize || 10
@@ -98,4 +98,3 @@ export const FewPages: Story = {
     queryConfig: { page: '2', limit: '20' } as QueryConfig
   }
 }
-
